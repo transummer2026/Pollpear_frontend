@@ -1,3 +1,0 @@
-FROM nginx:alpine AS prod
-
-WORKDIR /usr/share/nginx/html
