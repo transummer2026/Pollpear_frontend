@@ -2,7 +2,7 @@ name: CI
 
 on:
   pull_request:
-    branches: ["dev, main, staging"]
+    branches: [dev, main, staging]
   push:
     branches: ["dev"]
   repository_dispatch:
@@ -21,6 +21,7 @@ jobs:
     uses: transummer2026/.github/.github/workflows/ci-service.yml@main
     with:
       service_name: front
+      install_cmd: npm ci
       lint_cmd: npx eslint .
       test_cmd: npm test -- --watchAll=false
       build_cmd: npm run build
@@ -34,3 +35,4 @@ jobs:
       DISCORD_WEBHOOK_REPO: ${{ secrets.DISCORD_WEBHOOK_FRONT }}
       GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
       DISPATCH_TOKEN: ${{ secrets.DISPATCH_TOKEN }}
+      SEMANTIC_TOKEN: ${{ secrets.SEMANTIC_TOKEN }}
