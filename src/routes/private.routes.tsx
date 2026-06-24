@@ -1,0 +1,28 @@
+import FeedPage from "../pages/FeedPage";
+import ProfilePage from "../pages/ProfilePage";
+import RoomsPage from "../pages/RoomsPage";
+import SettingsPage from "../pages/SettingsPage";
+import AdminPage from "../pages/SettingsPage";
+
+export const privateRoutes = [
+  	{
+		path: "/feed",
+		element: <FeedPage />,
+	},
+	{
+		path: "/profile/:id",
+		element: <ProfilePage />,
+	},
+	{
+		path: "/rooms/:id",
+		element: <RoomsPage />,
+	},
+	{
+		path: "/settings",
+		element: <SettingsPage />,
+	},
+	{
+		path: "/admin",
+		element: <AdminPage />,
+	},
+];
