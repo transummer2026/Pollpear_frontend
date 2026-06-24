@@ -6,6 +6,7 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 lerna-debug.log*
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
@@ -83,6 +84,7 @@ out
 # Nuxt.js build / generate output
 .nuxt
 dist
+dist-ssr
 .output
 
 # Gatsby files
@@ -173,6 +175,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+*.local
 .env*.local
 .env
 
@@ -282,6 +285,13 @@ tmbootpicker.efi
 !.vscode/extensions.json
 !.vscode/*.code-snippets
 !*.code-workspace
+.idea
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
