@@ -3,7 +3,7 @@ import logo from "@/assets/pwar.jpg";
 
 export function LogoButton() {
 	return (
-		<Link to="/feed">
+		<Link to="/">
 			<img
 				src={logo}
 				alt="Logo"

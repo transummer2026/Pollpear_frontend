@@ -12,7 +12,7 @@ import {
 export function MenuDropdown() {
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger asChild>
+			<DropdownMenuTrigger>
 				<Menu />
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-40" align="start">

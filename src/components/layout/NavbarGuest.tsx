@@ -1,6 +1,6 @@
 import { Menubar } from "@/components/ui/menubar"
 import { Button } from "@/components/ui/button"
-import { LogoButton } from "./LogoButton";
+import { LogoButton } from "@/components/layout/LogoButton";
 import { Link } from "react-router"
 
 export default function NavbarGuest() {

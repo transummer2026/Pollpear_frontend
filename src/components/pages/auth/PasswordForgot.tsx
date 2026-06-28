@@ -1,6 +1,7 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
+//TODO: handle the redirection if guest or user
 export default function PasswordForgot() {
 	return (
 		<div className="min-h-screen flex flex-col">
