@@ -1,5 +1,5 @@
-import NavbarUser from "./NavbarUser";
-import NavbarGuest from "./NavbarGuest";
+import NavbarUser from "@/components/layout/NavbarUser";
+import NavbarGuest from "@/components/layout/NavbarGuest";
 
 //temporary function, waiting for backend connection
 const isLogged = () => {
