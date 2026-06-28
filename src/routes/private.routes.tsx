@@ -1,8 +1,10 @@
-import FeedPage from "../pages/FeedPage";
-import ProfilePage from "../pages/ProfilePage";
-import RoomsPage from "../pages/RoomsPage";
-import SettingsPage from "../pages/SettingsPage";
-import AdminPage from "../pages/SettingsPage";
+import AdminPage from "@/pages/SettingsPage";
+import FeedPage from "@/pages/FeedPage";
+import NewPollPage from "@/pages/NewPollPage";
+import NewRoomPage from "@/pages/NewRoomPage";
+import ProfilePage from "@/pages/ProfilePage";
+import RoomsPage from "@/pages/RoomsPage";
+import SettingsPage from "@/pages/SettingsPage";
 
 export const privateRoutes = [
   	{
@@ -24,5 +26,13 @@ export const privateRoutes = [
 	{
 		path: "/admin",
 		element: <AdminPage />,
+	},
+	{
+		path: "/rooms/new",
+		element: <NewRoomPage />,
+	},
+	{
+		path: "/polls/new",
+		element: <NewPollPage />,
 	},
 ];
