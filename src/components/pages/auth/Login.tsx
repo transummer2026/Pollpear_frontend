@@ -1,13 +1,19 @@
+import Layout from "@/layout/Layout";
 import LoginCard from "@/components/auth/LoginCard";
 import SignUpCard from "@/components/auth/SignUpCard";
 
 export default function Login() {
-  return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="flex flex-col md:flex-row gap-6 items-stretch">
-        <LoginCard />
-        <SignUpCard />
-      </div>
-    </div>
-  );
+	return (
+		<Layout>
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<div className="w-full max-w-l p-4">
+						<SignUpCard />
+					</div>
+
+					<div className="w-full max-w-l p-4">
+						<LoginCard />
+					</div>
+				</div>
+		</Layout>
+	);
 }
