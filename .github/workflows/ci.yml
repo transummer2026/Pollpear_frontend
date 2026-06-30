@@ -26,10 +26,10 @@ jobs:
       service_name: frontend
       install_cmd: npm ci
       lint_cmd: npx eslint .
-      test_cmd: npm test -- --watchAll=false
+      test_cmd: npm test -- --run
       build_cmd: npm run build
       audit_cmd: npm audit --audit-level=high
-      coverage_cmd: npm test -- --watchAll=false --coverage
+      coverage_cmd: npm test -- --run --coverage
       coverage_format: lcov
       coverage_threshold: 0
     secrets:
