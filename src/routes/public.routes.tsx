@@ -1,9 +1,9 @@
-import LoginPage from "../pages/LoginPage";
-import RegisterPage from "../pages/RegisterPage";
-import LegalPage from "../pages/LegalPage";
-import ContactPage from "../pages/ContactPage";
-import HomePage from "../pages/HomePage";
-import PrivacyPage from "../pages/PrivacyPage";
+import LoginPage from "@/pages/LoginPage";
+import RegisterPage from "@/pages/RegisterPage";
+import LegalPage from "@/pages/LegalPage";
+import ContactPage from "@/pages/ContactPage";
+import HomePage from "@/pages/HomePage";
+import PrivacyPage from "@/pages/PrivacyPage";
 import PasswordForgotPage from "@/pages/PasswordForgotPage";
 
 export const publicRoutes = [

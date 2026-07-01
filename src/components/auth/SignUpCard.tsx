@@ -4,7 +4,7 @@ import { Link } from "react-router"
 
 export default function SignUpCard() {
   return (
-		<Card className="">
+		<Card>
 			<CardHeader className="text-center">
 				<CardTitle className="text-3xl">New here ?</CardTitle>
 		  		<CardDescription className="text-sm text-muted-foreground">

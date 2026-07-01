@@ -2,6 +2,7 @@ import Layout from "@/layout/Layout";
 import LoginCard from "@/components/auth/LoginCard";
 import SignUpCard from "@/components/auth/SignUpCard";
 
+//TODO: handle the redirection if guest or user
 export default function Login() {
 	return (
 		<Layout>

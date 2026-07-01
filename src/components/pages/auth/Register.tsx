@@ -1,18 +1,13 @@
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import RegisterCard from "@/components/auth/RegisterCard";
+import Layout from "@/layout/Layout";
 
+//TODO: handle the redirection if guest or user
 export default function Register() {
 	return (
-		<div className="min-h-screen flex flex-col">
-			<Navbar />
-
-			<main className="flex-1">
-				<div className="flex justify-center">
-					<h1>Register</h1>
-				</div>
-			</main>
-
-			<Footer />
-		</div>
+		<Layout>
+			<div className="mx-auto w-full max-w-md mt-3">
+				<RegisterCard/ >
+			</div>
+		</Layout>
 	);
 }
