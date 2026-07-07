@@ -14,6 +14,8 @@ FROM builder AS dev
 
 COPY . .
 
+USER node
+
 CMD ["npm", "run", "dev"]
 
 FROM nginx:alpine AS prod
