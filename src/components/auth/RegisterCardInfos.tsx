@@ -1,13 +1,13 @@
 import { Input } from "@/components/ui/input";
 import { type UseFormRegister, type FieldErrors } from "react-hook-form";
-import { type RegisterDTO } from "@shared/schemas/auth.schema";
+import { type RegisterInput } from "@shared/schemas/auth.schema";
 
 export default function RegisterCardInfos({
     register , 
     errors, 
   } : { 
-    register: UseFormRegister<RegisterDTO>; 
-    errors: FieldErrors<RegisterDTO>; 
+    register: UseFormRegister<RegisterInput>; 
+    errors: FieldErrors<RegisterInput>; 
 }) {
 	return (
     <div className="p-6 space-y-4">

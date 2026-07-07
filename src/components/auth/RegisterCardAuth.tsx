@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { type UseFormRegister, type FieldErrors, type Control } from "react-hook-form";
-import { type RegisterDTO } from "@shared/schemas/auth.schema";
+import { type RegisterInput } from "@shared/schemas/auth.schema";
 import RegisterCardAuthGender from "./RegisterCardAuthGender";
 
 export default function RegisterCardAuth({
@@ -8,9 +8,9 @@ export default function RegisterCardAuth({
 	errors,
 	control
 }: {
-	register: UseFormRegister<RegisterDTO>;
-	errors: FieldErrors<RegisterDTO>;
-	control: Control<RegisterDTO>;
+	register: UseFormRegister<RegisterInput>;
+	errors: FieldErrors<RegisterInput>;
+	control: Control<RegisterInput>;
 }) {
 	return (
 		<div className="p-6 border-b md:border-b-0 md:border-r p-6 space-y-4">

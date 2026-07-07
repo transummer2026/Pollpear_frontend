@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator";
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { type RegisterDTO, RegisterSchema } from "@shared/schemas/auth.schema"
+import { type RegisterDTO, type RegisterInput, RegisterSchema } from "@shared/schemas/auth.schema"
 import RegisterCardAuth from "@/components/auth/RegisterCardAuth";
 import RegisterCardHeader from "@/components/auth/RegisterCardHeader";
 import RegisterCardInfos from "@/components/auth/RegisterCardInfos";
@@ -18,7 +18,7 @@ export default function RegisterCard() {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<RegisterDTO>({
+  } = useForm<RegisterInput, unknown, RegisterDTO>({
     resolver: zodResolver(RegisterSchema),
   })
 

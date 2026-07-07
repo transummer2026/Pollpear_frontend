@@ -1,14 +1,14 @@
 import { Controller, type UseFormRegister, type FieldErrors, type Control } from "react-hook-form";
-import { type RegisterDTO } from "@shared/schemas/auth.schema";
+import { type RegisterInput } from "@shared/schemas/auth.schema";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export default function RegisterCardAuthGender({ 
   errors, 
   control 
 } : { 
-  register: UseFormRegister<RegisterDTO>; 
-  errors: FieldErrors<RegisterDTO>; 
-  control: Control<RegisterDTO> 
+  register: UseFormRegister<RegisterInput>; 
+  errors: FieldErrors<RegisterInput>; 
+  control: Control<RegisterInput> 
 }) {
   return (
     <div>
