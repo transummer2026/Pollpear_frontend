@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint \"{src}/**/*.ts\" --fix",
+    "lint": "eslint \"src/**/*.ts\" --fix",
     "prettier": "npx prettier . --write \"src/**/*.ts\"",
     "preview": "vite preview",
     "test": "vitest"
