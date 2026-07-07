@@ -25,7 +25,7 @@ jobs:
     with:
       service_name: frontend
       install_cmd: npm ci
-      lint_cmd: npx eslint .
+      lint_cmd: npm run lint
       test_cmd: npm test -- --run
       build_cmd: npm run build
       audit_cmd: npm audit --audit-level=high
