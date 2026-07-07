@@ -6,14 +6,14 @@ export default function SignUpCard() {
   return (
 		<Card>
 			<CardHeader className="text-center">
-				<CardTitle className="text-3xl">New here ?</CardTitle>
+				<CardTitle className="text-2xl">New here ?</CardTitle>
 		  		<CardDescription className="text-sm text-muted-foreground">
 						Join us, create polls and share with your pears
  					</CardDescription>
 			</CardHeader>
 			<CardContent>
 				<Button asChild className="w-full" >
-					<Link to="/register">
+					<Link to="/auth/register">
 						Sign Up
   				</Link>
 				</Button>

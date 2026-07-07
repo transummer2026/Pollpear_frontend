@@ -8,11 +8,11 @@ import PasswordForgotPage from "@/pages/PasswordForgotPage";
 
 export const publicRoutes = [
 	{
-		path: "/login",
+		path: "/auth/login",
 		element: <LoginPage />,
 	},
 	{
-		path: "/register",
+		path: "/auth/register",
 		element: <RegisterPage />,
 	},
 	{
@@ -32,7 +32,7 @@ export const publicRoutes = [
 		element: <HomePage />,
 	},
 		{
-		path: "/password-forgot",
+		path: "/auth/password-forgot",
 		element: <PasswordForgotPage />,
 	},
 ];

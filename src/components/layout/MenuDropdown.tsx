@@ -24,7 +24,7 @@ export function MenuDropdown() {
 				<DropdownMenuItem> <Link to="/rooms/new">New Room</Link> </DropdownMenuItem>
 				<DropdownMenuItem> <Link to="/polls/new">New Poll</Link> </DropdownMenuItem>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem> <Link to="/login">Log out</Link> </DropdownMenuItem>
+				<DropdownMenuItem> <Link to="/auth/login">Log out</Link> </DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	)
