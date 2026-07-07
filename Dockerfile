@@ -14,7 +14,8 @@ FROM builder AS dev
 
 COPY . .
 
-RUN npm run build
+USER node
 
-# update and install in second time focus to build and dev
+CMD ["npm", "run", "dev"]
+
 FROM nginx:alpine AS prod
