@@ -8,6 +8,9 @@ import RegisterCardAuth from "@/components/auth/RegisterCardAuth";
 import RegisterCardHeader from "@/components/auth/RegisterCardHeader";
 import RegisterCardInfos from "@/components/auth/RegisterCardInfos";
 import { useRegister } from "@/hooks/auth/use-register";
+import { useNavigate } from "react-router";
+import { toast } from "sonner"
+import { ApiError } from "@/lib/fetcher"
 
 export default function RegisterCard() {
   const {
@@ -21,11 +24,18 @@ export default function RegisterCard() {
 
   const { trigger, isMutating } = useRegister()
 
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<RegisterDTO> = async (data) => {
     try {
       const res = await trigger(data)
-      console.log("Success: ", res)
+      console.log("Success: ", res) 
+      navigate("/auth/login", { replace: true })
     } catch (e) {
+      if (e instanceof ApiError)
+        toast.error(e.message)
+      else
+        toast.error("An unknown error occurred")
       console.error("Error: ", e)
     }
   }
