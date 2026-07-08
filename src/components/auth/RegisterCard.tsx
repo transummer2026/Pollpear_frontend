@@ -1,20 +1,56 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator";
-import RegisterCardInfos from "@/components/auth/RegisterCardInfos";
+import { useForm, type SubmitHandler } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { type RegisterDTO, type RegisterInput, RegisterSchema } from "@shared/schemas/auth.schema"
 import RegisterCardAuth from "@/components/auth/RegisterCardAuth";
 import RegisterCardHeader from "@/components/auth/RegisterCardHeader";
+import RegisterCardInfos from "@/components/auth/RegisterCardInfos";
+import { useRegister } from "@/hooks/auth/use-register";
+import { useNavigate } from "react-router";
+import { toast } from "sonner"
+import { ApiError } from "@/lib/fetcher"
 
 export default function RegisterCard() {
-	return (
-    <Card className="max-w-4xl">
-     	<RegisterCardHeader />
-      <Separator />
-      <div className="grid md:grid-cols-2">
-          <RegisterCardAuth />
-          <RegisterCardInfos />
-      </div>
-      <Button className="m-6">Sign up</Button>
-    </Card>
-	);
+  const {
+    register,
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<RegisterInput, unknown, RegisterDTO>({
+    resolver: zodResolver(RegisterSchema),
+  })
+
+  const { trigger, isMutating } = useRegister()
+
+  const navigate = useNavigate();
+
+  const onSubmit: SubmitHandler<RegisterDTO> = async (data) => {
+    try {
+      const res = await trigger(data)
+      console.log("Success: ", res) 
+      navigate("/auth/login", { replace: true })
+    } catch (e) {
+      if (e instanceof ApiError)
+        toast.error(e.message)
+      else
+        toast.error("An unknown error occurred")
+      console.error("Error: ", e)
+    }
+  }
+  
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Card className="max-w-4xl mx-auto w-full">
+        <RegisterCardHeader />
+        <Separator />
+        <div className="grid md:grid-cols-2">
+          <RegisterCardAuth register={register} errors={errors} control={control}/>
+          <RegisterCardInfos register={register} errors={errors}/>
+        </div>
+        <Button type="submit" className="m-6" disabled={isMutating}>Sign up</Button>
+      </Card>
+    </form>
+  );
 }

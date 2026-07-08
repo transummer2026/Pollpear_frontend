@@ -5,24 +5,25 @@ import { Link } from "react-router"
 
 export default function RegisterCardHeader() {
 	return (
-		<CardHeader className="text-center">
-			<CardTitle className="text-3xl"> 
-					Create a free account
-			</CardTitle>
-			<CardDescription className="text-sm text-muted-foreground">
-					Or 	<Link to="/login" className="hover:underline" >
-						log into your account
-					</Link>
-			</CardDescription>
-			<Separator />
-			<CardContent>
-					<div className="text-center">Register with</div>
-				<div className="p-4 flex justify-between">
-					<Button variant="outline" className="flex-1 w-1/3 mr-4">GitHub</Button>
-					<Button variant="outline" className="flex-1 w-1/3">42</Button>
-					<Button variant="outline" className="flex-1 w-1/3 ml-4">Google</Button>
-				</div>
-			</CardContent>
-		</CardHeader>
+		<CardHeader className="text-center px-4">
+          <CardTitle className="text-2xl">
+            Create a free account
+          </CardTitle>
+          <CardDescription className="text-sm text-muted-foreground">
+            Or{" "}
+            <Link to="/auth/login" className="hover:underline">
+              log into your account
+            </Link>
+          </CardDescription>
+          <Separator />
+          <CardContent className="px-4">
+              <div className="text-center">Register with</div>
+              <div className="p-4 flex justify-between">
+                <Button type="button" variant="outline" className="flex-1 w-1/3 mr-4">GitHub</Button>
+                <Button type="button" variant="outline" className="flex-1 w-1/3">42</Button>
+                <Button type="button" variant="outline" className="flex-1 w-1/3 ml-4">Google</Button>
+              </div>
+          </CardContent>
+        </CardHeader>
 	);
 }

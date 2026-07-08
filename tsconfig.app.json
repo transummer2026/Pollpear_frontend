@@ -23,7 +23,8 @@
 
     /* Shadcn UI */
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@shared/*": ["./Pollpear_shared/src/*"]
     }
   },
   "include": ["src"]

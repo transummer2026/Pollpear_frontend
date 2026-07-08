@@ -7,7 +7,7 @@ export default function LoginCard() {
 	return (
 		<Card>
 			<CardHeader className="text-center">
-				<CardTitle className="text-3xl"> 
+				<CardTitle className="text-2xl"> 
 					Welcome back !
 				</CardTitle>
 				<CardDescription className="text-sm text-muted-foreground">
@@ -25,7 +25,7 @@ export default function LoginCard() {
 					<Input type="password" placeholder="Password" />
 					<Button className="w-full mt-4">Sign in</Button>
 					<div className="text-right">
-						<Link to="/password-forgot"
+						<Link to="/auth/password-forgot"
 							className="text-sm text-gray-500 hover:underline" >
 							Forgot your password?
 						</Link>

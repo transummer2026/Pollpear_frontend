@@ -10,10 +10,10 @@ export default function NavbarGuest() {
 			<div className="hidden md:flex items-center flex-1">
 				<div className="ml-auto flex items-center gap-4">
 					<Button asChild variant="ghost">
-						<Link to="/login">Log in</Link>
+						<Link to="/auth/login">Log in</Link>
 					</Button>
 					<Button asChild>
-						<Link to="/register">Sign up</Link>
+						<Link to="/auth/register">Sign up</Link>
 					</Button>
 				</div>
 			</div>
