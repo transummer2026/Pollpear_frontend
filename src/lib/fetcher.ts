@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000'; // localhost while the gateway does not work
+const GATEWAY_URL = import.meta.env.BACKEND_URL ?? 'http://localhost:3000'; // localhost while the gateway does not work
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 
@@ -22,9 +22,9 @@ class ApiError extends Error {
  */
 const extractErrorMessage = (status: number, body: unknown): string => {
   const message = (body as { message?: unknown } | null)?.message
-  if (typeof message === "string") 
+  if (typeof message === "string")
     return message
-  if (Array.isArray(message)) 
+  if (Array.isArray(message))
     return message.join(', ')
   return `HTTP ${status}`
 }
@@ -40,10 +40,10 @@ const extractErrorMessage = (status: number, body: unknown): string => {
  *  const res = await fetch(`${API_URL}${resource}`, options) // fetch the data with the back
  */
 const fetcher = async <T>(
-  resource: string, 
+  resource: string,
   options?: RequestInit
 ): Promise<T> => {
-  const res = await fetch(`${API_URL}${resource}`, {
+  const res = await fetch(`${GATEWAY_URL}${resource}`, {
     credentials: 'include',
     ...options
   })
@@ -63,8 +63,8 @@ const fetcher = async <T>(
  * Function to send JSON data to the server
  */
 const sendJson = <T>(
-  method: HttpMethod, 
-  resource: string, 
+  method: HttpMethod,
+  resource: string,
   data?: unknown
 ): Promise<T> => {
   return fetcher<T>(resource, {
@@ -72,7 +72,7 @@ const sendJson = <T>(
     headers: data !== undefined
       ? { 'Content-type': 'application/json' }
       : undefined,
-    body: data !== undefined 
+    body: data !== undefined
       ? JSON.stringify(data)
       : undefined
   })
@@ -94,4 +94,4 @@ const deleteJson = <T>(resource: string, data?: unknown): Promise<T> => {
   return sendJson<T>('DELETE', resource, data);
 }
 
-export { API_URL, fetcher, postJson, putJson, patchJson, deleteJson, ApiError };
+export { GATEWAY_URL, fetcher, postJson, putJson, patchJson, deleteJson, ApiError };
