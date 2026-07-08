@@ -6,15 +6,17 @@ FROM node:24-slim AS builder
 
 WORKDIR /app
 
-COPY package*.json ./
+RUN chown node:node /app
+
+USER node
+
+COPY --chown=node:node package*.json ./
 
 RUN npm ci
 
 FROM builder AS dev
 
-COPY . .
-
-USER node
+COPY --chown=node:node . .
 
 CMD ["npm", "run", "dev"]
 
