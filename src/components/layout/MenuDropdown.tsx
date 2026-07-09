@@ -17,7 +17,7 @@ export function MenuDropdown() {
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-40" align="start">
 				<Input className="mb-2" placeholder="Search..." />
-				<DropdownMenuItem> <Link to="/profile/:id">Profile</Link> </DropdownMenuItem>
+				<DropdownMenuItem> <Link to="/profile/me">Profile</Link> </DropdownMenuItem>
 				<DropdownMenuItem> <Link to="/settings">Settings</Link> </DropdownMenuItem>
 				<DropdownMenuItem> <Link to="/contact">Support</Link> </DropdownMenuItem>
 				<DropdownMenuSeparator />

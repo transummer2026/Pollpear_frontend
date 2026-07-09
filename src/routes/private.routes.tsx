@@ -12,9 +12,13 @@ export const privateRoutes = [
 		element: <FeedPage />,
 	},
 	{
-		path: "/profile/:id",
+		path: "/profile/me",
 		element: <ProfilePage />,
 	},
+  // {
+	// 	path: "/profile/:id",
+	// 	element: <ProfilePage />,
+	// },
 	{
 		path: "/rooms/:id",
 		element: <RoomsPage />,
