@@ -27,7 +27,7 @@ export default function LoginCard() {
       try {
         const res = await trigger(data)
         console.log("Success: ", res) 
-        navigate("/profile/me", { replace: true })
+        navigate("/feed", { replace: true })
       } catch (e) {
         if (e instanceof ApiError)
           toast.error(e.message)
