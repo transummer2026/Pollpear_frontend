@@ -3,10 +3,10 @@ import NavbarGuest from "@/components/layout/NavbarGuest";
 
 //TODO: temporary function, waiting for backend connection
 const isLogged = () => {
-	return true;
+  return true;
 };
 
 export default function Navbar() {
-	const user = isLogged();
-	return user ? <NavbarUser /> : <NavbarGuest />;
+  const user = isLogged();
+  return user ? <NavbarUser /> : <NavbarGuest />;
 }

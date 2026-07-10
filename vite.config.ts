@@ -6,8 +6,8 @@ import { defineConfig } from "vitest/config";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  envDir: path.resolve(__dirname, '../'),
-  envPrefix: ['VITE_', 'BACKEND_URL', 'GATEWAY_URL', 'FRONTEND_URL'],
+  envDir: path.resolve(__dirname, "../"),
+  envPrefix: ["VITE_", "BACKEND_URL", "GATEWAY_URL", "FRONTEND_URL"],
   server: {
     host: true,
     port: 5173,

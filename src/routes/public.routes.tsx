@@ -7,32 +7,32 @@ import PrivacyPage from "@/pages/PrivacyPage";
 import PasswordForgotPage from "@/pages/PasswordForgotPage";
 
 export const publicRoutes = [
-	{
-		path: "/auth/login",
-		element: <LoginPage />,
-	},
-	{
-		path: "/auth/register",
-		element: <RegisterPage />,
-	},
-	{
-		path: "/legal",
-		element: <LegalPage />,
-	},
-	{
-		path: "/privacy",
-		element: <PrivacyPage />,
-	},
-	{
-		path: "/contact",
-		element: <ContactPage />,
-	},
-	{
-		path: "/",
-		element: <HomePage />,
-	},
-		{
-		path: "/auth/password-forgot",
-		element: <PasswordForgotPage />,
-	},
+  {
+    path: "/auth/login",
+    element: <LoginPage />,
+  },
+  {
+    path: "/auth/register",
+    element: <RegisterPage />,
+  },
+  {
+    path: "/legal",
+    element: <LegalPage />,
+  },
+  {
+    path: "/privacy",
+    element: <PrivacyPage />,
+  },
+  {
+    path: "/contact",
+    element: <ContactPage />,
+  },
+  {
+    path: "/",
+    element: <HomePage />,
+  },
+  {
+    path: "/auth/password-forgot",
+    element: <PasswordForgotPage />,
+  },
 ];
