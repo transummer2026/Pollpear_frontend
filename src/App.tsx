@@ -1,4 +1,4 @@
-import AppRoutes from "./routes/protectedRoutes";
+import AppRoutes from "./routes/AppRoutes";
 
 function App() {
   return AppRoutes();
