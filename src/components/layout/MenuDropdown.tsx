@@ -19,7 +19,7 @@ export function MenuDropdown() {
         <Input className="mb-2" placeholder="Search..." />
         <DropdownMenuItem>
           {" "}
-          <Link to="/profile/me">Profile</Link>{" "}
+          <Link to="/me">Profile</Link>{" "}
         </DropdownMenuItem>
         <DropdownMenuItem>
           {" "}
