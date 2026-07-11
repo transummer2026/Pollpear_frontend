@@ -1,19 +1,15 @@
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import Layout from "@/layout/Layout";
+import ResetPasswordCard from "@/components/auth/ResetPasswordCard";
 
 //TODO: handle the redirection if guest or user
 export default function PasswordForgot() {
-  return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-
-      <main className="flex-1">
-        <div className="flex justify-center">
-          <h1>Password Forgot</h1>
+	return (
+    <Layout>
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+          <div className="w-full max-w-l p-4">
+            <ResetPasswordCard />
+          </div>
         </div>
-      </main>
-
-      <Footer />
-    </div>
-  );
+    </Layout>
+	);
 }
