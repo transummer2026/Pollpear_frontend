@@ -74,9 +74,9 @@ export default function LoginCard() {
             <div>
               <Input type="email" placeholder="Email" {...register("email")} />
               {errors.email && (
-                <span className="text-destructive text-sm mt-1">
+                <p className="text-destructive text-sm mt-1">
                   {errors.email?.message}
-                </span>
+                </p>
               )}
             </div>
             <div>
@@ -86,9 +86,9 @@ export default function LoginCard() {
                 {...register("password")}
               />
               {errors.password && (
-                <span className="text-destructive text-sm mt-1">
+                <p className="text-destructive text-sm mt-1">
                   {errors.password?.message}
-                </span>
+                </p>
               )}
             </div>
             <Button type="submit" className="w-full mt-4" disabled={isMutating}>

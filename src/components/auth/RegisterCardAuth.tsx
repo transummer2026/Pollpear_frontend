@@ -29,9 +29,9 @@ export default function RegisterCardAuth({
       <div>
         <Input type="email" placeholder="Email" {...register("email")} />
         {errors.email && (
-          <span className="text-destructive text-sm mt-1">
+          <p className="text-destructive text-sm mt-1">
             {errors.email?.message}
-          </span>
+          </p>
         )}
       </div>
       <div>
@@ -41,9 +41,9 @@ export default function RegisterCardAuth({
           {...register("password")}
         />
         {errors.password && (
-          <span className="text-destructive text-sm mt-1">
+          <p className="text-destructive text-sm mt-1">
             {errors.password?.message}
-          </span>
+          </p>
         )}
       </div>
       <div>
@@ -53,25 +53,25 @@ export default function RegisterCardAuth({
           {...register("confirmPassword")}
         />
         {errors.confirmPassword && (
-          <span className="text-destructive text-sm mt-1">
+          <p className="text-destructive text-sm mt-1">
             {errors.confirmPassword?.message}
-          </span>
+          </p>
         )}
       </div>
       <div>
         <Input type="date" {...register("birthdate")} />
         {errors.birthdate && (
-          <span className="text-destructive text-sm mt-1">
+          <p className="text-destructive text-sm mt-1">
             {errors.birthdate?.message}
-          </span>
+          </p>
         )}
       </div>
       <div>
         <Input placeholder="Nationality" {...register("nationality")} />
         {errors.nationality && (
-          <span className="text-destructive text-sm mt-1">
+          <p className="text-destructive text-sm mt-1">
             {errors.nationality?.message}
-          </span>
+          </p>
         )}
       </div>
       <div>

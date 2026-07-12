@@ -17,32 +17,26 @@ export function MenuDropdown() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-40" align="start">
         <Input className="mb-2" placeholder="Search..." />
-        <DropdownMenuItem>
-          {" "}
-          <Link to="/me">Profile</Link>{" "}
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          {" "}
-          <Link to="/settings">Settings</Link>{" "}
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          {" "}
-          <Link to="/contact">Support</Link>{" "}
-        </DropdownMenuItem>
+        <Link to="/me" className="block w-full">
+          <DropdownMenuItem>Profile</DropdownMenuItem>
+        </Link>
+        <Link to="/settings" className="block w-full">
+          <DropdownMenuItem>Settings</DropdownMenuItem>
+        </Link>
+        <Link to="/contact" className="block w-full">
+          <DropdownMenuItem>Support</DropdownMenuItem>
+        </Link>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          {" "}
-          <Link to="/rooms/new">New Room</Link>{" "}
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          {" "}
-          <Link to="/polls/new">New Poll</Link>{" "}
-        </DropdownMenuItem>
+        <Link to="/rooms/new" className="block w-full">
+          <DropdownMenuItem>New Room</DropdownMenuItem>
+        </Link>
+        <Link to="/polls/new" className="block w-full">
+          <DropdownMenuItem>New Poll</DropdownMenuItem>
+        </Link>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          {" "}
-          <Link to="/auth/login">Log out</Link>{" "}
-        </DropdownMenuItem>
+        <Link to="/auth/login" className="block w-full">
+          <DropdownMenuItem>Log out</DropdownMenuItem>
+        </Link>
       </DropdownMenuContent>
     </DropdownMenu>
   );
