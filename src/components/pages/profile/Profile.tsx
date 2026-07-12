@@ -1,40 +1,36 @@
-import RegisterCard from "@/components/auth/RegisterCard";
+import AvatarUser from "@/components/profile/AtatarUser";
+import HeaderUser from "@/components/profile/HeaderUser";
+import SettingPannelUser from "@/components/profile/SettingPannelUser";
+import MainContentUser from "@/components/profile/MainContentUser";
+import FriendPannelUser from "@/components/profile/FriendPannelUser";
 import Layout from "@/layout/Layout";
 
-
-
 export default function Profile() {
-	return (
+  return (
     <Layout>
-      <div className="flex h-screen w-full flex-col items-center justify-center bg-gray-100">
-        <div className="grid h-screen grid-cols-6 gap-4">
-          {/* Avatar User*/}
-          <div className="col-span-1 bg-gray-200">
-            <RegisterCard />
+        <div className="grid grid-cols-1 lg:grid-cols-6 mx-auto  max-w-7xl  gap-4 p-4 ">
+          
+          <div className="lg:col-span-1 p-4 w-full flex justify-center">
+            <AvatarUser />
           </div>
 
-          {/* Header */}
-          <div className="col-span-3 bg-gray-200">
-            <RegisterCard />
+          <div className="lg:col-span-3">
+            <HeaderUser />
           </div>
 
-          {/* Right Panel for User Options */}
-          <div className="col-span-2 bg-gray-200">
-            <RegisterCard />
+          <div className="lg:col-span-2">
+            <SettingPannelUser />
           </div>
 
-          {/* Main Content */}
-          <div className="col-span-4 overflow-y-auto bg-gray-200">
-            <RegisterCard />
+          <div className="lg:col-span-4 ">
+            <MainContentUser />
           </div>
 
-          {/* Friends and Rooms */}
-          <div className="col-span-2 overflow-y-auto bg-gray-200">
-            <RegisterCard />
+          <div className="lg:col-span-2 ">
+            <FriendPannelUser />
           </div>
 
         </div>
-      </div>
     </Layout>
-	);
+  );
 }
