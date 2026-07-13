@@ -14,49 +14,49 @@ export default function RegisterCardInfos({
       <div>
         <Input placeholder="First name (optional)" {...register("name")} />
         {errors.name && (
-          <span className="text-destructive text-sm mt-1">
+          <p className="text-destructive text-sm mt-1">
             {errors.name?.message}
-          </span>
+          </p>
         )}
       </div>
       <div>
         <Input placeholder="Last name (optional)" {...register("surname")} />
         {errors.surname && (
-          <span className="text-destructive text-sm mt-1">
+          <p className="text-destructive text-sm mt-1">
             {errors.surname?.message}
-          </span>
+          </p>
         )}
       </div>
       <div>
         <Input placeholder="City (optional)" {...register("city")} />
         {errors.city && (
-          <span className="text-destructive text-sm mt-1">
+          <p className="text-destructive text-sm mt-1">
             {errors.city?.message}
-          </span>
+          </p>
         )}
       </div>
       <div>
         <Input placeholder="State (optional)" {...register("state")} />
         {errors.state && (
-          <span className="text-destructive text-sm mt-1">
+          <p className="text-destructive text-sm mt-1">
             {errors.state?.message}
-          </span>
+          </p>
         )}
       </div>
       <div>
         <Input placeholder="Country (optional)" {...register("country")} />
         {errors.country && (
-          <span className="text-destructive text-sm mt-1">
+          <p className="text-destructive text-sm mt-1">
             {errors.country?.message}
-          </span>
+          </p>
         )}
       </div>
       <div>
         <Input placeholder="Company (optional)" {...register("company")} />
         {errors.company && (
-          <span className="text-destructive text-sm mt-1">
+          <p className="text-destructive text-sm mt-1">
             {errors.company?.message}
-          </span>
+          </p>
         )}
       </div>
     </div>
