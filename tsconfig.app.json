@@ -27,5 +27,6 @@
       "@shared/*": ["./Pollpear_shared/src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["src/components/ui"]
 }
