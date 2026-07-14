@@ -1,4 +1,4 @@
-const GATEWAY_URL = import.meta.env.BACKEND_URL ?? "http://localhost:3000"; // localhost while the gateway does not work
+const GATEWAY_URL = import.meta.env.GATEWAY_URL ?? "http://localhost:8080";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
