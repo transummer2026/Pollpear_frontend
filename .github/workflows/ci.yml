@@ -24,6 +24,7 @@ jobs:
       coverage_cmd: npm test -- --run --coverage
       coverage_format: lcov
       coverage_threshold: 0
+      docker_build_args: GATEWAY_URL=http://ci.invalid
     secrets:
       OTEL_ENDPOINT: ${{ secrets.OTEL_ENDPOINT }}
       TAILSCALE_AUTHKEY: ${{ secrets.TAILSCALE_AUTHKEY }}
