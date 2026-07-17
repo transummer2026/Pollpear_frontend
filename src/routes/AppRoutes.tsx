@@ -16,6 +16,8 @@ import HomePage from "@/pages/HomePage";
 import PrivacyPage from "@/pages/PrivacyPage";
 import PasswordForgotPage from "@/pages/PasswordForgotPage";
 
+
+//TODO: while Pieric is coding, routes arent protected
 export default function AppRoutes() {
   return (
     <Routes>
@@ -26,15 +28,26 @@ export default function AppRoutes() {
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/" element={<HomePage />} />
       <Route path="/auth/password-forgot" element={<PasswordForgotPage />} />
+      <Route path="/feed" element={<FeedPage />} />
+
+      
+      <Route path="/admin" element={<AdminPage />} />
+      <Route path="/me" element={<ProfilePage />} />
+      <Route path="/users/:id" element={<UserPage />} />
+      <Route path="/rooms/:id" element={<RoomsPage />} />
+      <Route path="/settings" element={<SettingsPage />} />
+      <Route path="/rooms/new" element={<NewRoomPage />} />
+      <Route path="/polls/new" element={<NewPollPage />} />
+      
       <Route element={<ProtectedRoute />}>
-        <Route path="/feed" element={<FeedPage />} />
+        {/* <Route path="/feed" element={<FeedPage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/me" element={<ProfilePage />} />
         <Route path="/users/:id" element={<UserPage />} />
         <Route path="/rooms/:id" element={<RoomsPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/rooms/new" element={<NewRoomPage />} />
-        <Route path="/polls/new" element={<NewPollPage />} />
+        <Route path="/polls/new" element={<NewPollPage />} /> */}
       </Route>
     </Routes>
   );
