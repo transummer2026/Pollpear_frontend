@@ -15,6 +15,7 @@ import { useLogin } from "@/hooks/auth/use-login";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
+import { useSWRConfig } from "swr";
 
 export default function LoginCard() {
   const {
@@ -24,6 +25,7 @@ export default function LoginCard() {
   } = useForm<LoginDTO>({
     resolver: zodResolver(LoginSchema),
   });
+	const { mutate } = useSWRConfig();
 
   const { trigger, isMutating } = useLogin();
 
@@ -31,13 +33,12 @@ export default function LoginCard() {
 
   const onSubmit: SubmitHandler<LoginDTO> = async (data) => {
     try {
-      const res = await trigger(data);
-      console.log("Success: ", res);
+      const user = await trigger(data);
+			await mutate("/me", user, {revalidate: false});
       navigate("/feed", { replace: true });
     } catch (e) {
       if (e instanceof ApiError) toast.error(e.message);
       else toast.error("An unknown error occurred");
-      console.error("Error: ", e);
     }
   };
 
