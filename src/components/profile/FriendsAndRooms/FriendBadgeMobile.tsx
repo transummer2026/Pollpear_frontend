@@ -1,39 +1,17 @@
-import { PopoverTrigger } from "@/components/ui/popover";
-import { Avatar, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from "@/components/ui/avatar";
-import avatar from "@/assets/pwar.jpg";
+import { AvatarGroup, AvatarGroupCount } from "@/components/ui/avatar";
+import FriendAvatar from "./FriendAvatar";
+import { sortByStatus, type Friend } from "./friends";
 
-export default function FriendBadge() {
-  return (
-    <PopoverTrigger asChild>
-      <button>
-        <AvatarGroup className="cursor-pointer">
-          <Avatar>
-            <AvatarImage
-              src={avatar}
-              alt="friend avatar"
-            />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <Avatar>
-            <AvatarImage
-              src={avatar}
-              alt="friend avatar"
-            />
-            <AvatarFallback>LR</AvatarFallback>
-          </Avatar>
-          <Avatar>
-            <AvatarImage
-              src={avatar}
-              alt="friend avatar"
-            />
-            <AvatarFallback>ER</AvatarFallback>
-          </Avatar>
+export default function FriendBadgeMobile({ friends }: { friends: Friend[] }) {
+	const shown = sortByStatus(friends).slice(0, 3);
+	const extra = Math.max(friends.length - 3, 0);
 
-          <AvatarGroupCount>
-            +3
-          </AvatarGroupCount>
-        </AvatarGroup>
-      </button>
-    </PopoverTrigger>
-  );
+	return (
+		<AvatarGroup className="cursor-pointer">
+			{shown.map((friend) => (
+				<FriendAvatar key={friend.id} friend={friend} />
+			))}
+			{extra > 0 && <AvatarGroupCount>+{extra}</AvatarGroupCount>}
+		</AvatarGroup>
+	);
 }
