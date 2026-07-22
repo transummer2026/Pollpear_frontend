@@ -5,7 +5,6 @@ import { useAuth } from "@/hooks/auth/use-auth";
 const isLogged = () => {
   const { isAuthenticated } = useAuth();
   return isAuthenticated;
-  //return true; // For testing purposes
 };
 
 export default function Navbar() {
