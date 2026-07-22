@@ -1,4 +1,4 @@
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Pencil, Trash, Clock3, Vote } from "lucide-react";
 import PollResult from "@/components/poll/PollResult";
@@ -16,7 +16,7 @@ export default function PollDummy({ poll }: PollDummyProps) {
 
   return (
     <Card size="sm" className="mx-auto p-4 space-y-3">
-      <div className="flex justify-between items-center">
+      <CardContent className="flex justify-between items-center">
         <Badge variant={poll.isClosed ? "destructive" : "default"}>
           {poll.isClosed ? "Closed" : "Open"}
         </Badge>
@@ -30,7 +30,7 @@ export default function PollDummy({ poll }: PollDummyProps) {
             <Trash />
           </Badge>
         </div>
-      </div>
+      </CardContent>
 
       <h2 className="text-sm font-bold">{poll.question}</h2>
 
@@ -68,56 +68,3 @@ export default function PollDummy({ poll }: PollDummyProps) {
     </Card>
   );
 }
-
-
-
-//const [showResults, setShowResults] = useState(false);
-
-// <Button
-//   className="w-full"
-//   variant="secondary"
-//   onClick={() => setShowResults(!showResults)}
-// >
-//   {showResults
-//     ? "Masquer les résultats"
-//     : "Afficher les résultats"}
-// </Button>
-
-
-// {!showResults ? (
-//         <div className="space-y-3">
-//           {poll.answers.map((answer) => (
-//             <Button
-//               key={answer.id}
-//               variant="outline"
-//               className="w-full justify-start"
-//             >
-//               {answer.label}
-//             </Button>
-//           ))}
-//         </div>
-//       ) : (
-//         <div className="space-y-5">
-//           {poll.answers.map((answer) => {
-//             const percent = Math.round(
-//               (answer.votes / totalVotes) * 100
-//             );
-//             return (
-//               <div key={answer.id}>
-//                 <div className="flex justify-between mb-2">
-//                   <span>{answer.label}</span>
-
-//                   <span className="font-semibold">
-//                     {percent}%
-//                   </span>
-//                 </div>
-
-//                 <Progress value={percent} />
-
-//                 <p className="text-xs text-muted-foreground mt-1">
-//                   {answer.votes} votes
-//                 </p>
-//               </div>
-//             );
-//           })}
-//         </div>

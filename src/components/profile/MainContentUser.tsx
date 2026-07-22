@@ -28,7 +28,7 @@ export default function MainContentUser() {
       <CardHeader className="text-center">
         <CardTitle className="text-xl">Polls</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-wrap gap-2 grid grid-cols-1 md:grid-cols-2">
+      <CardContent className="gap-2 grid grid-cols-1 md:grid-cols-2">
       {polls.map((poll) => (
         <PollDummy key={poll.id} poll={poll} />
       ))}

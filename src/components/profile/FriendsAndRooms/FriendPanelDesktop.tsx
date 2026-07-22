@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import FriendBadgeLarge from "./FriendBadgeLarge";
-import type { Friend } from "./friends";
+import FriendBadgeLarge from "@/components/profile/FriendsAndRooms/FriendBadgeLarge";
+import type { Friend } from "@/components/profile/FriendsAndRooms/friends";
 
 export default function FriendPanelDesktop({ friends }: { friends: Friend[] }) {
 	const [showAll, setShowAll] = useState(false);

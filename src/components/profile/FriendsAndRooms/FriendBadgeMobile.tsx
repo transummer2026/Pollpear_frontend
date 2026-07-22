@@ -1,6 +1,6 @@
 import { AvatarGroup, AvatarGroupCount } from "@/components/ui/avatar";
-import FriendAvatar from "./FriendAvatar";
-import { sortByStatus, type Friend } from "./friends";
+import FriendAvatar from "@/components/profile/FriendsAndRooms/FriendAvatar";
+import { sortByStatus, type Friend } from "@/components/profile/FriendsAndRooms/friends";
 
 export default function FriendBadgeMobile({ friends }: { friends: Friend[] }) {
 	const shown = sortByStatus(friends).slice(0, 3);

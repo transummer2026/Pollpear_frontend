@@ -3,9 +3,8 @@ import NavbarGuest from "@/components/layout/NavbarGuest";
 import { useAuth } from "@/hooks/auth/use-auth";
 
 const isLogged = () => {
-  // const { isAuthenticated } = useAuth();
-  // return isAuthenticated;
-  return true; // For testing purposes
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated;
 };
 
 export default function Navbar() {

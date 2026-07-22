@@ -47,15 +47,13 @@ export default function HeaderUser() {
           </CardDescription>
       </CardHeader>
       <Separator />
-      <CardContent className="space-y-2 pt-2">
-        <div className="grid grid-cols-1 lg:grid-cols-5 mx-auto  max-w-7xl  gap-4 p-4">  
+      <CardContent className="space-y-2 grid grid-cols-1 lg:grid-cols-5 mx-auto max-w-7xl gap-4 p-4">
           <div className="lg:col-span-4 md:col-span-2">
             <HeaderUserScores scores={user.scores} />
           </div>
           <div className="space-y-3 lg:col-span-1">
             <HeaderUserHashtags hashtags={user.hashtags} />
           </div>
-        </div>
       </CardContent>
     </Card>
   );

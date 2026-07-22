@@ -5,7 +5,7 @@ import {
 	AvatarImage,
 } from "@/components/ui/avatar";
 import avatar from "@/assets/pwar.jpg";
-import { statusBadgeClass, type Friend } from "./friends";
+import { statusBadgeClass, type Friend } from "@/components/profile/FriendsAndRooms/friends";
 
 export default function FriendAvatar({ friend }: { friend: Friend }) {
 	return (
