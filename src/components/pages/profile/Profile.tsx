@@ -1,18 +1,37 @@
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import AvatarUser from "@/components/profile/AtatarUser";
+import HeaderUser from "@/components/profile/Header/HeaderUser";
+import MainContentUser from "@/components/profile/MainContentUser";
+import FriendPannelUser from "@/components/profile/FriendsAndRooms/FriendPannelUser";
+import Layout from "@/layout/Layout";
 
 export default function Profile() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-
-      <main className="flex-1">
-        <div className="flex justify-center">
-          <h1>Profile</h1>
+    <Layout>
+      <div className="hidden lg:block">
+        <div className="grid grid-cols-1 lg:grid-cols-6 mx-auto max-w-7xl gap-4 p-4 ">
+          <div className="lg:col-span-1 ">
+            <AvatarUser />
+          </div>
+          <div className="lg:col-span-5">
+            <HeaderUser />
+          </div>
+          <div className="lg:col-span-4 ">
+            <MainContentUser />
+          </div>
+          <div className="lg:col-span-2 ">
+            <FriendPannelUser />
+          </div>
         </div>
-      </main>
+      </div>
 
-      <Footer />
-    </div>
+      <div className="lg:hidden">
+        <div className="flex flex-col gap-4 p-4 justify-center items-center">
+          <AvatarUser />
+          <HeaderUser />
+          <FriendPannelUser />
+          <MainContentUser />
+          </div>
+      </div>
+    </Layout>
   );
 }

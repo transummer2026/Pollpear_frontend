@@ -32,13 +32,11 @@ export default function RegisterCard() {
 
   const onSubmit: SubmitHandler<RegisterDTO> = async (data) => {
     try {
-      const res = await trigger(data);
-      console.log("Success: ", res);
+      await trigger(data);
       navigate("/auth/login", { replace: true });
     } catch (e) {
       if (e instanceof ApiError) toast.error(e.message);
       else toast.error("An unknown error occurred");
-      console.error("Error: ", e);
     }
   };
 
