@@ -14,8 +14,6 @@ import { usePasswordForgot } from "@/hooks/auth/use-password-forgot";
 
 export default function ResetPasswordCard() {
 
-
-
   const {
     register,
     formState: { errors },
@@ -79,35 +77,3 @@ export default function ResetPasswordCard() {
       </Card>
   );
 }
-
-
-// import { useForm, type SubmitHandler } from "react-hook-form"
-// import { zodResolver } from "@hookform/resolvers/zod"
-// import { type RegisterDTO, RegisterSchema } from "@shared/schemas/auth.schema"
-// import { useRegister } from "@/hooks/auth/use-register";
-
-  // const {
-  //   register,
-  //   control,
-  //   formState: { errors },
-  //   handleSubmit,
-  // } = useForm<RegisterDTO>({
-  //   resolver: zodResolver(RegisterSchema),
-  // })
-
-  // const { trigger, isMutating } = useRegister()
-
-  // const onSubmit: SubmitHandler<RegisterDTO> = async (data) => {
-  //   try {
-  //     const res = await trigger(data)
-  //     console.log("Success: ", res)
-  //   } catch (e) {
-  //     console.error("Error: ", e)
-  //   }
-  // }
-
-  // <Button type="submit" className="m-6" disabled={isMutating}>Sign up</Button>
-
-  // <form onSubmit={handleSubmit(onSubmit)}>
-
-  // </form>

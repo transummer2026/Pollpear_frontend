@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input";
@@ -9,7 +9,6 @@ import { ApiError } from "@/lib/fetcher";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { useSWRConfig } from "swr";
-import { Link } from "react-router"
 import { useForm, type SubmitHandler } from "react-hook-form";
 
 
@@ -42,16 +41,6 @@ export default function ChangePasswordCardGuest() {
       <Card className="max-w-xl mx-auto w-full text-center">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">Change your password</CardTitle>
-          <CardDescription className="text-sm text-muted-foreground">
-              Change your mind ? {" "}
-              <Link to="/auth/register" className="hover:underline font-bold">
-                register 
-              </Link>
-              {" / "}
-              <Link to="/auth/login" className="hover:underline font-bold">
-                login 
-              </Link>
-            </CardDescription>
 			  </CardHeader>
         <Separator />
         <div className="grid md:grid-cols-1">
