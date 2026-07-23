@@ -1,11 +1,42 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input";
+import { type PasswordResetDTO, PasswordResetSchema } from "@shared/schemas/auth.schema";
+import { usePasswordReset } from "@/hooks/auth/use-password-reset";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ApiError } from "@/lib/fetcher";
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
+import { useSWRConfig } from "swr";
 import { Link } from "react-router"
+import { useForm, type SubmitHandler } from "react-hook-form";
 
 
 export default function ChangePasswordCardGuest() {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<PasswordResetDTO>({
+    resolver: zodResolver(PasswordResetSchema),
+  });
+	const { mutate } = useSWRConfig();
+
+  const { trigger, isMutating } = usePasswordReset();
+
+  const navigate = useNavigate();
+
+  const onSubmit: SubmitHandler<PasswordResetDTO> = async (data) => {
+    try {
+      const user = await trigger(data);
+			await mutate("/me", user, {revalidate: false});
+      navigate("auth/login", { replace: true });
+    } catch (e) {
+      if (e instanceof ApiError) toast.error(e.message);
+      else toast.error("An unknown error occurred");
+    }
+  };
 
   return (
       <Card className="max-w-xl mx-auto w-full text-center">
@@ -25,29 +56,35 @@ export default function ChangePasswordCardGuest() {
         <Separator />
         <div className="grid md:grid-cols-1">
           <CardContent className="p-6 border-b md:border-b-0 md:border-r p-6 space-y-4">
-            <div>
-              <Input type="password" placeholder="New Password" />
-
-            </div>
-            <div>
-              <Input type="password" placeholder="Confirm Password" />
-
-            </div>
-            <Button type="submit" className="m-6">Change your Password</Button>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="m-4">
+                <Input 
+                  type="password" 
+                  placeholder="New Password"
+                  {...register("password")}
+                />
+                {errors.password && (
+                  <p className="text-destructive text-sm mt-1">
+                    {errors.password?.message}
+                  </p>
+                )}
+              </div>
+              <div className="m-4">
+                <Input 
+                  type="password"
+                  placeholder="Confirm Password" 
+                  {...register("confirmPassword")}
+                />
+                {errors.confirmPassword && (
+                  <p className="text-destructive text-sm mt-1">
+                    {errors.confirmPassword?.message}
+                  </p>
+                )}
+              </div>
+              <Button type="submit" className="m-4" disabled={isMutating}>Change your Password</Button>
+            </form>
           </CardContent>
         </div>
       </Card>
   );
 }
-
-
-//   <Input type="email" placeholder="Email" {...register("email")} />
-//   {errors.email && <span className="text-destructive text-sm mt-1">{errors.email?.message}</span>}
-// </div>
-// <div>
-//   <Input type="password" placeholder="Password" {...register("password")} />
-//   {errors.password && <span className="text-destructive text-sm mt-1">{errors.password?.message}</span>}
-// </div>
-
-
-// <Button type="submit" className="m-6" disabled={isMutating}>Sign up</Button>

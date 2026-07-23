@@ -15,6 +15,7 @@ import ContactPage from "@/pages/ContactPage";
 import HomePage from "@/pages/HomePage";
 import PrivacyPage from "@/pages/PrivacyPage";
 import PasswordForgotPage from "@/pages/PasswordForgotPage";
+import ChangePasswordPage from "@/pages/ChangePasswordPage";
 
 
 export default function AppRoutes() {
@@ -27,11 +28,12 @@ export default function AppRoutes() {
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/" element={<HomePage />} />
       <Route path="/auth/password-forgot" element={<PasswordForgotPage />} />
+      <Route path="/auth/change-password" element={<ChangePasswordPage />} />
       
       <Route element={<ProtectedRoute />}>
+        <Route path="/me" element={<ProfilePage />} />
         <Route path="/feed" element={<FeedPage />} />
         <Route path="/admin" element={<AdminPage />} />
-        <Route path="/me" element={<ProfilePage />} />
         <Route path="/users/:id" element={<UserPage />} />
         <Route path="/rooms/:id" element={<RoomsPage />} />
         <Route path="/settings" element={<SettingsPage />} />

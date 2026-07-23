@@ -4,7 +4,6 @@ import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router"
 
-
 export default function ChangePasswordCardUser() {
   return (
       <Card className="max-w-xl mx-auto w-full text-center">
@@ -20,33 +19,20 @@ export default function ChangePasswordCardUser() {
         <Separator />
         <div className="grid md:grid-cols-1">
           <CardContent className="p-6 border-b md:border-b-0 md:border-r p-6 space-y-4">
-            <div>
+            <div className="m-4">
               <Input type="password" placeholder="Old Password" />
-
             </div>
-            <div>
+            <div className="m-4">
               <Input type="password" placeholder="New Password" />
-
             </div>
-            <div>
+            <div className="m-4">
               <Input type="password" placeholder="Confirm Password" />
 
             </div>
-            <Button type="submit" className="m-6">Change your Password</Button>
+            <Button type="submit" className="m-4">Change your Password</Button>
+          
           </CardContent>
         </div>
       </Card>
   );
 }
-
-
-//   <Input type="email" placeholder="Email" {...register("email")} />
-//   {errors.email && <span className="text-destructive text-sm mt-1">{errors.email?.message}</span>}
-// </div>
-// <div>
-//   <Input type="password" placeholder="Password" {...register("password")} />
-//   {errors.password && <span className="text-destructive text-sm mt-1">{errors.password?.message}</span>}
-// </div>
-
-
-// <Button type="submit" className="m-6" disabled={isMutating}>Sign up</Button>

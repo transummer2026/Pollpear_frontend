@@ -1,10 +1,14 @@
-import Layout from "@/layout/Layout";
 import ChangePasswordCardGuest from "@/components/auth/ChangePasswordCardGuest";
 import ChangePasswordCardUser from "@/components/auth/ChangePasswordCardUser";
-import { isLogged } from "@/hooks/auth/is-logged";
+import { useAuth } from "@/hooks/auth/use-auth";
+import Layout from "@/layout/Layout";
 
-//TODO: handle the redirection if guest or user
 export default function ChangePassword() {
+  const isLogged = () => {
+    const { isAuthenticated } = useAuth();
+    return isAuthenticated;
+  };
+
   const user = isLogged();
   return (
     <Layout>
