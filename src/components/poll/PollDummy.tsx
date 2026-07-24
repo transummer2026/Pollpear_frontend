@@ -3,7 +3,6 @@ import { Badge } from "@/components/ui/badge";
 import { Pencil, Trash, Clock3, Vote } from "lucide-react";
 import PollResult from "@/components/poll/PollResult";
 
-
 type PollDummyProps = {
   poll: any;
 };
@@ -11,7 +10,7 @@ type PollDummyProps = {
 export default function PollDummy({ poll }: PollDummyProps) {
   const totalVotes = poll.answers.reduce(
     (sum: number, answer: any) => sum + answer.votes,
-    0
+    0,
   );
 
   return (
@@ -44,11 +43,7 @@ export default function PollDummy({ poll }: PollDummyProps) {
 
       <div className="space-y-3">
         {poll.answers.map((answer: any) => (
-          <PollResult
-            key={answer.id}
-            answer={answer}
-            totalVotes={totalVotes}
-          />
+          <PollResult key={answer.id} answer={answer} totalVotes={totalVotes} />
         ))}
       </div>
 

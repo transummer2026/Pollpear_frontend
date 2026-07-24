@@ -24,7 +24,11 @@ export default function HeaderUserScores({ scores }: { scores: any }) {
   return (
     <ItemGroup className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {stats.map((stat) => (
-        <HeaderUserScore key={stat.label} label={stat.label} value={stat.value} />
+        <HeaderUserScore
+          key={stat.label}
+          label={stat.label}
+          value={stat.value}
+        />
       ))}
     </ItemGroup>
   );

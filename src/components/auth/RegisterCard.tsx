@@ -41,10 +41,10 @@ export default function RegisterCard() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Card className="max-w-4xl mx-auto w-full">
-        <RegisterCardHeader />
-        <Separator />
+    <Card className="max-w-4xl mx-auto w-full">
+      <RegisterCardHeader />
+      <Separator />
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid md:grid-cols-2">
           <RegisterCardAuth
             register={register}
@@ -56,7 +56,7 @@ export default function RegisterCard() {
         <Button type="submit" className="m-6" disabled={isMutating}>
           Sign up
         </Button>
-      </Card>
-    </form>
+      </form>
+    </Card>
   );
 }

@@ -17,7 +17,6 @@ import PrivacyPage from "@/pages/PrivacyPage";
 import PasswordForgotPage from "@/pages/PasswordForgotPage";
 import ChangePasswordPage from "@/pages/ChangePasswordPage";
 
-
 export default function AppRoutes() {
   return (
     <Routes>
@@ -29,7 +28,7 @@ export default function AppRoutes() {
       <Route path="/" element={<HomePage />} />
       <Route path="/auth/password-forgot" element={<PasswordForgotPage />} />
       <Route path="/auth/change-password" element={<ChangePasswordPage />} />
-      
+
       <Route element={<ProtectedRoute />}>
         <Route path="/me" element={<ProfilePage />} />
         <Route path="/feed" element={<FeedPage />} />

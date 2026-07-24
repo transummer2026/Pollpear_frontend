@@ -12,11 +12,11 @@ export default function ChangePassword() {
   const user = isLogged();
   return (
     <Layout>
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
-          <div className="w-full max-w-l p-4">
-            { user ? <ChangePasswordCardUser /> : <ChangePasswordCardGuest /> }
-          </div>
+      <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+        <div className="w-full max-w-l p-4">
+          {user ? <ChangePasswordCardUser /> : <ChangePasswordCardGuest />}
         </div>
+      </div>
     </Layout>
   );
 }
