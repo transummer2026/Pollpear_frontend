@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
+import { GATEWAY_URL } from "@/lib/fetcher";
 
 export default function OAuthButtons() {
   return (
@@ -10,10 +10,10 @@ export default function OAuthButtons() {
         variant="outline"
         className="flex-1 w-1/3 mr-4"
       >
-        <Link to="/auth/oauth/github">GitHub</Link>
+        <a href={`${GATEWAY_URL}/auth/oauth/github`}>GitHub</a>
       </Button>
       <Button asChild type="button" variant="outline" className="flex-1 w-1/3">
-        <Link to="/auth/oauth/42">42</Link>
+        <a href={`${GATEWAY_URL}/auth/oauth/42`}>42</a>
       </Button>
       <Button
         asChild
@@ -21,7 +21,7 @@ export default function OAuthButtons() {
         variant="outline"
         className="flex-1 w-1/3 ml-4"
       >
-        <Link to="/auth/oauth/google">Google</Link>
+        <a href={`${GATEWAY_URL}/auth/oauth/google`}>Google</a>
       </Button>
     </div>
   );
