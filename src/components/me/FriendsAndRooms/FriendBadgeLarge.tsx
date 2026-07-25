@@ -1,8 +1,8 @@
 import { Item, ItemTitle } from "@/components/ui/item";
 import { Link } from "react-router";
-import FriendAvatar from "@/components/profile/FriendsAndRooms/FriendAvatar";
-import FriendActions from "@/components/profile/FriendsAndRooms/FriendActions";
-import type { Friend } from "@/components/profile/FriendsAndRooms/friends";
+import FriendAvatar from "@/components/me/FriendsAndRooms/FriendAvatar";
+import FriendActions from "@/components/me/FriendsAndRooms/FriendActions";
+import type { Friend } from "@/components/me/FriendsAndRooms/friends";
 
 function truncate(name: string): string {
   return name.length > 12 ? name.slice(0, 10) + "…" : name;

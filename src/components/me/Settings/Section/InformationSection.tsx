@@ -6,9 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
 import { useSWRConfig } from "swr";
-import { type UserProfileUpdateDTO, UserProfileUpdateSchema } from "@shared/schemas/users.schema";
+import { type UserProfileUpdateInput, type UserProfileUpdateDTO, UserProfileUpdateSchema } from "@shared/schemas/users.schema";
 import { useMeUpdate } from "@/hooks/user/use-me";
-import ProfileCardGender from "@/components/profile/ProfileCardGender";
+import ProfileCardGender from "@/components/me/ProfileCardGender";
 
 export default function InformationSection() {
   const {
@@ -16,7 +16,7 @@ export default function InformationSection() {
     formState: { errors },
     handleSubmit,
     control,
-  } = useForm<UserProfileUpdateDTO>({
+  } = useForm<UserProfileUpdateInput, unknown, UserProfileUpdateDTO>({
     resolver: zodResolver(UserProfileUpdateSchema),
   });
   const { mutate } = useSWRConfig();
@@ -32,7 +32,7 @@ export default function InformationSection() {
       else toast.error("An unknown error occurred");
     }
   };
-//TODO: change or not the emai, username, birthdate ? -> need discussion with team
+
   return (
     <div>
       <CardHeader>
@@ -41,7 +41,7 @@ export default function InformationSection() {
       <CardContent className="text-muted-foreground mt-2">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="p-6 border-b md:border-b-0 md:border-r p-6 space-y-4">
-            {/* <div>
+            <div>
               <Input type="email" placeholder="Email" {...register("email")} />
               {errors.email && (
                 <p className="text-destructive text-sm mt-1">
@@ -56,7 +56,7 @@ export default function InformationSection() {
                   {errors.birthdate?.message}
                 </p>
               )}
-            </div> */}
+            </div>
             <div>
               <Input placeholder="Nationality" {...register("nationality")} />
               {errors.nationality && (

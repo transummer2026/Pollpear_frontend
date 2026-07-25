@@ -8,7 +8,7 @@ import avatar from "@/assets/pwar.jpg";
 import {
   statusBadgeClass,
   type Friend,
-} from "@/components/profile/FriendsAndRooms/friends";
+} from "@/components/me/FriendsAndRooms/friends";
 
 export default function FriendAvatar({ friend }: { friend: Friend }) {
   return (

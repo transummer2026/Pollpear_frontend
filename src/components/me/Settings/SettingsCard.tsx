@@ -4,13 +4,13 @@ import { Bell, User, Lock, RefreshCw, LifeBuoy } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import LanguageSection from "@/components/profile/Settings/Section/LanguageSection";
+import LanguageSection from "@/components/me/Settings/Section/LanguageSection";
 
-import PasswordSection from "@/components/profile/Settings/Section/PasswordSection";
-import SyncSection from "@/components/profile/Settings/Section/SyncSection";
-import InformationSection from "@/components/profile/Settings/Section/InformationSection";
-import NotificationSection from "@/components/profile/Settings/Section/NotificationsSection";
-import DarkModeSection from "@/components/profile/Settings/Section/DarkModeSection";
+import PasswordSection from "@/components/me/Settings/Section/PasswordSection";
+import SyncSection from "@/components/me/Settings/Section/SyncSection";
+import InformationSection from "@/components/me/Settings/Section/InformationSection";
+import NotificationSection from "@/components/me/Settings/Section/NotificationsSection";
+import DarkModeSection from "@/components/me/Settings/Section/DarkModeSection";
 
 const sections = [
   {

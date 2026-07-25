@@ -1,5 +1,5 @@
 import Layout from "@/layout/Layout";
-import SettingsCard from "@/components/profile/Settings/SettingsCard";
+import SettingsCard from "@/components/me/Settings/SettingsCard";
 
 export default function Settings() {
   return (

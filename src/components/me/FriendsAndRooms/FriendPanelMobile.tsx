@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import FriendBadgeLarge from "@/components/profile/FriendsAndRooms/FriendBadgeLarge";
-import FriendBadgeMobile from "@/components/profile/FriendsAndRooms/FriendBadgeMobile";
-import type { Friend } from "@/components/profile/FriendsAndRooms/friends";
+import FriendBadgeLarge from "@/components/me/FriendsAndRooms/FriendBadgeLarge";
+import FriendBadgeMobile from "@/components/me/FriendsAndRooms/FriendBadgeMobile";
+import type { Friend } from "@/components/me/FriendsAndRooms/friends";
 import {
   Popover,
   PopoverContent,

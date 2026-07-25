@@ -29,11 +29,8 @@ export default function AppRoutes() {
       <Route path="/auth/password-forgot" element={<PasswordForgotPage />} />
       <Route path="/auth/change-password" element={<ChangePasswordPage />} />
 
-<<<<<<< Updated upstream
-=======
       <Route path="/settings" element={<SettingsPage />} />
 
->>>>>>> Stashed changes
       <Route element={<ProtectedRoute />}>
         <Route path="/me" element={<ProfilePage />} />
         <Route path="/feed" element={<FeedPage />} />
