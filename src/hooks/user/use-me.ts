@@ -14,20 +14,3 @@ export function useMeUpdate() {
   );
 }
 
-/**
- * Uploads a new avatar (multipart/form-data, field "file").
- * We POST to /me/avatar but bind the mutation to the "/me" key so the profile
- * (and its avatarUrl) is revalidated on success.
- *
- * @note: no Content-Type header — the browser sets the multipart boundary itself.
- */
-export function useAvatarUpload() {
-  return useSWRMutation<UserDTO, ApiError, string, File>(
-    "/me",
-    (_ressource, { arg }) => {
-      const formData = new FormData();
-      formData.append("file", arg);
-      return fetcher<UserDTO>("/me/avatar", { method: "POST", body: formData });
-    },
-  );
-}

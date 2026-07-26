@@ -6,38 +6,127 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router";
 import HeaderUserHashtags from "./HeaderUserHashtags";
 import HeaderUserScores from "./HeaderUserScores";
-import { useMe } from "@/hooks/user/use-me";
+import { useMeUpdate } from "@/hooks/user/use-me";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
+import { useState } from "react";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useSWRConfig } from "swr";
+import { useMe } from "@/hooks/user/use-me";
+import { type UserProfileUpdateDTO, UserProfileUpdateSchema, type UserProfileUpdateInput } from "@shared/schemas/users.schema";
 
 export default function HeaderUser() {
-  const { data: user, error } = useMe();
 
-  if (error) {
-    if (error instanceof ApiError) toast.error(error.message);
-    else toast.error("Error fetching user data");
-  }
+  const { data: user } = useMe();
+
   const hashtags = {
     hashtags: ["#polls", "#crocs", "#Valais", "#vibeconding", "#claude"],
+  };
+
+  const [isEditing, setIsEditing] = useState(false);
+  function startEditing() {
+    setIsEditing(true);
+  }
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<UserProfileUpdateInput, unknown, UserProfileUpdateDTO>({
+    resolver: zodResolver(UserProfileUpdateSchema),
+  });
+  const { mutate } = useSWRConfig();
+
+  const { trigger, isMutating } = useMeUpdate();
+
+  const onSubmit: SubmitHandler<UserProfileUpdateDTO> = async (data) => {
+    try {
+      const user = await trigger(data);
+      setIsEditing(false);
+      await mutate("/me", user, { revalidate: false });
+    } catch (e) {
+      if (e instanceof ApiError) toast.error(e.message);
+      else toast.error("An unknown error occurred");
+    }
   };
 
   return (
     <Card>
       <CardHeader className="space-y-2">
-        <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
-          <CardTitle className="text-lg font-bold">{user?.username}</CardTitle>
-          <div className="flex gap-2">
-            <Button asChild variant="outline">
-              <Link to="/settings">Settings</Link>
-            </Button>
-            <Button variant="outline">Edit Profile</Button>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
+            {isEditing ? (
+              <div className="flex flex-1 flex-col gap-2">
+                <Label htmlFor="username">Username</Label>
+                <Input
+                  id="username"
+                  {...register("username")}
+                  placeholder={user?.username || "Username"}
+                />
+                {errors.company && (
+                  <p className="text-destructive text-sm mt-1">
+                    {errors.bio?.message}
+                  </p>
+                )}
+              </div>
+            ) : (
+              <CardTitle className="text-lg font-bold">{user?.username}</CardTitle>
+            )}
+            <div className="flex gap-2">
+              <Button asChild type="button" variant="outline">
+                <Link to="/settings">Settings</Link>
+              </Button>
+              {isEditing ? (
+                <>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setIsEditing(false)}
+                    disabled={isMutating}
+                  >
+                    Cancel
+                  </Button>
+                  <Button 
+                    type="submit"
+                    disabled={isMutating}>
+                    Save
+                  </Button>
+                </>
+              ) : (
+                <Button type="button" variant="outline" onClick={startEditing}>
+                  Edit Profile
+                </Button>
+              )}
+            </div>
           </div>
-        </div>
-        <CardDescription>{user?.bio}</CardDescription>
+          {isEditing ? (
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="bio">Bio</Label>
+              <Textarea
+                id="bio"
+                {...register("bio")}
+                placeholder={user?.bio || "Bio"}
+              />
+              {errors.company && (
+                <p className="text-destructive text-sm mt-1">
+                  {errors.bio?.message}
+                </p>
+              )}
+            </div>
+
+          ) : (
+            <CardDescription>{user?.bio}</CardDescription>
+          )}
+      
+        </form>
       </CardHeader>
       <Separator />
       <CardContent className="space-y-2 grid grid-cols-1 lg:grid-cols-5 mx-auto max-w-7xl gap-4 p-4">
