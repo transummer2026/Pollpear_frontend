@@ -10,7 +10,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint \"src/**/*.ts\" --fix",
-    "prettier": "npx prettier . --write \"src/**/*.ts\"",
+    "prettier": "npx prettier --write \"src/**/*.ts\"",
     "preview": "vite preview",
     "test": "vitest",
     "prepare": "husky"

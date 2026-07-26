@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Menu } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,8 +8,25 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useLogout } from "@/hooks/auth/use-logout";
+import { toast } from "sonner";
+import { ApiError } from "@/lib/fetcher";
 
 export function MenuDropdown() {
+  const { trigger, isMutating } = useLogout();
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await trigger();
+      navigate("auth/login", { replace: true });
+    } catch (e) {
+      if (e instanceof ApiError) toast.error(e.message);
+      else toast.error("An unknown error occurred");
+    }
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -34,9 +51,9 @@ export function MenuDropdown() {
           <DropdownMenuItem>New Poll</DropdownMenuItem>
         </Link>
         <DropdownMenuSeparator />
-        <Link to="/auth/login" className="block w-full">
-          <DropdownMenuItem>Log out</DropdownMenuItem>
-        </Link>
+        <DropdownMenuItem onClick={handleLogout} disabled={isMutating}>
+          Log out
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
