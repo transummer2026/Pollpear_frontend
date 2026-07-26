@@ -9,30 +9,35 @@ import {
 import { usePasswordReset } from "@/hooks/auth/use-password-reset";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ApiError } from "@/lib/fetcher";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate, useSearchParams } from "react-router";
 import { toast } from "sonner";
-import { useSWRConfig } from "swr";
 import { useForm, type SubmitHandler } from "react-hook-form";
 
 export default function ChangePasswordCardGuest() {
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token") ?? "";
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<PasswordResetDTO>({
     resolver: zodResolver(PasswordResetSchema),
+    defaultValues: { token },
   });
-  const { mutate } = useSWRConfig();
 
   const { trigger, isMutating } = usePasswordReset();
 
   const navigate = useNavigate();
 
+  if (!token) {
+    return <Navigate to="/auth/password-forgot" replace />;
+  }
+
   const onSubmit: SubmitHandler<PasswordResetDTO> = async (data) => {
     try {
-      const user = await trigger(data);
-      await mutate("/me", user, { revalidate: false });
-      navigate("auth/login", { replace: true });
+      await trigger({ ...data, token });
+      navigate("/auth/login", { replace: true });
     } catch (e) {
       if (e instanceof ApiError) toast.error(e.message);
       else toast.error("An unknown error occurred");
@@ -46,8 +51,9 @@ export default function ChangePasswordCardGuest() {
       </CardHeader>
       <Separator />
       <div className="grid md:grid-cols-1">
-        <CardContent className="p-6 border-b md:border-b-0 md:border-r p-6 space-y-4">
+        <CardContent className="p-6 border-b md:border-b-0 md:border-r space-y-4">
           <form onSubmit={handleSubmit(onSubmit)}>
+            <input type="hidden" {...register("token")} />
             <div className="m-4">
               <Input
                 type="password"

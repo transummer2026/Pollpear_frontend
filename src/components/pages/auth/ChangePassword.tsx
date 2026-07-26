@@ -4,17 +4,17 @@ import { useAuth } from "@/hooks/auth/use-auth";
 import Layout from "@/layout/Layout";
 
 export default function ChangePassword() {
-  const isLogged = () => {
-    const { isAuthenticated } = useAuth();
-    return isAuthenticated;
-  };
+  const { isAuthenticated } = useAuth();
 
-  const user = isLogged();
   return (
     <Layout>
       <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
         <div className="w-full max-w-l p-4">
-          {user ? <ChangePasswordCardUser /> : <ChangePasswordCardGuest />}
+          {isAuthenticated ? (
+            <ChangePasswordCardUser />
+          ) : (
+            <ChangePasswordCardGuest />
+          )}
         </div>
       </div>
     </Layout>

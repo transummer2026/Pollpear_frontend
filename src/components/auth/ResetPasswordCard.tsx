@@ -17,8 +17,6 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
-import { useSWRConfig } from "swr";
-import { useNavigate } from "react-router";
 import { usePasswordForgot } from "@/hooks/auth/use-password-forgot";
 
 export default function ResetPasswordCard() {
@@ -29,17 +27,13 @@ export default function ResetPasswordCard() {
   } = useForm<PasswordForgotDTO>({
     resolver: zodResolver(PasswordForgotSchema),
   });
-  const { mutate } = useSWRConfig();
 
   const { trigger, isMutating } = usePasswordForgot();
 
-  const navigate = useNavigate();
-
   const onSubmit: SubmitHandler<PasswordForgotDTO> = async (data) => {
     try {
-      const user = await trigger(data);
-      await mutate("/me", user, { revalidate: false }); //remise a jour du cache sur le me
-      navigate("/change-password", { replace: true });
+      await trigger(data);
+      toast.success("If this email exists, a reset link has been sent");
     } catch (e) {
       if (e instanceof ApiError) toast.error(e.message);
       else toast.error("An unknown error occurred");
