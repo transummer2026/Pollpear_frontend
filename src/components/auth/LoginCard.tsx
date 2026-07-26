@@ -16,6 +16,7 @@ import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
 import { useSWRConfig } from "swr";
+import OAuthButtons from "./OAuthButtons";
 
 export default function LoginCard() {
   const {
@@ -25,7 +26,7 @@ export default function LoginCard() {
   } = useForm<LoginDTO>({
     resolver: zodResolver(LoginSchema),
   });
-	const { mutate } = useSWRConfig();
+  const { mutate } = useSWRConfig();
 
   const { trigger, isMutating } = useLogin();
 
@@ -34,7 +35,7 @@ export default function LoginCard() {
   const onSubmit: SubmitHandler<LoginDTO> = async (data) => {
     try {
       const user = await trigger(data);
-			await mutate("/me", user, {revalidate: false});
+      await mutate("/me", user, { revalidate: false });
       navigate("/feed", { replace: true });
     } catch (e) {
       if (e instanceof ApiError) toast.error(e.message);
@@ -52,25 +53,7 @@ export default function LoginCard() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="p-4 flex justify-between">
-            <Button
-              type="button"
-              variant="outline"
-              className="flex-1 w-1/3 mr-4"
-            >
-              GitHub
-            </Button>
-            <Button type="button" variant="outline" className="flex-1 w-1/3">
-              42
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              className="flex-1 w-1/3 ml-4"
-            >
-              Google
-            </Button>
-          </div>
+          <OAuthButtons />
           <div className="space-y-4">
             <div>
               <Input type="email" placeholder="Email" {...register("email")} />

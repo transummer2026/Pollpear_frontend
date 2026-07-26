@@ -1,14 +1,14 @@
 import { Menubar } from "@/components/ui/menubar";
 import { Button } from "@/components/ui/button";
 import { LogoButton } from "@/components/layout/LogoButton";
-import { Link } from "react-router"
-import MenuDropdownGuest from "@/components/layout/MenuDropdownGuest"
+import { Link } from "react-router";
+import MenuDropdownGuest from "@/components/layout/MenuDropdownGuest";
 
 export default function NavbarGuest() {
-	return (
-		<Menubar className="flex h-16 items-center px-6 border-x-0 border-t-0">
-			<LogoButton />
-			<div className="ml-auto hidden md:flex items-center flex-1">
+  return (
+    <Menubar className="flex h-16 items-center px-6 border-x-0 border-t-0">
+      <LogoButton />
+      <div className="ml-auto hidden md:flex items-center flex-1">
         <div className="ml-auto flex items-center gap-4">
           <Button asChild variant="ghost">
             <Link to="/auth/login">Log in</Link>
@@ -20,7 +20,7 @@ export default function NavbarGuest() {
       </div>
       <div className="ml-auto md:hidden">
         <MenuDropdownGuest />
-			</div>
-		</Menubar>
-	)
+      </div>
+    </Menubar>
+  );
 }

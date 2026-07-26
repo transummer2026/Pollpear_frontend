@@ -10,17 +10,16 @@ type HeaderUserScoreProps = {
   label: string;
 };
 
-export default function HeaderUserScore({ value, label }: HeaderUserScoreProps) {
+export default function HeaderUserScore({
+  value,
+  label,
+}: HeaderUserScoreProps) {
   return (
     <Item variant="outline" size="sm">
       <ItemContent>
-        <ItemTitle className="text-lg font-bold">
-          {value}
-        </ItemTitle>
+        <ItemTitle className="text-lg font-bold">{value}</ItemTitle>
 
-        <ItemDescription>
-          {label}
-        </ItemDescription>
+        <ItemDescription>{label}</ItemDescription>
       </ItemContent>
     </Item>
   );

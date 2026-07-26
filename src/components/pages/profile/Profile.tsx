@@ -30,7 +30,7 @@ export default function Profile() {
           <HeaderUser />
           <FriendPannelUser />
           <MainContentUser />
-          </div>
+        </div>
       </div>
     </Layout>
   );
