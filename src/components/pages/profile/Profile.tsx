@@ -1,4 +1,4 @@
-import AvatarUser from "@/components/me/AtatarUser";
+import AvatarUser from "@/components/me/AvatarUser";
 import HeaderUser from "@/components/me/Header/HeaderUser";
 import MainContentUser from "@/components/me/MainContentUser";
 import FriendPannelUser from "@/components/me/FriendsAndRooms/FriendPannelUser";

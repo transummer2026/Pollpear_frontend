@@ -76,6 +76,18 @@ const postJson = <T>(resource: string, data?: unknown): Promise<T> => {
   return sendJson<T>("POST", resource, data);
 };
 
+/**
+ * Sends multipart/form-data (file uploads).
+ * @note: no Content-Type header on purpose -> the browser sets
+ *   "multipart/form-data; boundary=..." itself. Setting it manually breaks the upload.
+ */
+const postForm = <T>(resource: string, form: FormData): Promise<T> => {
+  return fetcher<T>(resource, {
+    method: "POST",
+    body: form,
+  });
+};
+
 const putJson = <T>(resource: string, data?: unknown): Promise<T> => {
   return sendJson<T>("PUT", resource, data);
 };
@@ -92,6 +104,7 @@ export {
   GATEWAY_URL,
   fetcher,
   postJson,
+  postForm,
   putJson,
   patchJson,
   deleteJson,
