@@ -1,4 +1,5 @@
 const GATEWAY_URL = import.meta.env.GATEWAY_URL ?? "http://localhost:8080";
+const UPLOADS_PREFIX = "/uploads/";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -88,8 +89,12 @@ const deleteJson = <T>(resource: string, data?: unknown): Promise<T> => {
   return sendJson<T>("DELETE", resource, data);
 };
 
+const mediaUrl = (path: string): string =>
+  path.startsWith(UPLOADS_PREFIX) ? `${GATEWAY_URL}${path}` : path;
+
 export {
   GATEWAY_URL,
+  mediaUrl,
   fetcher,
   postJson,
   putJson,
