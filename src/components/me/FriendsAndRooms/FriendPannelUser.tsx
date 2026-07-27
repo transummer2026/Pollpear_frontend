@@ -1,9 +1,9 @@
-import FriendPanelDesktop from "@/components/profile/FriendsAndRooms/FriendPanelDesktop";
-import FriendPanelMobile from "@/components/profile/FriendsAndRooms/FriendPanelMobile";
+import FriendPanelDesktop from "@/components/me/FriendsAndRooms/FriendPanelDesktop";
+import FriendPanelMobile from "@/components/me/FriendsAndRooms/FriendPanelMobile";
 import {
   sortByStatus,
   type Friend,
-} from "@/components/profile/FriendsAndRooms/friends";
+} from "@/components/me/FriendsAndRooms/friends";
 
 // TODO: remplacer par les vraies données du user (API)
 const friends: Friend[] = [

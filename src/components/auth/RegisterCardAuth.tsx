@@ -5,7 +5,7 @@ import {
   type Control,
 } from "react-hook-form";
 import { type RegisterInput } from "@shared/schemas/auth.schema";
-import RegisterCardAuthGender from "./RegisterCardAuthGender";
+import ProfileCardGender from "@/components/me/ProfileCardGender";
 
 export default function RegisterCardAuth({
   register,
@@ -75,8 +75,7 @@ export default function RegisterCardAuth({
         )}
       </div>
       <div>
-        <RegisterCardAuthGender
-          register={register}
+        <ProfileCardGender
           errors={errors}
           control={control}
         />

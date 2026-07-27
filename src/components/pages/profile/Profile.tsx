@@ -1,7 +1,7 @@
-import AvatarUser from "@/components/profile/AtatarUser";
-import HeaderUser from "@/components/profile/Header/HeaderUser";
-import MainContentUser from "@/components/profile/MainContentUser";
-import FriendPannelUser from "@/components/profile/FriendsAndRooms/FriendPannelUser";
+import AvatarUser from "@/components/me/AvatarUser";
+import HeaderUser from "@/components/me/Header/HeaderUser";
+import MainContentUser from "@/components/me/MainContentUser";
+import FriendPannelUser from "@/components/me/FriendsAndRooms/FriendPannelUser";
 import Layout from "@/layout/Layout";
 
 export default function Profile() {

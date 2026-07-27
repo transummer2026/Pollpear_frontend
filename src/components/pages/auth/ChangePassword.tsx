@@ -1,5 +1,5 @@
 import ChangePasswordCardGuest from "@/components/auth/ChangePasswordCardGuest";
-import ChangePasswordCardUser from "@/components/auth/ChangePasswordCardUser";
+import ChangePasswordCardUser from "@/components/me/Settings/Section/ChangePasswordCardUser";
 import { useAuth } from "@/hooks/auth/use-auth";
 import Layout from "@/layout/Layout";
 
