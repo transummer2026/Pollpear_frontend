@@ -89,12 +89,8 @@ const deleteJson = <T>(resource: string, data?: unknown): Promise<T> => {
   return sendJson<T>("DELETE", resource, data);
 };
 
-const mediaUrl = (path: string): string =>
-  path.startsWith(UPLOADS_PREFIX) ? `${GATEWAY_URL}${path}` : path;
-
 export {
   GATEWAY_URL,
-  mediaUrl,
   fetcher,
   postJson,
   putJson,
