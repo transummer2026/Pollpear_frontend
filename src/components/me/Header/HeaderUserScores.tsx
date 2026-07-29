@@ -1,23 +1,23 @@
 import { ItemGroup } from "@/components/ui/item";
 import HeaderUserScore from "./HeaderUserScore";
 
-export default function HeaderUserScores({ scores }: { scores: any }) {
+export default function HeaderUserScores({ score }: { score?: number | null }) {
   const stats = [
     {
       label: "Score",
-      value: scores.scores,
+      value: score ?? undefined,
     },
     {
       label: "PearsPals",
-      value: scores.friends,
+      value: undefined,
     },
     {
       label: "Active Rooms",
-      value: scores.rooms,
+      value: undefined,
     },
     {
       label: "Polls Created",
-      value: scores.pollsCreated,
+      value: undefined,
     },
   ];
 

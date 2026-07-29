@@ -4,7 +4,7 @@ import { Pencil } from "lucide-react";
 import { useMe } from "@/hooks/user/use-me";
 import { useAvatarChange } from "@/hooks/me/use-avatar-change";
 import { toast } from "sonner";
-import { ApiError, GATEWAY_URL } from "@/lib/fetcher";
+import { ApiError } from "@/lib/fetcher";
 import { useSWRConfig } from "swr";
 import { useForm, type SubmitErrorHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -49,10 +49,7 @@ export default function AvatarUser() {
   return (
     <div className="relative h-40 w-40">
       <Avatar className="h-40 w-40 rounded-full object-cover cursor-pointer border-2">
-        <AvatarImage
-          src={user?.avatarUrl ? `${GATEWAY_URL}${user.avatarUrl}` : undefined}
-          alt="my avatar"
-        />
+        <AvatarImage src={user?.avatarUrl} alt="my avatar" />
         <AvatarFallback>
           {user?.username?.slice(0, 2).toUpperCase()}
         </AvatarFallback>

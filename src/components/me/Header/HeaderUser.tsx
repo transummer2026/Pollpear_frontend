@@ -21,10 +21,13 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSWRConfig } from "swr";
 import { useMe } from "@/hooks/user/use-me";
-import { type UserProfileUpdateDTO, UserProfileUpdateSchema, type UserProfileUpdateInput } from "@shared/schemas/users.schema";
+import {
+  type UserProfileUpdateDTO,
+  UserProfileUpdateSchema,
+  type UserProfileUpdateInput,
+} from "@shared/schemas/users.schema";
 
 export default function HeaderUser() {
-
   const { data: user } = useMe();
 
   const hashtags = {
@@ -78,7 +81,9 @@ export default function HeaderUser() {
                 )}
               </div>
             ) : (
-              <CardTitle className="text-lg font-bold">{user?.username}</CardTitle>
+              <CardTitle className="text-lg font-bold">
+                {user?.username}
+              </CardTitle>
             )}
             <div className="flex gap-2">
               <Button asChild type="button" variant="outline">
@@ -94,9 +99,7 @@ export default function HeaderUser() {
                   >
                     Cancel
                   </Button>
-                  <Button 
-                    type="submit"
-                    disabled={isMutating}>
+                  <Button type="submit" disabled={isMutating}>
                     Save
                   </Button>
                 </>
@@ -121,17 +124,15 @@ export default function HeaderUser() {
                 </p>
               )}
             </div>
-
           ) : (
             <CardDescription>{user?.bio}</CardDescription>
           )}
-      
         </form>
       </CardHeader>
       <Separator />
       <CardContent className="space-y-2 grid grid-cols-1 lg:grid-cols-5 mx-auto max-w-7xl gap-4 p-4">
         <div className="lg:col-span-4 md:col-span-2">
-          <HeaderUserScores scores={user?.score} />
+          <HeaderUserScores score={user?.score} />
         </div>
         <div className="space-y-3 lg:col-span-1">
           <HeaderUserHashtags hashtags={hashtags.hashtags} />

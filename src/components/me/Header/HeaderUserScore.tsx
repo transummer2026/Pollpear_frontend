@@ -6,8 +6,8 @@ import {
 } from "@/components/ui/item";
 
 type HeaderUserScoreProps = {
-  value: number;
   label: string;
+  value?: number;
 };
 
 export default function HeaderUserScore({
@@ -17,7 +17,9 @@ export default function HeaderUserScore({
   return (
     <Item variant="outline" size="sm">
       <ItemContent>
-        <ItemTitle className="text-lg font-bold">{value === undefined ? "0" : value}</ItemTitle>
+        <ItemTitle className="text-lg font-bold">
+          {value === undefined ? "0" : value}
+        </ItemTitle>
 
         <ItemDescription>{label}</ItemDescription>
       </ItemContent>
