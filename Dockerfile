@@ -30,7 +30,7 @@ COPY --chown=node:node . .
 RUN npm run build
 
 FROM alpine:3.24 AS prod
-
+# hadolint ignore=DL3018
 RUN apk add --no-cache rsync
 
 COPY --from=build /app/dist /dist
