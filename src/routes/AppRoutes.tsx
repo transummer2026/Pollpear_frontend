@@ -29,16 +29,16 @@ export default function AppRoutes() {
       <Route path="/auth/password-forgot" element={<PasswordForgotPage />} />
       <Route path="/auth/change-password" element={<ChangePasswordPage />} />
 
-      <Route path="/settings" element={<SettingsPage />} />
+      <Route path="/polls/new" element={<NewPollPage />} />
+      <Route path="/me" element={<ProfilePage />} />
 
       <Route element={<ProtectedRoute />}>
-        <Route path="/me" element={<ProfilePage />} />
         <Route path="/feed" element={<FeedPage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/users/:id" element={<UserPage />} />
         <Route path="/rooms/:id" element={<RoomsPage />} />
         <Route path="/rooms/new" element={<NewRoomPage />} />
-        <Route path="/polls/new" element={<NewPollPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
       </Route>
     </Routes>
   );
