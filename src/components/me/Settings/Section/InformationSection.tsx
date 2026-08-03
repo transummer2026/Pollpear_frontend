@@ -6,11 +6,39 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
 import { useSWRConfig } from "swr";
-import { type UserProfileUpdateInput, type UserProfileUpdateDTO, UserProfileUpdateSchema } from "@shared/schemas/users.schema";
-import { useMeUpdate } from "@/hooks/user/use-me";
+import {
+  type UserProfileUpdateInput,
+  type UserProfileUpdateDTO,
+  UserProfileUpdateSchema,
+} from "@shared/schemas/users.schema";
+import { useMe, useMeUpdate } from "@/hooks/user/use-me";
+import type { UserDTO } from "@shared/schemas/users.schema";
 import ProfileCardGender from "@/components/me/ProfileCardGender";
 
+function toDateInput(value: UserDTO["birthdate"] | undefined): string {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toISOString().slice(0, 10);
+}
+
+function toFormValues(user: UserDTO): UserProfileUpdateInput {
+  return {
+    birthdate: toDateInput(user.birthdate),
+    nationality: user.nationality ?? "",
+    name: user.name ?? "",
+    surname: user.surname ?? "",
+    city: user.city ?? "",
+    state: user.state ?? "",
+    country: user.country ?? "",
+    company: user.company ?? "",
+    gender: user.gender,
+  };
+}
+
 export default function InformationSection() {
+  const { data: user } = useMe();
+
   const {
     register,
     formState: { errors },
@@ -18,6 +46,7 @@ export default function InformationSection() {
     control,
   } = useForm<UserProfileUpdateInput, unknown, UserProfileUpdateDTO>({
     resolver: zodResolver(UserProfileUpdateSchema),
+    values: user ? toFormValues(user) : undefined,
   });
   const { mutate } = useSWRConfig();
 
@@ -42,14 +71,6 @@ export default function InformationSection() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="p-6 border-b md:border-b-0 md:border-r p-6 space-y-4">
             <div>
-              <Input type="email" placeholder="Email" {...register("email")} />
-              {errors.email && (
-                <p className="text-destructive text-sm mt-1">
-                  {errors.email?.message}
-                </p>
-              )}
-            </div>
-            <div> 
               <Input type="date" {...register("birthdate")} />
               {errors.birthdate && (
                 <p className="text-destructive text-sm mt-1">
@@ -66,7 +87,10 @@ export default function InformationSection() {
               )}
             </div>
             <div>
-              <Input placeholder="First name (optional)" {...register("name")} />
+              <Input
+                placeholder="First name (optional)"
+                {...register("name")}
+              />
               {errors.name && (
                 <p className="text-destructive text-sm mt-1">
                   {errors.name?.message}
@@ -101,7 +125,10 @@ export default function InformationSection() {
               )}
             </div>
             <div>
-              <Input placeholder="Country (optional)" {...register("country")} />
+              <Input
+                placeholder="Country (optional)"
+                {...register("country")}
+              />
               {errors.country && (
                 <p className="text-destructive text-sm mt-1">
                   {errors.country?.message}
@@ -109,18 +136,18 @@ export default function InformationSection() {
               )}
             </div>
             <div>
-              <Input placeholder="Company (optional)" {...register("company")} />
+              <Input
+                placeholder="Company (optional)"
+                {...register("company")}
+              />
               {errors.company && (
                 <p className="text-destructive text-sm mt-1">
                   {errors.company?.message}
                 </p>
               )}
             </div>
-              <div>
-                <ProfileCardGender
-                  errors={errors}
-                  control={control}
-                />
+            <div>
+              <ProfileCardGender errors={errors} control={control} />
             </div>
 
             <Button type="submit" className="m-6" disabled={isMutating}>
