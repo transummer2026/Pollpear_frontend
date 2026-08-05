@@ -295,3 +295,4 @@ tmbootpicker.efi
 *.njsproj
 *.sln
 *.sw?
+public/config.json
