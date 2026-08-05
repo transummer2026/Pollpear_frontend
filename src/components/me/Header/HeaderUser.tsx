@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router";
+import { Pencil } from "lucide-react";
 import HeaderUserHashtags from "./HeaderUserHashtags";
 import HeaderUserScores from "./HeaderUserScores";
 import { useMeUpdate } from "@/hooks/user/use-me";
@@ -22,10 +23,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useSWRConfig } from "swr";
 import { useMe } from "@/hooks/user/use-me";
 import {
+  type UserDTO,
   type UserProfileUpdateDTO,
   UserProfileUpdateSchema,
   type UserProfileUpdateInput,
 } from "@shared/schemas/users.schema";
+
+function toFormValues(user: UserDTO): UserProfileUpdateInput {
+  return {
+    username: user.username ?? "",
+    bio: user.bio ?? "",
+  };
+}
 
 export default function HeaderUser() {
   const { data: user } = useMe();
@@ -43,8 +52,11 @@ export default function HeaderUser() {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm<UserProfileUpdateInput, unknown, UserProfileUpdateDTO>({
     resolver: zodResolver(UserProfileUpdateSchema),
+    values: user ? toFormValues(user) : undefined,
+    resetOptions: { keepDirtyValues: true },
   });
   const { mutate } = useSWRConfig();
 
@@ -52,9 +64,10 @@ export default function HeaderUser() {
 
   const onSubmit: SubmitHandler<UserProfileUpdateDTO> = async (data) => {
     try {
-      const user = await trigger(data);
+      const updated = await trigger(data);
       setIsEditing(false);
-      await mutate("/me", user, { revalidate: false });
+      await mutate("/me", updated, { revalidate: false });
+      if (updated) reset(toFormValues(updated));
     } catch (e) {
       if (e instanceof ApiError) toast.error(e.message);
       else toast.error("An unknown error occurred");
@@ -69,14 +82,10 @@ export default function HeaderUser() {
             {isEditing ? (
               <div className="flex flex-1 flex-col gap-2">
                 <Label htmlFor="username">Username</Label>
-                <Input
-                  id="username"
-                  {...register("username")}
-                  placeholder={user?.username || "Username"}
-                />
-                {errors.company && (
+                <Input id="username" {...register("username")} />
+                {errors.username && (
                   <p className="text-destructive text-sm mt-1">
-                    {errors.bio?.message}
+                    {errors.username?.message}
                   </p>
                 )}
               </div>
@@ -94,7 +103,10 @@ export default function HeaderUser() {
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => setIsEditing(false)}
+                    onClick={() => {
+                      reset(user ? toFormValues(user) : undefined);
+                      setIsEditing(false);
+                    }}
                     disabled={isMutating}
                   >
                     Cancel
@@ -104,8 +116,15 @@ export default function HeaderUser() {
                   </Button>
                 </>
               ) : (
-                <Button type="button" variant="outline" onClick={startEditing}>
-                  Edit Profile
+                <Button
+                  type="button"
+                  size="icon"
+                  variant="secondary"
+                  aria-label="Edit Profile"
+                  className="rounded-full border-2 shadow-md"
+                  onClick={startEditing}
+                >
+                  <Pencil className="h-4 w-4" />
                 </Button>
               )}
             </div>
@@ -113,12 +132,8 @@ export default function HeaderUser() {
           {isEditing ? (
             <div className="flex flex-col gap-2">
               <Label htmlFor="bio">Bio</Label>
-              <Textarea
-                id="bio"
-                {...register("bio")}
-                placeholder={user?.bio || "Bio"}
-              />
-              {errors.company && (
+              <Textarea id="bio" {...register("bio")} />
+              {errors.bio && (
                 <p className="text-destructive text-sm mt-1">
                   {errors.bio?.message}
                 </p>
