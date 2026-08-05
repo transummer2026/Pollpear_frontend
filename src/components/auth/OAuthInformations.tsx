@@ -18,13 +18,6 @@ import { useOAuthPending } from "@/hooks/auth/use-oauth-pending";
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 
-// function toDateInput(value: UserDTO["birthdate"] | undefined): string {
-//   if (!value) return "";
-//   const date = new Date(value);
-//   if (Number.isNaN(date.getTime())) return "";
-//   return date.toISOString().slice(0, 10);
-// }
-
 function toFormValues(
   pending: OauthPendingSchemaDTO,
 ): Partial<OauthRegisterSchemaInput> {
