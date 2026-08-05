@@ -29,10 +29,9 @@ export default function AppRoutes() {
       <Route path="/auth/password-forgot" element={<PasswordForgotPage />} />
       <Route path="/auth/change-password" element={<ChangePasswordPage />} />
 
-      <Route path="/polls/new" element={<NewPollPage />} />
-      <Route path="/me" element={<ProfilePage />} />
-
       <Route element={<ProtectedRoute />}>
+        <Route path="/polls/new" element={<NewPollPage />} />
+        <Route path="/me" element={<ProfilePage />} />
         <Route path="/feed" element={<FeedPage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/users/:id" element={<UserPage />} />
