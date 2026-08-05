@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ListChecks, Gauge, MessageSquareText } from "lucide-react";
+import { ListChecks, Gauge } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -7,6 +7,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import SingleChoiceSection from "@/components/poll/pollCreation/SingleChoiceSection";
 import Layout from "@/layout/Layout";
+import ScaleSection from "@/components/poll/pollCreation/ScaleSection";
+// Free field poll type on hold, not implemented yet (see FreeFormSection.tsx).
+// import FreeFormSection from "@/components/poll/pollCreation/FreeFormSection";
 
 const pollTypes = [
   {
@@ -19,11 +22,11 @@ const pollTypes = [
     label: "Scale",
     icon: Gauge,
   },
-  {
-    id: "freeForm",
-    label: "free form",
-    icon: MessageSquareText,
-  },
+  // {
+  //   id: "freeForm",
+  //   label: "free form",
+  //   icon: MessageSquareText,
+  // },
 ];
 
 export default function PollCreatorCard() {
@@ -63,11 +66,8 @@ export default function PollCreatorCard() {
 
           <CardContent>
             {activeTab === "single" && <SingleChoiceSection />}
-
-            {activeTab === "scale" && "Scale in the making... be patient"}
-
-            {activeTab === "freeForm" &&
-              "Free Form in the making... be patient"}
+            {activeTab === "scale" && <ScaleSection />}
+            {/* {activeTab === "freeForm" && <FreeFormSection />} */}
           </CardContent>
         </Card>
       </div>

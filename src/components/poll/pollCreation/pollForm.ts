@@ -1,5 +1,8 @@
 import type { DefaultValues } from "react-hook-form";
-import type { PollCreationInput } from "@shared/schemas/polls.schema";
+import type { z } from "zod";
+import { PollCreationDTOSchema } from "@shared/schemas/polls.schema";
+
+type PollCreationInput = z.input<typeof PollCreationDTOSchema>;
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 export const INITIAL_DAYS = 3;
@@ -8,6 +11,19 @@ export type PollFormValues = Extract<
   PollCreationInput,
   { type: "single_choice" | "multiple_choice" }
 > & { endsAt: Date };
+
+export type ScaleFormValues = Extract<PollCreationInput, { type: "slider" }> & {
+  endsAt: Date;
+};
+
+// Free field poll type on hold: the team decided not to implement it for now
+// (no consensus on how "options" should map to a free-text answer), and the
+// shared PollCreationDTOSchema has no "free_field" branch. Commented out
+// rather than deleted so it's easy to pick back up.
+// export type FreeFormValues = Extract<
+//   PollCreationInput,
+//   { type: "free_field" }
+// > & { endsAt: Date };
 
 export const daysFromNow = (days: number) =>
   new Date(Date.now() + days * MS_PER_DAY);
@@ -27,3 +43,34 @@ export const defaultValues: DefaultValues<PollFormValues> = {
   ],
   hashtags: [],
 };
+
+/**
+ * A slider poll holds exactly one option: its label is the statement being
+ * rated, and the two slider labels are the ends of the scale (left / right).
+ */
+export const scaleDefaultValues: DefaultValues<ScaleFormValues> = {
+  title: "",
+  description: "",
+  type: "slider",
+  endsAt: daysFromNow(INITIAL_DAYS),
+  allowChangeVote: true,
+  isAnonymous: false,
+  options: [{ label: "", order: 0, sliderLeftLabel: "", sliderRightLabel: "" }],
+  hashtags: [],
+};
+
+// Free field poll type on hold, see FreeFormValues above.
+// /**
+//  * A free field poll carries no option at all: the question is the title and
+//  * each voter writes their own answer.
+//  */
+// export const freeFormDefaultValues: DefaultValues<FreeFormValues> = {
+//   title: "",
+//   description: "",
+//   type: "free_field",
+//   endsAt: daysFromNow(INITIAL_DAYS),
+//   allowChangeVote: true,
+//   isAnonymous: false,
+//   options: [],
+//   hashtags: [],
+// };
