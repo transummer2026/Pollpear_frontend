@@ -11,35 +11,35 @@ import {
   type OauthRegisterSchemaDTO,
   OauthRegisterSchema,
 } from "@shared/schemas/auth.schema";
-import { useMe } from "@/hooks/user/use-me";
 import { useOAuthComplete } from "@/hooks/auth/use-oauth-complete";
-import type { UserDTO } from "@shared/schemas/users.schema";
 import ProfileCardGender from "@/components/me/ProfileCardGender";
+import type { OauthPendingSchemaDTO } from "@shared/schemas/auth.schema";
+import { useOAuthPending } from "@/hooks/auth/use-oauth-pending";
+import { useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router";
 
-function toDateInput(value: UserDTO["birthdate"] | undefined): string {
-  if (!value) return "";
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "";
-  return date.toISOString().slice(0, 10);
-}
+// function toDateInput(value: UserDTO["birthdate"] | undefined): string {
+//   if (!value) return "";
+//   const date = new Date(value);
+//   if (Number.isNaN(date.getTime())) return "";
+//   return date.toISOString().slice(0, 10);
+// }
 
-function toFormValues(user: UserDTO): OauthRegisterSchemaInput {
+function toFormValues(
+  pending: OauthPendingSchemaDTO,
+): Partial<OauthRegisterSchemaInput> {
   return {
-    username: user.username ?? "",
-    birthdate: toDateInput(user.birthdate),
-    nationality: user.nationality ?? "",
-    name: user.name ?? "",
-    surname: user.surname ?? "",
-    city: user.city ?? "",
-    state: user.state ?? "",
-    country: user.country ?? "",
-    company: user.company ?? "",
-    gender: user.gender,
+    username: pending.username ?? "",
+    name: pending.name ?? "",
+    surname: pending.surname ?? "",
   };
 }
 
 export default function InformationSection() {
-  const { data: user } = useMe();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("signup");
+  const { data: pending, error: pendingError } = useOAuthPending(token);
 
   const {
     register,
@@ -49,23 +49,47 @@ export default function InformationSection() {
     reset,
   } = useForm<OauthRegisterSchemaInput, unknown, OauthRegisterSchemaDTO>({
     resolver: zodResolver(OauthRegisterSchema),
-    values: user ? toFormValues(user) : undefined,
-    resetOptions: { keepDirtyValues: true },
   });
   const { mutate } = useSWRConfig();
 
   const { trigger, isMutating } = useOAuthComplete();
 
+  useEffect(() => {
+    if (pending) {
+      reset(toFormValues(pending), { keepDirtyValues: true });
+    }
+  }, [pending, reset]);
+
   const onSubmit: SubmitHandler<OauthRegisterSchemaDTO> = async (data) => {
+    if (!token) return;
     try {
-      const updated = await trigger(data);
+      const updated = await trigger({ ...data, token });
       await mutate("/me", updated, { revalidate: false });
-      if (updated) reset(toFormValues(updated));
+      navigate("/", { replace: true });
     } catch (e) {
       if (e instanceof ApiError) toast.error(e.message);
       else toast.error("An unknown error occurred");
     }
   };
+
+  if (!token || pendingError) {
+    return (
+      <Card className="w-full max-w-xl mx-auto">
+        <div>
+          <CardHeader>
+            <CardTitle className="text-2xl">Signup Session Expired</CardTitle>
+            <p>Your signup session has expired. Please try signing up again.</p>
+            <Button
+              className="mt-6"
+              onClick={() => navigate("/auth/login", { replace: true })}
+            >
+              Back to Login
+            </Button>
+          </CardHeader>
+        </div>
+      </Card>
+    );
+  }
 
   return (
     <Card className="w-full max-w-xl mx-auto">
@@ -78,7 +102,7 @@ export default function InformationSection() {
             <div className="p-6 md:border-b-0 p-6 space-y-4">
               <div>
                 <Input placeholder="Username" {...register("username")} />
-                {errors.nationality && (
+                {errors.username && (
                   <p className="text-destructive text-sm mt-1">
                     {errors.username?.message}
                   </p>
