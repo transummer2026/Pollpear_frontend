@@ -56,6 +56,7 @@ export default function HeaderUser() {
   } = useForm<UserProfileUpdateInput, unknown, UserProfileUpdateDTO>({
     resolver: zodResolver(UserProfileUpdateSchema),
     values: user ? toFormValues(user) : undefined,
+    resetOptions: { keepDirtyValues: true },
   });
   const { mutate } = useSWRConfig();
 
@@ -63,9 +64,10 @@ export default function HeaderUser() {
 
   const onSubmit: SubmitHandler<UserProfileUpdateDTO> = async (data) => {
     try {
-      const user = await trigger(data);
+      const updated = await trigger(data);
       setIsEditing(false);
-      await mutate("/me", user, { revalidate: false });
+      await mutate("/me", updated, { revalidate: false });
+      if (updated) reset(toFormValues(updated));
     } catch (e) {
       if (e instanceof ApiError) toast.error(e.message);
       else toast.error("An unknown error occurred");

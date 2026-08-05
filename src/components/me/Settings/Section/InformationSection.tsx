@@ -44,9 +44,11 @@ export default function InformationSection() {
     formState: { errors },
     handleSubmit,
     control,
+    reset,
   } = useForm<UserProfileUpdateInput, unknown, UserProfileUpdateDTO>({
     resolver: zodResolver(UserProfileUpdateSchema),
     values: user ? toFormValues(user) : undefined,
+    resetOptions: { keepDirtyValues: true },
   });
   const { mutate } = useSWRConfig();
 
@@ -54,8 +56,9 @@ export default function InformationSection() {
 
   const onSubmit: SubmitHandler<UserProfileUpdateDTO> = async (data) => {
     try {
-      const user = await trigger(data);
-      await mutate("/me", user, { revalidate: false });
+      const updated = await trigger(data);
+      await mutate("/me", updated, { revalidate: false });
+      if (updated) reset(toFormValues(updated));
     } catch (e) {
       if (e instanceof ApiError) toast.error(e.message);
       else toast.error("An unknown error occurred");
