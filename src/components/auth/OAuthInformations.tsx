@@ -7,24 +7,28 @@ import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
 import { useSWRConfig } from "swr";
 import {
-  type OauthRegisterSchemaInput,
-  type OauthRegisterSchemaDTO,
+  type OauthRegisterInput,
+  type OauthRegisterDTO,
+  type OauthPendingDTO,
   OauthRegisterSchema,
 } from "@shared/schemas/auth.schema";
 import { useOAuthComplete } from "@/hooks/auth/use-oauth-complete";
 import ProfileCardGender from "@/components/me/ProfileCardGender";
-import type { OauthPendingSchemaDTO } from "@shared/schemas/auth.schema";
 import { useOAuthPending } from "@/hooks/auth/use-oauth-pending";
-import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 
-function toFormValues(
-  pending: OauthPendingSchemaDTO,
-): Partial<OauthRegisterSchemaInput> {
+function toFormValues(pending: OauthPendingDTO): OauthRegisterInput {
   return {
     username: pending.username ?? "",
+    birthdate: "",
+    nationality: "",
     name: pending.name ?? "",
     surname: pending.surname ?? "",
+    city: "",
+    state: "",
+    country: "",
+    company: "",
+    gender: undefined as unknown as OauthRegisterInput["gender"],
   };
 }
 
@@ -39,21 +43,16 @@ export default function InformationSection() {
     formState: { errors },
     handleSubmit,
     control,
-    reset,
-  } = useForm<OauthRegisterSchemaInput, unknown, OauthRegisterSchemaDTO>({
+  } = useForm<OauthRegisterInput, unknown, OauthRegisterDTO>({
     resolver: zodResolver(OauthRegisterSchema),
+    values: pending ? toFormValues(pending) : undefined,
+    resetOptions: { keepDirtyValues: true },
   });
   const { mutate } = useSWRConfig();
 
   const { trigger, isMutating } = useOAuthComplete();
 
-  useEffect(() => {
-    if (pending) {
-      reset(toFormValues(pending), { keepDirtyValues: true });
-    }
-  }, [pending, reset]);
-
-  const onSubmit: SubmitHandler<OauthRegisterSchemaDTO> = async (data) => {
+  const onSubmit: SubmitHandler<OauthRegisterDTO> = async (data) => {
     if (!token) return;
     try {
       const updated = await trigger({ ...data, token });
