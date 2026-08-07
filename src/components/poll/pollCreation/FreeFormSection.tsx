@@ -8,7 +8,7 @@
 // import { Button } from "@/components/ui/button";
 // import { CardContent } from "@/components/ui/card";
 // import {
-//   PollCreationDTOSchema,
+//   PollCreationSchema,
 //   type PollCreationDTO,
 // } from "@shared/schemas/polls.schema";
 // import { useCreatePoll } from "@/hooks/poll/use-create-poll";
@@ -29,7 +29,7 @@
 //     reset,
 //     formState: { errors },
 //   } = useForm<FreeFormValues, unknown, PollCreationDTO>({
-//     resolver: zodResolver(PollCreationDTOSchema) as Resolver<
+//     resolver: zodResolver(PollCreationSchema) as Resolver<
 //       FreeFormValues,
 //       unknown,
 //       PollCreationDTO

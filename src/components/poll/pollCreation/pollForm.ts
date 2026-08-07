@@ -1,8 +1,8 @@
 import type { DefaultValues } from "react-hook-form";
 import type { z } from "zod";
-import { PollCreationDTOSchema } from "@shared/schemas/polls.schema";
+import { PollCreationSchema } from "@shared/schemas/polls.schema";
 
-type PollCreationInput = z.input<typeof PollCreationDTOSchema>;
+type PollCreationInput = z.input<typeof PollCreationSchema>;
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 export const INITIAL_DAYS = 3;
@@ -18,7 +18,7 @@ export type ScaleFormValues = Extract<PollCreationInput, { type: "slider" }> & {
 
 // Free field poll type on hold: the team decided not to implement it for now
 // (no consensus on how "options" should map to a free-text answer), and the
-// shared PollCreationDTOSchema has no "free_field" branch. Commented out
+// shared PollCreationSchema has no "free_field" branch. Commented out
 // rather than deleted so it's easy to pick back up.
 // export type FreeFormValues = Extract<
 //   PollCreationInput,
