@@ -17,6 +17,8 @@ import PrivacyPage from "@/pages/PrivacyPage";
 import PasswordForgotPage from "@/pages/PasswordForgotPage";
 import ChangePasswordPage from "@/pages/ChangePasswordPage";
 import OAuthRegisterPage from "@/pages/OAuthRegisterPage";
+import VerifyEmailPage from "@/pages/VerifyEmailPage";
+import ResendVerificationPage from "@/pages/ResendVerificationPage";
 
 export default function AppRoutes() {
   return (
@@ -30,6 +32,11 @@ export default function AppRoutes() {
       <Route path="/auth/password-forgot" element={<PasswordForgotPage />} />
       <Route path="/auth/change-password" element={<ChangePasswordPage />} />
       <Route path="/auth/complete-profile" element={<OAuthRegisterPage />} />
+      <Route path="/auth/verify-email" element={<VerifyEmailPage />} />
+      <Route
+        path="/auth/verify-email/resend"
+        element={<ResendVerificationPage />}
+      />
 
       <Route element={<ProtectedRoute />}>
         <Route path="/polls/new" element={<NewPollPage />} />

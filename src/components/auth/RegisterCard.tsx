@@ -33,6 +33,7 @@ export default function RegisterCard() {
   const onSubmit: SubmitHandler<RegisterDTO> = async (data) => {
     try {
       await trigger(data);
+      toast.success("Check your inbox to confirm your email address");
       navigate("/auth/login", { replace: true });
     } catch (e) {
       if (e instanceof ApiError) toast.error(e.message);
