@@ -4,9 +4,9 @@ import useSWRMutation from "swr/mutation";
 import { fetcher, postJson, type ApiError } from "@/lib/fetcher";
 import type { PollType } from "@shared/prisma/schemas/enums/PollType.schema";
 import type { PollStatus } from "@shared/prisma/schemas/enums/PollStatus.schema";
-import { VoteCreationDTO } from "@shared/schemas/vote.schema";
+import { VoteCreationSchema } from "@shared/schemas/vote.schema";
 
-export type VoteCreationInput = z.infer<typeof VoteCreationDTO>;
+export type VoteCreationInput = z.infer<typeof VoteCreationSchema>;
 
 /**
  * Shape we expect from the read routes. They are not implemented yet

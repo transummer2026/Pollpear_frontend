@@ -4,7 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { CardHeader, CardContent } from "@/components/ui/card";
 import {
-  PollCreationDTOSchema,
+  PollCreationSchema,
   type PollCreationDTO,
 } from "@shared/schemas/polls.schema";
 import { useCreatePoll } from "@/hooks/poll/use-create-poll";
@@ -26,7 +26,7 @@ export default function SingleChoiceSection() {
     reset,
     formState: { errors },
   } = useForm<PollFormValues, unknown, PollCreationDTO>({
-    resolver: zodResolver(PollCreationDTOSchema) as Resolver<
+    resolver: zodResolver(PollCreationSchema) as Resolver<
       PollFormValues,
       unknown,
       PollCreationDTO
