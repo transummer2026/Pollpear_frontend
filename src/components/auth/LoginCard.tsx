@@ -38,8 +38,18 @@ export default function LoginCard() {
       await mutate("/me", user, { revalidate: false });
       navigate("/feed", { replace: true });
     } catch (e) {
-      if (e instanceof ApiError) toast.error(e.message);
-      else toast.error("An unknown error occurred");
+      if (e instanceof ApiError && e.message === "Email not verified.") {
+        toast.error(e.message, {
+          action: {
+            label: "Resend email",
+            onClick: () => navigate("/auth/verify-email/resend"),
+          },
+        });
+      } else if (e instanceof ApiError) {
+        toast.error(e.message);
+      } else {
+        toast.error("An unknown error occurred");
+      }
     }
   };
 

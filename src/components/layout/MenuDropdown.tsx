@@ -20,7 +20,7 @@ export function MenuDropdown() {
   const handleLogout = async () => {
     try {
       await trigger();
-      navigate("auth/login", { replace: true });
+      navigate("/auth/login", { replace: true });
     } catch (e) {
       if (e instanceof ApiError) toast.error(e.message);
       else toast.error("An unknown error occurred");
