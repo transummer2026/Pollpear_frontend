@@ -1,4 +1,4 @@
-const GATEWAY_URL = import.meta.env.GATEWAY_URL ?? "http://localhost:8080";
+const GATEWAY_URL = import.meta.env.GATEWAY_URL ?? "http://localhost:8080/api";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
