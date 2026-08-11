@@ -1,4 +1,3 @@
-import { Input } from "@/components/ui/input";
 import { Menu } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import {
@@ -8,6 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { NavbarSearchTrigger } from "@/components/layout/NavbarSearch/NavbarSearchTrigger";
 import { useLogout } from "@/hooks/auth/use-logout";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
@@ -33,7 +33,7 @@ export function MenuDropdown() {
         <Menu />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-40" align="start">
-        <Input className="mb-2" placeholder="Search..." />
+        <NavbarSearchTrigger className="mb-2 w-full" />
         <Link to="/me" className="block w-full">
           <DropdownMenuItem>Profile</DropdownMenuItem>
         </Link>
