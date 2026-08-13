@@ -51,7 +51,7 @@ export default function PollResultCard({
                 <PollResult
                   answer={{
                     id: option.id,
-                    label: option.label,
+                    text: option.text,
                     votes: option.votes,
                   }}
                   totalVotes={results.totalVotes}

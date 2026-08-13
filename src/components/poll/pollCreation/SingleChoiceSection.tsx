@@ -4,8 +4,8 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { CardHeader, CardContent } from "@/components/ui/card";
 import {
-  PollCreationSchema,
-  type PollCreationDTO,
+  PollCreateSchema,
+  type PollCreateDTO,
 } from "@shared/schemas/polls.schema";
 import { useCreatePoll } from "@/hooks/poll/use-create-poll";
 import { toast } from "sonner";
@@ -25,16 +25,16 @@ export default function SingleChoiceSection() {
     getValues,
     reset,
     formState: { errors },
-  } = useForm<PollFormValues, unknown, PollCreationDTO>({
-    resolver: zodResolver(PollCreationSchema) as Resolver<
+  } = useForm<PollFormValues, unknown, PollCreateDTO>({
+    resolver: zodResolver(PollCreateSchema) as Resolver<
       PollFormValues,
       unknown,
-      PollCreationDTO
+      PollCreateDTO
     >,
     defaultValues,
   });
 
-  const onSubmit: SubmitHandler<PollCreationDTO> = async (data) => {
+  const onSubmit: SubmitHandler<PollCreateDTO> = async (data) => {
     try {
       await trigger(data);
       toast.success("Poll created");

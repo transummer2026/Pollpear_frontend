@@ -3,7 +3,7 @@ import { Progress } from "@/components/ui/progress";
 type PollResultProps = {
   answer: {
     id: number;
-    label: string;
+    text: string;
     votes: number;
   };
   totalVotes: number;
@@ -15,7 +15,7 @@ export default function PollResult({ answer, totalVotes }: PollResultProps) {
   return (
     <div>
       <div className="flex justify-between mb-2">
-        <span>{answer.label}</span>
+        <span>{answer.text}</span>
         <span className="font-semibold">{percent}%</span>
       </div>
 

@@ -1,4 +1,4 @@
-import { type OauthPendingDTO } from "@shared/schemas/auth.schema";
+import { type OauthPendingDTO } from "@shared/schemas/oauth.schema";
 import { ApiError, fetcher } from "@/lib/fetcher";
 import useSWR from "swr";
 

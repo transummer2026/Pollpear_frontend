@@ -8,8 +8,8 @@
 // import { Button } from "@/components/ui/button";
 // import { CardContent } from "@/components/ui/card";
 // import {
-//   PollCreationSchema,
-//   type PollCreationDTO,
+//   PollCreateSchema,
+//   type PollCreateDTO,
 // } from "@shared/schemas/polls.schema";
 // import { useCreatePoll } from "@/hooks/poll/use-create-poll";
 // import { toast } from "sonner";
@@ -28,16 +28,16 @@
 //     setValue,
 //     reset,
 //     formState: { errors },
-//   } = useForm<FreeFormValues, unknown, PollCreationDTO>({
-//     resolver: zodResolver(PollCreationSchema) as Resolver<
+//   } = useForm<FreeFormValues, unknown, PollCreateDTO>({
+//     resolver: zodResolver(PollCreateSchema) as Resolver<
 //       FreeFormValues,
 //       unknown,
-//       PollCreationDTO
+//       PollCreateDTO
 //     >,
 //     defaultValues: freeFormDefaultValues,
 //   });
 //
-//   const onSubmit: SubmitHandler<PollCreationDTO> = async (data) => {
+//   const onSubmit: SubmitHandler<PollCreateDTO> = async (data) => {
 //     try {
 //       await trigger(data);
 //       toast.success("Poll created");

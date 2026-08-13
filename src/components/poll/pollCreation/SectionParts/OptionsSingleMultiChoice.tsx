@@ -9,7 +9,7 @@ import type {
 } from "react-hook-form";
 import { Separator } from "@/components/ui/separator";
 import { CardTitle } from "@/components/ui/card";
-import type { PollCreationDTO } from "@shared/schemas/polls.schema";
+import type { PollCreateDTO } from "@shared/schemas/polls.schema";
 import {
   type PollFormValues,
   INITIAL_DAYS,
@@ -23,7 +23,7 @@ import HashtagsSelection from "@/components/poll/pollCreation/SectionParts/Hasht
 import AnonymousSwitch from "@/components/poll/pollCreation/SectionParts/AnonymousSwitch";
 
 type SingleMultiChoiceOptionsProps = {
-  control: Control<PollFormValues, unknown, PollCreationDTO>;
+  control: Control<PollFormValues, unknown, PollCreateDTO>;
   register: UseFormRegister<PollFormValues>;
   getValues: UseFormGetValues<PollFormValues>;
   watch: UseFormWatch<PollFormValues>;

@@ -1,8 +1,8 @@
 import type { DefaultValues } from "react-hook-form";
 import type { z } from "zod";
-import { PollCreationSchema } from "@shared/schemas/polls.schema";
+import { PollCreateSchema } from "@shared/schemas/polls.schema";
 
-type PollCreationInput = z.input<typeof PollCreationSchema>;
+type PollCreationInput = z.input<typeof PollCreateSchema>;
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 export const INITIAL_DAYS = 3;
@@ -18,7 +18,7 @@ export type ScaleFormValues = Extract<PollCreationInput, { type: "slider" }> & {
 
 // Free field poll type on hold: the team decided not to implement it for now
 // (no consensus on how "options" should map to a free-text answer), and the
-// shared PollCreationSchema has no "free_field" branch. Commented out
+// shared PollCreateSchema has no "free_field" branch. Commented out
 // rather than deleted so it's easy to pick back up.
 // export type FreeFormValues = Extract<
 //   PollCreationInput,
@@ -38,8 +38,8 @@ export const defaultValues: DefaultValues<PollFormValues> = {
   allowChangeVote: true,
   isAnonymous: false,
   options: [
-    { label: "", order: 0 },
-    { label: "", order: 1 },
+    { text: "", order: 0 },
+    { text: "", order: 1 },
   ],
   hashtags: [],
 };
@@ -55,7 +55,7 @@ export const scaleDefaultValues: DefaultValues<ScaleFormValues> = {
   endsAt: daysFromNow(INITIAL_DAYS),
   allowChangeVote: true,
   isAnonymous: false,
-  options: [{ label: "", order: 0, sliderLeftLabel: "", sliderRightLabel: "" }],
+  options: [{ text: "", order: 0, sliderLeftLabel: "", sliderRightLabel: "" }],
   hashtags: [],
 };
 

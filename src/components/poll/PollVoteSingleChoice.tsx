@@ -77,7 +77,7 @@ export default function PollVoteSingleChoice({
     try {
       await trigger({
         type: "single_choice",
-        optionVoted: [{ optionId }],
+        optionsVoted: [{ optionId }],
       });
       setVotedOptionId(optionId);
       toast.success("Vote sent");
@@ -101,11 +101,11 @@ export default function PollVoteSingleChoice({
         )}
       </CardHeader>
 
-      {poll.hashtags && poll.hashtags.length > 0 && (
+      {poll.pollHashtags.length > 0 && (
         <div className="flex flex-wrap gap-2">
-          {poll.hashtags.map((tag) => (
-            <Badge key={tag.name} variant="outline">
-              #{tag.name}
+          {poll.pollHashtags.map(({ hashtag }) => (
+            <Badge key={hashtag.id} variant="outline">
+              #{hashtag.name}
             </Badge>
           ))}
         </div>
@@ -121,7 +121,7 @@ export default function PollVoteSingleChoice({
             disabled={isMutating}
             onClick={() => vote(option.id)}
           >
-            {option.label}
+            {option.text}
           </Button>
         ))}
       </div>

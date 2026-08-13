@@ -24,11 +24,11 @@ export default function ScaleChoiceSection({
         <Input
           id="scale-label"
           placeholder="How much do you agree?"
-          {...register("options.0.label" as const)}
+          {...register("options.0.text" as const)}
         />
-        {optionErrors?.label && (
+        {optionErrors?.text && (
           <p className="text-sm text-destructive">
-            {optionErrors.label.message}
+            {optionErrors.text.message}
           </p>
         )}
       </div>

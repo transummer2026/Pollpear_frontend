@@ -11,7 +11,7 @@ import {
   type OauthRegisterDTO,
   type OauthPendingDTO,
   OauthRegisterSchema,
-} from "@shared/schemas/auth.schema";
+} from "@shared/schemas/oauth.schema";
 import { useOAuthComplete } from "@/hooks/auth/use-oauth-complete";
 import ProfileCardGender from "@/components/me/ProfileCardGender";
 import { useOAuthPending } from "@/hooks/auth/use-oauth-pending";

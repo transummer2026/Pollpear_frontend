@@ -1,13 +1,13 @@
 import { Controller } from "react-hook-form";
 import type { Control, UseFormRegister, FieldErrors } from "react-hook-form";
-import type { PollCreationDTO } from "@shared/schemas/polls.schema";
+import type { PollCreateDTO } from "@shared/schemas/polls.schema";
 import TitleSetting from "@/components/poll/pollCreation/SectionParts/TitleSetting";
 import PollType from "@/components/poll/pollCreation/SectionParts/PollType";
 import PollDescription from "@/components/poll/pollCreation/SectionParts/PollDescription";
 import type { PollFormValues } from "@/components/poll/pollCreation/pollForm";
 
 type SingleMultiChoiceHeaderProps = {
-  control: Control<PollFormValues, unknown, PollCreationDTO>;
+  control: Control<PollFormValues, unknown, PollCreateDTO>;
   register: UseFormRegister<PollFormValues>;
   errors: FieldErrors<PollFormValues>;
 };

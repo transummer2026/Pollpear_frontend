@@ -1,44 +1,33 @@
-import { z } from "zod";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 import { fetcher, postJson, type ApiError } from "@/lib/fetcher";
-import type { PollType } from "@shared/prisma/schemas/enums/PollType.schema";
-import type { PollStatus } from "@shared/prisma/schemas/enums/PollStatus.schema";
-import { VoteCreationSchema } from "@shared/schemas/vote.schema";
-
-export type VoteCreationInput = z.infer<typeof VoteCreationSchema>;
+import type { VoteCreateDTO } from "@shared/schemas/vote.schema";
+import type { PollReadDTO } from "@shared/schemas/polls.schema";
 
 /**
  * Shape we expect from the read routes. They are not implemented yet
  * (the backend answers 503 and the gateway does not even proxy them), so this
  * is the contract to line up with once they are, not something observed.
- * Dates are strings here: they went through JSON.
+ * Derived from PollReadDTO; its top-level date fields are re-typed as strings
+ * since dates go through JSON as ISO strings, and myVote is added on top
+ * since it's per-requesting-user state, not part of the Poll model itself.
  */
-export type PollOptionDTO = {
-  id: number;
-  label: string;
-  order: number;
-};
-
-export type PollDetailDTO = {
-  id: number;
-  title: string;
-  description?: string | null;
-  type: PollType;
-  status: PollStatus;
-  createdAt: string;
+export type PollDetailDTO = Omit<
+  PollReadDTO,
+  "publishedAt" | "endsAt" | "createdAt" | "updatedAt" | "deletedAt"
+> & {
+  publishedAt: string | null;
   endsAt: string;
-  allowChangeVote: boolean;
-  isAnonymous: boolean;
-  options: PollOptionDTO[];
-  hashtags?: { name: string }[];
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
   /** ids the current user already voted for, empty or absent if they did not */
   myVote?: { optionIds: number[] } | null;
 };
 
 export type PollResultsDTO = {
   totalVotes: number;
-  options: (PollOptionDTO & { votes: number })[];
+  options: (PollDetailDTO["options"][number] & { votes: number })[];
 };
 
 export function usePoll(pollId?: number) {
@@ -60,7 +49,7 @@ export function usePollResults(pollId?: number, enabled = true) {
 }
 
 export function useVotePoll(pollId: number) {
-  return useSWRMutation<unknown, ApiError, string, VoteCreationInput>(
+  return useSWRMutation<unknown, ApiError, string, VoteCreateDTO>(
     `/polls/${pollId}/vote`,
     (resource, { arg }) => postJson<unknown>(resource, arg),
   );

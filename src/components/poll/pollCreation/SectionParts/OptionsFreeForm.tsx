@@ -10,7 +10,7 @@
 //   FieldErrors,
 // } from "react-hook-form";
 // import { CardTitle } from "@/components/ui/card";
-// import type { PollCreationDTO } from "@shared/schemas/polls.schema";
+// import type { PollCreateDTO } from "@shared/schemas/polls.schema";
 // import {
 //   type PollFormValues,
 //   type FreeFormValues,
@@ -24,7 +24,7 @@
 // import AnonymousSwitch from "@/components/poll/pollCreation/SectionParts/AnonymousSwitch";
 //
 // type FreeFormOptionsProps = {
-//   control: Control<FreeFormValues, unknown, PollCreationDTO>;
+//   control: Control<FreeFormValues, unknown, PollCreateDTO>;
 //   watch: UseFormWatch<FreeFormValues>;
 //   setValue: UseFormSetValue<FreeFormValues>;
 //   errors: FieldErrors<FreeFormValues>;
