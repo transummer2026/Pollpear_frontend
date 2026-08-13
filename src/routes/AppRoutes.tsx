@@ -20,6 +20,7 @@ import OAuthRegisterPage from "@/pages/OAuthRegisterPage";
 import VerifyEmailPage from "@/pages/VerifyEmailPage";
 import ResendVerificationPage from "@/pages/ResendVerificationPage";
 import MaintenancePage from "@/pages/MaintenancePage";
+import ApiPage from "@/pages/ApiPage";
 
 export default function AppRoutes() {
   return (
@@ -46,6 +47,7 @@ export default function AppRoutes() {
         <Route path="/feed" element={<FeedPage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/settings/api" element={<ApiPage />} />
         <Route path="/users/:id" element={<UserPage />} />
         <Route path="/rooms/:id" element={<RoomsPage />} />
         <Route path="/rooms/new" element={<NewRoomPage />} />
