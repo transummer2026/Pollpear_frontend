@@ -1,4 +1,7 @@
 import Layout from "@/layout/Layout";
+import { Link } from "react-router";
+import { ArrowRight, BookOpen } from "lucide-react";
+
 import {
   Card,
   CardContent,
@@ -7,6 +10,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import ApiKeySection from "@/components/pages/api/ApiKeySection";
+
+//TODO: pointe sur la page de maintenance en attendant la vraie doc d'api
+const DOC_ROUTE = "/maintenance";
 
 export default function Api() {
   return (
@@ -21,8 +29,29 @@ export default function Api() {
 
         <Separator />
 
-        <CardContent className="text-muted-foreground mt-2">
-          Manage your API key
+        <CardContent className="space-y-6 pt-2">
+          <section className="space-y-3">
+            <div className="space-y-1">
+              <h2 className="flex items-center gap-2 font-medium">
+                <BookOpen size={18} />
+                Documentation
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Resources, verbs and error codes exposed by the public API.
+              </p>
+            </div>
+
+            <Button variant="outline" asChild>
+              <Link to={DOC_ROUTE}>
+                Read the API documentation
+                <ArrowRight size={16} />
+              </Link>
+            </Button>
+          </section>
+
+          <Separator />
+
+          <ApiKeySection />
         </CardContent>
       </Card>
     </Layout>
