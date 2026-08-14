@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { KeyRound, RefreshCw } from "lucide-react";
+import { toast } from "sonner";
 
+import { ApiError } from "@/lib/fetcher";
+import { useApiKey, useApiKeyCreate } from "@/hooks/me/use-api-key";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
@@ -14,18 +17,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import ApiKeyDialog from "@/components/pages/api/ApiKeyDialog";
-
-//TODO: remplcer par la vrais api key et la vrai date d'expiration
-const MOCK_API_KEY = "test_ssss";
-const KEY_LIFETIME_MS = 365 * 24 * 60 * 60 * 1000;
-
-type ApiKeyMeta = {
-  createdAt: Date;
-  expiresAt: Date;
-};
-
-function formatDate(date: Date) {
-  return date.toLocaleDateString(undefined, {
+function formatDate(date: Date | string) {
+  return new Date(date).toLocaleDateString(undefined, {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -33,17 +26,18 @@ function formatDate(date: Date) {
 }
 
 export default function ApiKeySection() {
-  const [meta, setMeta] = useState<ApiKeyMeta | null>(null);
+  const { data: apiKey, isLoading } = useApiKey();
+  const { trigger, isMutating } = useApiKeyCreate();
   const [revealedKey, setRevealedKey] = useState<string | null>(null);
 
-  function issueKey() {
-    const createdAt = new Date();
-
-    setMeta({
-      createdAt,
-      expiresAt: new Date(createdAt.getTime() + KEY_LIFETIME_MS),
-    });
-    setRevealedKey(MOCK_API_KEY);
+  async function issueKey() {
+    try {
+      const issued = await trigger({});
+      setRevealedKey(issued.key);
+    } catch (e) {
+      if (e instanceof ApiError) toast.error(e.message);
+      else toast.error("An unknown error occurred");
+    }
   }
 
   return (
@@ -54,24 +48,28 @@ export default function ApiKeySection() {
           API key
         </h2>
         <p className="text-sm text-muted-foreground">
-          {meta
+          {apiKey
             ? "Your key is active. It is stored hashed, so it cannot be displayed again."
             : "You do not have an API key yet."}
         </p>
       </div>
 
-      {meta ? (
+      {isLoading && (
+        <p className="text-sm text-muted-foreground">Loading your key...</p>
+      )}
+
+      {!isLoading && apiKey && (
         <div className="space-y-4">
           <dl className="grid gap-x-6 gap-y-1 text-sm sm:grid-cols-[auto_1fr]">
             <dt className="text-muted-foreground">Created</dt>
-            <dd>{formatDate(meta.createdAt)}</dd>
+            <dd>{formatDate(apiKey.createdAt)}</dd>
             <dt className="text-muted-foreground">Expires</dt>
-            <dd>{formatDate(meta.expiresAt)}</dd>
+            <dd>{formatDate(apiKey.expiredAt)}</dd>
           </dl>
 
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant="outline">
+              <Button variant="outline" disabled={isMutating}>
                 <RefreshCw size={16} />
                 Regenerate key
               </Button>
@@ -94,8 +92,10 @@ export default function ApiKeySection() {
             </AlertDialogContent>
           </AlertDialog>
         </div>
-      ) : (
-        <Button onClick={issueKey}>
+      )}
+
+      {!isLoading && !apiKey && (
+        <Button onClick={issueKey} disabled={isMutating}>
           <KeyRound size={16} />
           Request an API key
         </Button>
