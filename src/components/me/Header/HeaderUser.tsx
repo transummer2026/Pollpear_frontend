@@ -24,12 +24,12 @@ import { useSWRConfig } from "swr";
 import { useMe } from "@/hooks/user/use-me";
 import {
   type UserDTO,
-  type UserProfileUpdateDTO,
-  UserProfileUpdateSchema,
-  type UserProfileUpdateInput,
+  type UserUpdateDTO,
+  UserUpdateSchema,
+  type UserUpdateInput,
 } from "@shared/schemas/users.schema";
 
-function toFormValues(user: UserDTO): UserProfileUpdateInput {
+function toFormValues(user: UserDTO): UserUpdateInput {
   return {
     username: user.username ?? "",
     bio: user.bio ?? "",
@@ -53,8 +53,8 @@ export default function HeaderUser() {
     formState: { errors },
     handleSubmit,
     reset,
-  } = useForm<UserProfileUpdateInput, unknown, UserProfileUpdateDTO>({
-    resolver: zodResolver(UserProfileUpdateSchema),
+  } = useForm<UserUpdateInput, unknown, UserUpdateDTO>({
+    resolver: zodResolver(UserUpdateSchema),
     values: user ? toFormValues(user) : undefined,
     resetOptions: { keepDirtyValues: true },
   });
@@ -62,7 +62,7 @@ export default function HeaderUser() {
 
   const { trigger, isMutating } = useMeUpdate();
 
-  const onSubmit: SubmitHandler<UserProfileUpdateDTO> = async (data) => {
+  const onSubmit: SubmitHandler<UserUpdateDTO> = async (data) => {
     try {
       const updated = await trigger(data);
       setIsEditing(false);

@@ -7,9 +7,9 @@ import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
 import { useSWRConfig } from "swr";
 import {
-  type UserProfileUpdateInput,
-  type UserProfileUpdateDTO,
-  UserProfileUpdateSchema,
+  type UserUpdateInput,
+  type UserUpdateDTO,
+  UserUpdateSchema,
 } from "@shared/schemas/users.schema";
 import { useMe, useMeUpdate } from "@/hooks/user/use-me";
 import type { UserDTO } from "@shared/schemas/users.schema";
@@ -22,7 +22,7 @@ function toDateInput(value: UserDTO["birthdate"] | undefined): string {
   return date.toISOString().slice(0, 10);
 }
 
-function toFormValues(user: UserDTO): UserProfileUpdateInput {
+function toFormValues(user: UserDTO): UserUpdateInput {
   return {
     birthdate: toDateInput(user.birthdate),
     nationality: user.nationality ?? "",
@@ -45,8 +45,8 @@ export default function InformationSection() {
     handleSubmit,
     control,
     reset,
-  } = useForm<UserProfileUpdateInput, unknown, UserProfileUpdateDTO>({
-    resolver: zodResolver(UserProfileUpdateSchema),
+  } = useForm<UserUpdateInput, unknown, UserUpdateDTO>({
+    resolver: zodResolver(UserUpdateSchema),
     values: user ? toFormValues(user) : undefined,
     resetOptions: { keepDirtyValues: true },
   });
@@ -54,7 +54,7 @@ export default function InformationSection() {
 
   const { trigger, isMutating } = useMeUpdate();
 
-  const onSubmit: SubmitHandler<UserProfileUpdateDTO> = async (data) => {
+  const onSubmit: SubmitHandler<UserUpdateDTO> = async (data) => {
     try {
       const updated = await trigger(data);
       await mutate("/me", updated, { revalidate: false });

@@ -10,11 +10,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { CardTitle } from "@/components/ui/card";
-import type { PollCreationDTO } from "@shared/schemas/polls.schema";
+import type { PollCreateDTO } from "@shared/schemas/polls.schema";
 import type { PollFormValues } from "@/components/poll/pollCreation/pollForm";
 
 type SingleMultipleChoiceSectionProps = {
-  control: Control<PollFormValues, unknown, PollCreationDTO>;
+  control: Control<PollFormValues, unknown, PollCreateDTO>;
   register: UseFormRegister<PollFormValues>;
   getValues: UseFormGetValues<PollFormValues>;
   errors: FieldErrors<PollFormValues>;
@@ -34,7 +34,7 @@ export default function SingleMultipleChoiceSection({
 
   const addChoice = () => {
     if (optionFields.length >= 5) return;
-    append({ label: "", order: optionFields.length });
+    append({ text: "", order: optionFields.length });
   };
 
   const removeChoice = (index: number) => {
@@ -59,11 +59,11 @@ export default function SingleMultipleChoiceSection({
             <Label>Option {index + 1}</Label>
             <Input
               placeholder={`Option ${index + 1}`}
-              {...register(`options.${index}.label` as const)}
+              {...register(`options.${index}.text` as const)}
             />
-            {errors.options?.[index]?.label && (
+            {errors.options?.[index]?.text && (
               <p className="text-sm text-destructive">
-                {errors.options[index]?.label?.message}
+                {errors.options[index]?.text?.message}
               </p>
             )}
           </div>

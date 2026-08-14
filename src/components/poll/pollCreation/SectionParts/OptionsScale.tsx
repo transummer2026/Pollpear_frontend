@@ -8,7 +8,7 @@ import type {
 } from "react-hook-form";
 import { Separator } from "@/components/ui/separator";
 import { CardTitle } from "@/components/ui/card";
-import type { PollCreationDTO } from "@shared/schemas/polls.schema";
+import type { PollCreateDTO } from "@shared/schemas/polls.schema";
 import {
   type PollFormValues,
   type ScaleFormValues,
@@ -23,7 +23,7 @@ import HashtagsSelection from "@/components/poll/pollCreation/SectionParts/Hasht
 import AnonymousSwitch from "@/components/poll/pollCreation/SectionParts/AnonymousSwitch";
 
 type ScaleOptionsProps = {
-  control: Control<ScaleFormValues, unknown, PollCreationDTO>;
+  control: Control<ScaleFormValues, unknown, PollCreateDTO>;
   register: UseFormRegister<ScaleFormValues>;
   watch: UseFormWatch<ScaleFormValues>;
   setValue: UseFormSetValue<ScaleFormValues>;
