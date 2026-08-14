@@ -19,6 +19,7 @@ import ChangePasswordPage from "@/pages/ChangePasswordPage";
 import OAuthRegisterPage from "@/pages/OAuthRegisterPage";
 import VerifyEmailPage from "@/pages/VerifyEmailPage";
 import ResendVerificationPage from "@/pages/ResendVerificationPage";
+import MaintenancePage from "@/pages/MaintenancePage";
 
 export default function AppRoutes() {
   return (
@@ -27,6 +28,7 @@ export default function AppRoutes() {
       <Route path="/auth/register" element={<RegisterPage />} />
       <Route path="/legal" element={<LegalPage />} />
       <Route path="/privacy" element={<PrivacyPage />} />
+      <Route path="/maintenance" element={<MaintenancePage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/" element={<HomePage />} />
       <Route path="/auth/password-forgot" element={<PasswordForgotPage />} />
