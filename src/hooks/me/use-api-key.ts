@@ -1,4 +1,4 @@
-import { fetcher, postJson, type ApiError } from "@/lib/fetcher";
+import { deleteJson, fetcher, postJson, type ApiError } from "@/lib/fetcher";
 import type {
   ApiKeyCreateDTO,
   ApiKeyCreatedDTO,
@@ -28,5 +28,15 @@ export function useApiKeyCreate() {
   return useSWRMutation<ApiKeyCreatedDTO, ApiError, string, ApiKeyCreateDTO>(
     API_KEY_ROUTE,
     (resource, { arg }) => postJson<ApiKeyCreatedDTO>(resource, arg),
+  );
+}
+
+/**
+ * DELETE the current API key. The server answers 204, so there is no payload
+ */
+export function useApiKeyRevoke() {
+  return useSWRMutation<null, ApiError, string, never>(
+    API_KEY_ROUTE,
+    (resource) => deleteJson<null>(resource),
   );
 }
