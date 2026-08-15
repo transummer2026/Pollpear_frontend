@@ -1,15 +1,26 @@
 import { useState, type ReactNode } from "react";
-import { KeyRound, RefreshCw, Trash } from "lucide-react";
+import { KeyRound, Pencil, RefreshCw, Trash } from "lucide-react";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 
-import type { ApiKeyDTO } from "@shared/schemas/api-key.schema";
+import {
+  ApiKeyCreateSchema,
+  ApiKeyRenameSchema,
+  type ApiKeyCreateDTO,
+  type ApiKeyDTO,
+  type ApiKeyRenameDTO,
+} from "@shared/schemas/api-key.schema";
 import { ApiError } from "@/lib/fetcher";
 import {
   useApiKey,
   useApiKeyCreate,
+  useApiKeyRename,
   useApiKeyRevoke,
 } from "@/hooks/me/use-api-key";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -43,6 +54,11 @@ function describeState(
   return "You do not have an API key yet.";
 }
 
+function reportError(e: unknown) {
+  if (e instanceof ApiError) toast.error(e.message);
+  else toast.error("An unknown error occurred");
+}
+
 type ConfirmedActionProps = {
   icon: ReactNode;
   label: string;
@@ -53,6 +69,10 @@ type ConfirmedActionProps = {
   variant?: "outline" | "destructive";
 };
 
+/**
+ * Every action here either revokes a working key or replaces it, so none of
+ * them fires on a single click
+ */
 function ConfirmedAction({
   icon,
   label,
@@ -86,6 +106,116 @@ function ConfirmedAction({
   );
 }
 
+function ApiKeyName({ apiKey, busy }: { apiKey: ApiKeyDTO; busy: boolean }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const { trigger, isMutating } = useApiKeyRename();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<ApiKeyRenameDTO>({
+    resolver: zodResolver(ApiKeyRenameSchema),
+    values: { appName: apiKey.appName },
+    resetOptions: { keepDirtyValues: true },
+  });
+
+  const onSubmit: SubmitHandler<ApiKeyRenameDTO> = async (data) => {
+    try {
+      await trigger(data);
+      setIsEditing(false);
+    } catch (e) {
+      reportError(e);
+    }
+  };
+
+  function cancel() {
+    reset({ appName: apiKey.appName });
+    setIsEditing(false);
+  }
+
+  if (!isEditing) {
+    return (
+      <div className="flex items-center gap-2 text-sm">
+        <span className="text-muted-foreground">Name</span>
+        <span className="font-medium">{apiKey.appName}</span>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          aria-label="Rename API key"
+          onClick={() => setIsEditing(true)}
+          disabled={busy}
+        >
+          <Pencil className="h-4 w-4" />
+        </Button>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-1.5">
+      <Label htmlFor="renameAppName">Name</Label>
+      <div className="flex flex-wrap items-center gap-2">
+        <Input
+          id="renameAppName"
+          className="max-w-xs"
+          {...register("appName")}
+        />
+        <Button type="button" variant="outline" onClick={cancel}>
+          Cancel
+        </Button>
+        <Button type="submit" disabled={isMutating}>
+          Save
+        </Button>
+      </div>
+      {errors.appName && (
+        <p className="text-destructive text-sm">{errors.appName.message}</p>
+      )}
+    </form>
+  );
+}
+
+function ApiKeyCreateForm({
+  busy,
+  onCreate,
+}: {
+  busy: boolean;
+  onCreate: (body: ApiKeyCreateDTO) => void;
+}) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ApiKeyCreateDTO>({
+    resolver: zodResolver(ApiKeyCreateSchema),
+  });
+
+  return (
+    <form onSubmit={handleSubmit(onCreate)} className="space-y-3">
+      <div className="space-y-1.5">
+        <Label htmlFor="appName">Application name</Label>
+        <Input
+          id="appName"
+          className="max-w-xs"
+          placeholder="default"
+          {...register("appName", {
+            setValueAs: (value: string) => value.trim() || undefined,
+          })}
+        />
+        {errors.appName && (
+          <p className="text-destructive text-sm">{errors.appName.message}</p>
+        )}
+      </div>
+      <Button type="submit" disabled={busy}>
+        <KeyRound size={16} />
+        Request an API key
+      </Button>
+    </form>
+  );
+}
+
 export default function ApiKeySection() {
   const { data: apiKey, isLoading, error } = useApiKey();
   const { trigger, isMutating } = useApiKeyCreate();
@@ -96,15 +226,14 @@ export default function ApiKeySection() {
   const settled = !isLoading && !failed;
   const busy = isMutating || isRevoking;
 
-  async function issueKey() {
+  async function issueKey(body: ApiKeyCreateDTO) {
     try {
-      const issued = await trigger({});
+      const issued = await trigger(body);
       if (issued) {
         setRevealedKey(issued.key);
       }
     } catch (e) {
-      if (e instanceof ApiError) toast.error(e.message);
-      else toast.error("An unknown error occurred");
+      reportError(e);
     }
   }
 
@@ -113,8 +242,7 @@ export default function ApiKeySection() {
       await revoke();
       toast.success("API key deleted");
     } catch (e) {
-      if (e instanceof ApiError) toast.error(e.message);
-      else toast.error("An unknown error occurred");
+      reportError(e);
     }
   }
 
@@ -137,12 +265,14 @@ export default function ApiKeySection() {
           title="Request a key without checking the current one?"
           description="We could not read your key status. If you already have a key, requesting a new one revokes it immediately and anything calling the API with it stops working."
           disabled={busy}
-          onConfirm={issueKey}
+          onConfirm={() => issueKey({})}
         />
       )}
 
       {settled && apiKey && (
         <div className="space-y-4">
+          <ApiKeyName apiKey={apiKey} busy={busy} />
+
           <dl className="grid gap-x-6 gap-y-1 text-sm sm:grid-cols-[auto_1fr]">
             <dt className="text-muted-foreground">Created</dt>
             <dd>{formatDate(apiKey.createdAt)}</dd>
@@ -155,9 +285,9 @@ export default function ApiKeySection() {
               icon={<RefreshCw size={16} />}
               label="Regenerate key"
               title="Regenerate your API key?"
-              description="Your current key is revoked immediately. Anything still calling the API with it stops working until you ship the new one."
+              description="Your current key is revoked immediately and the new one keeps the same name. Anything still calling the API with the old key stops working until you ship the new one."
               disabled={busy}
-              onConfirm={issueKey}
+              onConfirm={() => issueKey({ appName: apiKey.appName })}
             />
             <ConfirmedAction
               variant="destructive"
@@ -173,10 +303,7 @@ export default function ApiKeySection() {
       )}
 
       {settled && !apiKey && (
-        <Button onClick={issueKey} disabled={busy}>
-          <KeyRound size={16} />
-          Request an API key
-        </Button>
+        <ApiKeyCreateForm busy={busy} onCreate={issueKey} />
       )}
 
       <ApiKeyDialog apiKey={revealedKey} onClose={() => setRevealedKey(null)} />
