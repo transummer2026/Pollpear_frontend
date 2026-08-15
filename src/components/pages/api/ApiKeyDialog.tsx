@@ -54,8 +54,8 @@ export default function ApiKeyDialog({ apiKey, onClose }: ApiKeyDialogProps) {
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex items-center gap-2">
-          <code className="flex-1 overflow-x-auto rounded-md border bg-muted px-3 py-2 font-mono text-sm whitespace-nowrap">
+        <div className="flex items-center gap-2 truncate">
+          <code className="flex-1 truncate rounded-md border bg-muted px-3 py-2 font-mono text-sm whitespace-nowrap">
             {apiKey}
           </code>
           <Button
