@@ -2,6 +2,7 @@ import { useState, type ReactNode } from "react";
 import { KeyRound, Pencil, RefreshCw, Trash } from "lucide-react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import type { VariantProps } from "class-variance-authority";
 import { toast } from "sonner";
 
 import {
@@ -18,7 +19,7 @@ import {
   useApiKeyRename,
   useApiKeyRevoke,
 } from "@/hooks/me/use-api-key";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -33,6 +34,10 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import ApiKeyDialog from "@/components/pages/api/ApiKeyDialog";
+
+type ButtonVariant = VariantProps<typeof buttonVariants>["variant"];
+
+type ConfirmCopy = { title: string; description: string };
 
 function formatDate(date: Date | string) {
   return new Date(date).toLocaleDateString(undefined, {
@@ -59,15 +64,37 @@ function reportError(e: unknown) {
   else toast.error("An unknown error occurred");
 }
 
-type ConfirmedActionProps = {
-  icon: ReactNode;
+function FieldError({ message }: Readonly<{ message?: string }>) {
+  if (!message) return null;
+  return <p className="text-destructive text-sm">{message}</p>;
+}
+
+function ConfirmBody({
+  copy,
+  label,
+  disabled,
+  onConfirm,
+}: Readonly<{
+  copy: ConfirmCopy;
   label: string;
-  title: string;
-  description: string;
   disabled: boolean;
   onConfirm: () => void;
-  variant?: "outline" | "destructive";
-};
+}>) {
+  return (
+    <AlertDialogContent>
+      <AlertDialogHeader>
+        <AlertDialogTitle>{copy.title}</AlertDialogTitle>
+        <AlertDialogDescription>{copy.description}</AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogCancel>Cancel</AlertDialogCancel>
+        <AlertDialogAction onClick={onConfirm} disabled={disabled}>
+          {label}
+        </AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  );
+}
 
 /**
  * Every action here either revokes a working key or replaces it, so none of
@@ -76,12 +103,18 @@ type ConfirmedActionProps = {
 function ConfirmedAction({
   icon,
   label,
-  title,
-  description,
+  copy,
   disabled,
   onConfirm,
   variant = "outline",
-}: ConfirmedActionProps) {
+}: Readonly<{
+  icon: ReactNode;
+  label: string;
+  copy: ConfirmCopy;
+  disabled: boolean;
+  onConfirm: () => void;
+  variant?: ButtonVariant;
+}>) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -90,23 +123,20 @@ function ConfirmedAction({
           {label}
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>{title}</AlertDialogTitle>
-          <AlertDialogDescription>{description}</AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm} disabled={disabled}>
-            {label}
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
+      <ConfirmBody
+        copy={copy}
+        label={label}
+        disabled={disabled}
+        onConfirm={onConfirm}
+      />
     </AlertDialog>
   );
 }
 
-function ApiKeyName({ apiKey, busy }: { apiKey: ApiKeyDTO; busy: boolean }) {
+function ApiKeyName({
+  apiKey,
+  busy,
+}: Readonly<{ apiKey: ApiKeyDTO; busy: boolean }>) {
   const [isEditing, setIsEditing] = useState(false);
   const { trigger, isMutating } = useApiKeyRename();
 
@@ -170,26 +200,22 @@ function ApiKeyName({ apiKey, busy }: { apiKey: ApiKeyDTO; busy: boolean }) {
           Save
         </Button>
       </div>
-      {errors.appName && (
-        <p className="text-destructive text-sm">{errors.appName.message}</p>
-      )}
+      <FieldError message={errors.appName?.message} />
     </form>
   );
 }
-
-type ApiKeyCreateFormProps = {
-  busy: boolean;
-  label: string;
-  onCreate: (body: ApiKeyCreateDTO) => void;
-  confirm?: { title: string; description: string };
-};
 
 function ApiKeyCreateForm({
   busy,
   label,
   onCreate,
   confirm,
-}: ApiKeyCreateFormProps) {
+}: Readonly<{
+  busy: boolean;
+  label: string;
+  onCreate: (body: ApiKeyCreateDTO) => void;
+  confirm?: ConfirmCopy;
+}>) {
   const [confirming, setConfirming] = useState(false);
   const {
     register,
@@ -221,9 +247,7 @@ function ApiKeyCreateForm({
               setValueAs: (value: string) => value.trim() || undefined,
             })}
           />
-          {errors.appName && (
-            <p className="text-destructive text-sm">{errors.appName.message}</p>
-          )}
+          <FieldError message={errors.appName?.message} />
         </div>
         <Button type="submit" disabled={busy}>
           <KeyRound size={16} />
@@ -233,26 +257,66 @@ function ApiKeyCreateForm({
 
       {confirm && (
         <AlertDialog open={confirming} onOpenChange={setConfirming}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>{confirm.title}</AlertDialogTitle>
-              <AlertDialogDescription>
-                {confirm.description}
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={() => onCreate(getValues())}
-                disabled={busy}
-              >
-                {label}
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
+          <ConfirmBody
+            copy={confirm}
+            label={label}
+            disabled={busy}
+            onConfirm={() => onCreate(getValues())}
+          />
         </AlertDialog>
       )}
     </>
+  );
+}
+
+function ApiKeyDetails({
+  apiKey,
+  busy,
+  onRegenerate,
+  onDelete,
+}: Readonly<{
+  apiKey: ApiKeyDTO;
+  busy: boolean;
+  onRegenerate: () => void;
+  onDelete: () => void;
+}>) {
+  return (
+    <div className="space-y-4">
+      <ApiKeyName apiKey={apiKey} busy={busy} />
+
+      <dl className="grid gap-x-6 gap-y-1 text-sm sm:grid-cols-[auto_1fr]">
+        <dt className="text-muted-foreground">Created</dt>
+        <dd>{formatDate(apiKey.createdAt)}</dd>
+        <dt className="text-muted-foreground">Expires</dt>
+        <dd>{formatDate(apiKey.expiredAt)}</dd>
+      </dl>
+
+      <div className="flex flex-wrap gap-2">
+        <ConfirmedAction
+          icon={<RefreshCw size={16} />}
+          label="Regenerate key"
+          copy={{
+            title: "Regenerate your API key?",
+            description:
+              "Your current key is revoked immediately and the new one keeps the same name. Anything still calling the API with the old key stops working until you ship the new one.",
+          }}
+          disabled={busy}
+          onConfirm={onRegenerate}
+        />
+        <ConfirmedAction
+          variant="destructive"
+          icon={<Trash size={16} />}
+          label="Delete key"
+          copy={{
+            title: "Delete your API key?",
+            description:
+              "The key is revoked immediately and nothing replaces it. Anything calling the API with it stops working, and you will need to request a new key to call the API again.",
+          }}
+          disabled={busy}
+          onConfirm={onDelete}
+        />
+      </div>
+    </div>
   );
 }
 
@@ -312,36 +376,12 @@ export default function ApiKeySection() {
       )}
 
       {settled && apiKey && (
-        <div className="space-y-4">
-          <ApiKeyName apiKey={apiKey} busy={busy} />
-
-          <dl className="grid gap-x-6 gap-y-1 text-sm sm:grid-cols-[auto_1fr]">
-            <dt className="text-muted-foreground">Created</dt>
-            <dd>{formatDate(apiKey.createdAt)}</dd>
-            <dt className="text-muted-foreground">Expires</dt>
-            <dd>{formatDate(apiKey.expiredAt)}</dd>
-          </dl>
-
-          <div className="flex flex-wrap gap-2">
-            <ConfirmedAction
-              icon={<RefreshCw size={16} />}
-              label="Regenerate key"
-              title="Regenerate your API key?"
-              description="Your current key is revoked immediately and the new one keeps the same name. Anything still calling the API with the old key stops working until you ship the new one."
-              disabled={busy}
-              onConfirm={() => issueKey({ appName: apiKey.appName })}
-            />
-            <ConfirmedAction
-              variant="destructive"
-              icon={<Trash size={16} />}
-              label="Delete key"
-              title="Delete your API key?"
-              description="The key is revoked immediately and nothing replaces it. Anything calling the API with it stops working, and you will need to request a new key to call the API again."
-              disabled={busy}
-              onConfirm={revokeKey}
-            />
-          </div>
-        </div>
+        <ApiKeyDetails
+          apiKey={apiKey}
+          busy={busy}
+          onRegenerate={() => issueKey({ appName: apiKey.appName })}
+          onDelete={revokeKey}
+        />
       )}
 
       {settled && !apiKey && (
