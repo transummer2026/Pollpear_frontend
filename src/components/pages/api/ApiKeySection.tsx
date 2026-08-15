@@ -177,42 +177,82 @@ function ApiKeyName({ apiKey, busy }: { apiKey: ApiKeyDTO; busy: boolean }) {
   );
 }
 
+type ApiKeyCreateFormProps = {
+  busy: boolean;
+  label: string;
+  onCreate: (body: ApiKeyCreateDTO) => void;
+  confirm?: { title: string; description: string };
+};
+
 function ApiKeyCreateForm({
   busy,
+  label,
   onCreate,
-}: {
-  busy: boolean;
-  onCreate: (body: ApiKeyCreateDTO) => void;
-}) {
+  confirm,
+}: ApiKeyCreateFormProps) {
+  const [confirming, setConfirming] = useState(false);
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<ApiKeyCreateDTO>({
     resolver: zodResolver(ApiKeyCreateSchema),
   });
 
+  const onSubmit: SubmitHandler<ApiKeyCreateDTO> = (data) => {
+    if (confirm) {
+      setConfirming(true);
+      return;
+    }
+    onCreate(data);
+  };
+
   return (
-    <form onSubmit={handleSubmit(onCreate)} className="space-y-3">
-      <div className="space-y-1.5">
-        <Label htmlFor="appName">Application name</Label>
-        <Input
-          id="appName"
-          className="max-w-xs"
-          placeholder="default"
-          {...register("appName", {
-            setValueAs: (value: string) => value.trim() || undefined,
-          })}
-        />
-        {errors.appName && (
-          <p className="text-destructive text-sm">{errors.appName.message}</p>
-        )}
-      </div>
-      <Button type="submit" disabled={busy}>
-        <KeyRound size={16} />
-        Request an API key
-      </Button>
-    </form>
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+        <div className="space-y-1.5">
+          <Label htmlFor="appName">Application name</Label>
+          <Input
+            id="appName"
+            className="max-w-xs"
+            placeholder="default"
+            {...register("appName", {
+              setValueAs: (value: string) => value.trim() || undefined,
+            })}
+          />
+          {errors.appName && (
+            <p className="text-destructive text-sm">{errors.appName.message}</p>
+          )}
+        </div>
+        <Button type="submit" disabled={busy}>
+          <KeyRound size={16} />
+          {label}
+        </Button>
+      </form>
+
+      {confirm && (
+        <AlertDialog open={confirming} onOpenChange={setConfirming}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>{confirm.title}</AlertDialogTitle>
+              <AlertDialogDescription>
+                {confirm.description}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => onCreate(getValues())}
+                disabled={busy}
+              >
+                {label}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
+    </>
   );
 }
 
@@ -259,13 +299,15 @@ export default function ApiKeySection() {
       </div>
 
       {failed && (
-        <ConfirmedAction
-          icon={<KeyRound size={16} />}
+        <ApiKeyCreateForm
+          busy={busy}
           label="Request a key anyway"
-          title="Request a key without checking the current one?"
-          description="We could not read your key status. If you already have a key, requesting a new one revokes it immediately and anything calling the API with it stops working."
-          disabled={busy}
-          onConfirm={() => issueKey({})}
+          onCreate={issueKey}
+          confirm={{
+            title: "Request a key without checking the current one?",
+            description:
+              "We could not read your key status. If you already have a key, requesting a new one revokes it immediately and anything calling the API with it stops working.",
+          }}
         />
       )}
 
@@ -303,7 +345,11 @@ export default function ApiKeySection() {
       )}
 
       {settled && !apiKey && (
-        <ApiKeyCreateForm busy={busy} onCreate={issueKey} />
+        <ApiKeyCreateForm
+          busy={busy}
+          label="Request an API key"
+          onCreate={issueKey}
+        />
       )}
 
       <ApiKeyDialog apiKey={revealedKey} onClose={() => setRevealedKey(null)} />
