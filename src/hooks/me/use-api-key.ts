@@ -9,7 +9,7 @@ import type {
   ApiKeyCreateDTO,
   ApiKeyCreatedDTO,
   ApiKeyDTO,
-  ApiKeyRenameDTO,
+  ApiKeyUpdateDTO,
 } from "@shared/schemas/api-key.schema";
 import type { SWRConfiguration } from "swr";
 import useSWR from "swr";
@@ -41,8 +41,8 @@ export function useApiKeyCreate() {
 /**
  * PATCH the name of the current API key. The key itself is untouched
  */
-export function useApiKeyRename() {
-  return useSWRMutation<ApiKeyDTO, ApiError, string, ApiKeyRenameDTO>(
+export function useApiKeyUpdate() {
+  return useSWRMutation<ApiKeyDTO, ApiError, string, ApiKeyUpdateDTO>(
     API_KEY_ROUTE,
     (resource, { arg }) => patchJson<ApiKeyDTO>(resource, arg),
   );

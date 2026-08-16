@@ -7,16 +7,16 @@ import { toast } from "sonner";
 
 import {
   ApiKeyCreateSchema,
-  ApiKeyRenameSchema,
+  ApiKeyUpdateSchema,
   type ApiKeyCreateDTO,
   type ApiKeyDTO,
-  type ApiKeyRenameDTO,
+  type ApiKeyUpdateDTO,
 } from "@shared/schemas/api-key.schema";
 import { ApiError } from "@/lib/fetcher";
 import {
   useApiKey,
   useApiKeyCreate,
-  useApiKeyRename,
+  useApiKeyUpdate,
   useApiKeyRevoke,
 } from "@/hooks/me/use-api-key";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -138,20 +138,20 @@ function ApiKeyName({
   busy,
 }: Readonly<{ apiKey: ApiKeyDTO; busy: boolean }>) {
   const [isEditing, setIsEditing] = useState(false);
-  const { trigger, isMutating } = useApiKeyRename();
+  const { trigger, isMutating } = useApiKeyUpdate();
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<ApiKeyRenameDTO>({
-    resolver: zodResolver(ApiKeyRenameSchema),
+  } = useForm<ApiKeyUpdateDTO>({
+    resolver: zodResolver(ApiKeyUpdateSchema),
     values: { appName: apiKey.appName },
     resetOptions: { keepDirtyValues: true },
   });
 
-  const onSubmit: SubmitHandler<ApiKeyRenameDTO> = async (data) => {
+  const onSubmit: SubmitHandler<ApiKeyUpdateDTO> = async (data) => {
     try {
       await trigger(data);
       setIsEditing(false);
