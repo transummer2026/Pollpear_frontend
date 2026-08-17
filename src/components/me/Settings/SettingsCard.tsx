@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Bell, User, Lock, RefreshCw, LifeBuoy } from "lucide-react";
+import { Link } from "react-router";
+import { Bell, User, Lock, RefreshCw, LifeBuoy, KeyRound } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -80,6 +81,16 @@ export default function SettingsCard() {
                 <LifeBuoy size={18} />
                 Support
               </a>
+            </Button>
+            <Button
+              variant="ghost"
+              className="w-full justify-start gap-2"
+              asChild
+            >
+              <Link to="/settings/api">
+                <KeyRound size={18} />
+                API
+              </Link>
             </Button>
           </div>
 
