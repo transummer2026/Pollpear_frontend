@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import {
   Bell,
   User,
@@ -8,6 +8,7 @@ import {
   LifeBuoy,
   KeyRound,
   Trash2,
+  Ban,
 } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,6 +22,7 @@ import InformationSection from "@/components/me/Settings/Section/InformationSect
 import NotificationSection from "@/components/me/Settings/Section/NotificationsSection";
 import DarkModeSection from "@/components/me/Settings/Section/DarkModeSection";
 import DeleteAccountSection from "@/components/me/Settings/Section/DeleteAccountSection";
+import BlocksSection from "@/components/me/Settings/Section/BlocksSection";
 
 const sections = [
   {
@@ -44,6 +46,11 @@ const sections = [
     icon: RefreshCw,
   },
   {
+    id: "blocks",
+    label: "Blocked users",
+    icon: Ban,
+  },
+  {
     id: "danger",
     label: "Delete account",
     icon: Trash2,
@@ -51,7 +58,11 @@ const sections = [
 ];
 
 export default function SettingsCard() {
-  const [activeSection, setActiveSection] = useState("notifications");
+  const { section } = useParams<{ section?: string }>();
+  const navigate = useNavigate();
+  const activeSection = sections.some((s) => s.id === section)
+    ? (section as string)
+    : "notifications";
   const [language, setLanguage] = useState("en");
 
   return (
@@ -65,18 +76,18 @@ export default function SettingsCard() {
       <CardContent className="p-0">
         <div className="grid md:grid-cols-[240px_1fr]">
           <div className="border-r p-4 space-y-2">
-            {sections.map((section) => {
-              const Icon = section.icon;
+            {sections.map((s) => {
+              const Icon = s.icon;
 
               return (
                 <Button
-                  key={section.id}
-                  variant={activeSection === section.id ? "secondary" : "ghost"}
+                  key={s.id}
+                  variant={activeSection === s.id ? "secondary" : "ghost"}
                   className="w-full justify-start gap-2"
-                  onClick={() => setActiveSection(section.id)}
+                  onClick={() => navigate(`/settings/${s.id}`)}
                 >
                   <Icon size={18} />
-                  {section.label}
+                  {s.label}
                 </Button>
               );
             })}
@@ -116,6 +127,8 @@ export default function SettingsCard() {
             {activeSection === "password" && <PasswordSection />}
 
             {activeSection === "sync" && <SyncSection />}
+
+            {activeSection === "blocks" && <BlocksSection />}
 
             {activeSection === "danger" && <DeleteAccountSection />}
           </div>

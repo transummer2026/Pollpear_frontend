@@ -1,11 +1,19 @@
 import { ItemGroup } from "@/components/ui/item";
-import HeaderUserScore from "./HeaderUserScore";
+import HeaderUserScore from "@/components/user/HeaderUserScore";
+import { useUser } from "@/hooks/user/use-user";
 
-export default function HeaderUserScores({ score }: { score?: number | null }) {
+type HeaderUserScoresProps = {
+  id: number;
+};
+
+export default function HeaderUserScores({ id }: HeaderUserScoresProps) {
+  const { data: user } = useUser(id);
+
+  //TODO: brancher PearsPals / Active Rooms / Polls Created sur les vraies donnees du user
   const stats = [
     {
       label: "Score",
-      value: score ?? undefined,
+      value: user?.score ?? undefined,
     },
     {
       label: "PearsPals",

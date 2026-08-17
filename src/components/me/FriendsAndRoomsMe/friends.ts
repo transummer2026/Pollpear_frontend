@@ -1,8 +1,20 @@
+import type { FriendListItemDTO } from "@shared/schemas/friendship.schema";
+
 export type Friend = {
   id: number;
   name: string;
+  avatarUrl: string;
   status: "online" | "offline";
 };
+
+export function toFriend(item: FriendListItemDTO): Friend {
+  return {
+    id: item.user.id,
+    name: item.user.username,
+    avatarUrl: item.user.avatarUrl,
+    status: item.user.isOnline ? "online" : "offline",
+  };
+}
 
 export function sortByStatus(friends: Friend[]): Friend[] {
   return [...friends].sort((a, b) =>
