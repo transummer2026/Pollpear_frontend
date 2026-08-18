@@ -21,6 +21,10 @@ import VerifyEmailPage from "@/pages/VerifyEmailPage";
 import ResendVerificationPage from "@/pages/ResendVerificationPage";
 import MaintenancePage from "@/pages/MaintenancePage";
 import ApiPage from "@/pages/ApiPage";
+import NotFoundPage from "@/pages/NotFoundPage";
+import ForbiddenPage from "@/pages/ForbiddenPage";
+import UnauthorizedPage from "@/pages/UnauthorizedPage";
+import ServerErrorPage from "@/pages/ServerErrorPage";
 
 export default function AppRoutes() {
   return (
@@ -30,6 +34,9 @@ export default function AppRoutes() {
       <Route path="/legal" element={<LegalPage />} />
       <Route path="/privacy" element={<PrivacyPage />} />
       <Route path="/maintenance" element={<MaintenancePage />} />
+      <Route path="/forbidden" element={<ForbiddenPage />} />
+      <Route path="/unauthorized" element={<UnauthorizedPage />} />
+      <Route path="/server-error" element={<ServerErrorPage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/" element={<HomePage />} />
       <Route path="/auth/password-forgot" element={<PasswordForgotPage />} />
@@ -52,6 +59,8 @@ export default function AppRoutes() {
         <Route path="/rooms/:id" element={<RoomsPage />} />
         <Route path="/rooms/new" element={<NewRoomPage />} />
       </Route>
+
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }
