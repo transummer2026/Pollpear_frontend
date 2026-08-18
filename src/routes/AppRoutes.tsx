@@ -23,7 +23,6 @@ import MaintenancePage from "@/pages/MaintenancePage";
 import ApiPage from "@/pages/ApiPage";
 import NotFoundPage from "@/pages/NotFoundPage";
 import ForbiddenPage from "@/pages/ForbiddenPage";
-import UnauthorizedPage from "@/pages/UnauthorizedPage";
 import ServerErrorPage from "@/pages/ServerErrorPage";
 
 export default function AppRoutes() {
@@ -35,7 +34,6 @@ export default function AppRoutes() {
       <Route path="/privacy" element={<PrivacyPage />} />
       <Route path="/maintenance" element={<MaintenancePage />} />
       <Route path="/forbidden" element={<ForbiddenPage />} />
-      <Route path="/unauthorized" element={<UnauthorizedPage />} />
       <Route path="/server-error" element={<ServerErrorPage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/" element={<HomePage />} />
