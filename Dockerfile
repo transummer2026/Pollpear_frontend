@@ -22,9 +22,6 @@ CMD ["npm", "run", "dev"]
 
 FROM builder AS build
 
-ARG GATEWAY_URL
-RUN test -n "$GATEWAY_URL" || { echo "build arg GATEWAY_URL forbidden" >&2; exit 1; }
-
 COPY --chown=node:node . .
 
 RUN npm run build

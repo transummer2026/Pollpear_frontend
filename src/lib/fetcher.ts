@@ -1,4 +1,12 @@
-const GATEWAY_URL = import.meta.env.GATEWAY_URL ?? "http://localhost:8080/api";
+const config = await fetch("/config.json")
+  .then((r) => (r.ok ? r.json() : null))
+  .catch(() => null);
+
+if (!config && !import.meta.env.DEV) {
+  throw new Error("config.json unreachable");
+}
+
+const GATEWAY_URL: string = config?.gateway_url ?? "http://localhost:8080/api";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
