@@ -52,13 +52,13 @@ const SECTIONS: Section[] = [
   {
     title: "Data retention",
     paragraphs: [
-      "We keep your account and content data for as long as your account is active. If you delete your account, we delete or anonymize your personal data, except where we are required to keep it longer to meet a legal obligation.",
+      `We keep your account and content data for as long as your account is active, and we continue to keep it as-is after your account is deleted. If you would like your personal data anonymized, you can request this at any time by emailing us at ${SUPPORT_EMAIL}.`,
     ],
   },
   {
     title: "Your rights",
     paragraphs: [
-      "Under the FADP (and the GDPR where it applies to you), you may request access to, correction of, or deletion of your personal data, object to or restrict certain processing, and request a copy of your data in a portable format. To exercise any of these rights, contact us at " +
+      "Under the FADP (and the GDPR where it applies to you), you may request access to, correction of, or anonymization of your personal data, object to or restrict certain processing, and request a copy of your data in a portable format. To exercise any of these rights, contact us at " +
         SUPPORT_EMAIL +
         ".",
       "If you believe your data protection rights have not been respected, you may lodge a complaint with the Federal Data Protection and Information Commissioner (FDPIC) in Switzerland, or with your local supervisory authority if the GDPR applies to you.",

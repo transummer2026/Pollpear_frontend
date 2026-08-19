@@ -25,8 +25,7 @@ const FAQS: FaqEntry[] = [
   },
   {
     question: "What kinds of polls can I create?",
-    answer:
-      "You can create single-choice polls, scale (rating) polls, and free-form polls where people answer in their own words.",
+    answer: "You can create single-choice polls and scale (rating) polls.",
   },
   {
     question: "What are rooms?",
@@ -52,8 +51,10 @@ const FAQS: FaqEntry[] = [
     question: "How do I delete my account?",
     answer: (
       <>
-        You can delete your account from your account settings. If you run into
-        an issue, reach out through our <Link to="/contact">Contact page</Link>.
+        You can delete your account from your account settings. Your data is
+        kept as-is after deletion; if you'd like it anonymized instead, email us
+        at info@pollpear.com. If you run into an issue, reach out through our{" "}
+        <Link to="/contact">Contact page</Link>.
       </>
     ),
   },
