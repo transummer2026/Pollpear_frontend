@@ -1,4 +1,4 @@
-import { fetcher, patchJson, type ApiError } from "@/lib/fetcher";
+import { deleteJson, fetcher, patchJson, type ApiError } from "@/lib/fetcher";
 import type { UserDTO, UserUpdateDTO } from "@shared/schemas/users.schema";
 import type { SWRConfiguration } from "swr";
 import useSWR from "swr";
@@ -12,5 +12,11 @@ export function useMeUpdate() {
   return useSWRMutation<UserDTO, ApiError, string, UserUpdateDTO>(
     "/me",
     (ressource, { arg }) => patchJson<UserDTO>(ressource, arg),
+  );
+}
+
+export function useMeDelete() {
+  return useSWRMutation<void, ApiError, string>("/me", (ressource) =>
+    deleteJson<void>(ressource),
   );
 }

@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { Bell, User, Lock, RefreshCw, LifeBuoy, KeyRound } from "lucide-react";
+import {
+  Bell,
+  User,
+  Lock,
+  RefreshCw,
+  LifeBuoy,
+  KeyRound,
+  Trash2,
+} from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -12,6 +20,7 @@ import SyncSection from "@/components/me/Settings/Section/SyncSection";
 import InformationSection from "@/components/me/Settings/Section/InformationSection";
 import NotificationSection from "@/components/me/Settings/Section/NotificationsSection";
 import DarkModeSection from "@/components/me/Settings/Section/DarkModeSection";
+import DeleteAccountSection from "@/components/me/Settings/Section/DeleteAccountSection";
 
 const sections = [
   {
@@ -33,6 +42,11 @@ const sections = [
     id: "sync",
     label: "Sync Profile",
     icon: RefreshCw,
+  },
+  {
+    id: "danger",
+    label: "Delete account",
+    icon: Trash2,
   },
 ];
 
@@ -102,6 +116,8 @@ export default function SettingsCard() {
             {activeSection === "password" && <PasswordSection />}
 
             {activeSection === "sync" && <SyncSection />}
+
+            {activeSection === "danger" && <DeleteAccountSection />}
           </div>
         </div>
       </CardContent>
