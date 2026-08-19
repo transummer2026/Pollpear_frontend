@@ -14,7 +14,7 @@ export default function Footer() {
           <Link to="/contact" className="hover:underline">
             Contact
           </Link>
-          <Link to="/contact" className="hover:underline">
+          <Link to="/faq" className="hover:underline">
             FAQ
           </Link>
           <Link to="/privacy" className="hover:underline">

@@ -14,6 +14,7 @@ import LegalPage from "@/pages/LegalPage";
 import ContactPage from "@/pages/ContactPage";
 import HomePage from "@/pages/HomePage";
 import PrivacyPage from "@/pages/PrivacyPage";
+import FaqPage from "@/pages/FaqPage";
 import PasswordForgotPage from "@/pages/PasswordForgotPage";
 import ChangePasswordPage from "@/pages/ChangePasswordPage";
 import OAuthRegisterPage from "@/pages/OAuthRegisterPage";
@@ -36,6 +37,7 @@ export default function AppRoutes() {
       <Route path="/forbidden" element={<ForbiddenPage />} />
       <Route path="/server-error" element={<ServerErrorPage />} />
       <Route path="/contact" element={<ContactPage />} />
+      <Route path="/faq" element={<FaqPage />} />
       <Route path="/" element={<HomePage />} />
       <Route path="/auth/password-forgot" element={<PasswordForgotPage />} />
       <Route path="/auth/change-password" element={<ChangePasswordPage />} />
