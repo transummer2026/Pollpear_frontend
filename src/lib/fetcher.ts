@@ -35,6 +35,12 @@ const extractErrorMessage = (status: number, body: unknown): string => {
   return `HTTP ${status}`;
 };
 
+let onUnhandledApiError: ((status: number) => void) | null = null;
+
+const setApiErrorHandler = (handler: ((status: number) => void) | null) => {
+  onUnhandledApiError = handler;
+};
+
 /**
  * we work with swr and use the classic fetch (instead of other packages/frameworks like axios etc. )
  * This is a minimal fetcher for now to make api calls
@@ -56,6 +62,17 @@ const fetcher = async <T>(
 
   if (!res.ok) {
     const body = await res.json().catch(() => null);
+    const method = (options?.method ?? "GET").toUpperCase();
+    // "/me" is polled on every page (useAuth) to silently probe whether a
+    // session exists; a 401 there just means "logged out" and must never
+    // force-navigate the visitor, so it's excluded from the redirect.
+    if (
+      method === "GET" &&
+      resource !== "/me" &&
+      (res.status === 401 || res.status === 403 || res.status >= 500)
+    ) {
+      onUnhandledApiError?.(res.status);
+    }
     throw new ApiError(res.status, extractErrorMessage(res.status, body), body);
   }
 
@@ -116,5 +133,6 @@ export {
   putJson,
   patchJson,
   deleteJson,
+  setApiErrorHandler,
   ApiError,
 };
