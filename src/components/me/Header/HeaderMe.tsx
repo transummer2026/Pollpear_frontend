@@ -12,8 +12,8 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router";
 import { Pencil } from "lucide-react";
-import HeaderUserHashtags from "./HeaderUserHashtags";
-import HeaderUserScores from "./HeaderUserScores";
+import HeaderUserHashtags from "./HeaderMeHashtags";
+import HeaderUserScores from "./HeaderMeScores";
 import { useMeUpdate } from "@/hooks/user/use-me";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
@@ -36,7 +36,7 @@ function toFormValues(user: UserDTO): UserUpdateInput {
   };
 }
 
-export default function HeaderUser() {
+export default function HeaderMe() {
   const { data: user } = useMe();
 
   const hashtags = {

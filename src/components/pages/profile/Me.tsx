@@ -1,35 +1,35 @@
-import AvatarUser from "@/components/me/AvatarUser";
-import HeaderUser from "@/components/me/Header/HeaderUser";
-import MainContentUser from "@/components/me/MainContentUser";
-import FriendPannelUser from "@/components/me/FriendsAndRooms/FriendPannelUser";
+import AvatarMe from "@/components/me/AvatarMe";
+import HeaderMe from "@/components/me/Header/HeaderMe";
+import MainContentMe from "@/components/me/MainContentMe";
+import FriendPannelMe from "@/components/me/FriendsAndRoomsMe/FriendPannelUser";
 import Layout from "@/layout/Layout";
 
-export default function Profile() {
+export default function Me() {
   return (
     <Layout>
       <div className="hidden lg:block">
         <div className="grid grid-cols-1 lg:grid-cols-6 mx-auto max-w-7xl gap-4 p-4 ">
           <div className="lg:col-span-1 ">
-            <AvatarUser />
+            <AvatarMe />
           </div>
           <div className="lg:col-span-5">
-            <HeaderUser />
+            <HeaderMe />
           </div>
           <div className="lg:col-span-4 ">
-            <MainContentUser />
+            <MainContentMe />
           </div>
           <div className="lg:col-span-2 ">
-            <FriendPannelUser />
+            <FriendPannelMe />
           </div>
         </div>
       </div>
 
       <div className="lg:hidden">
         <div className="flex flex-col gap-4 p-4 justify-center items-center">
-          <AvatarUser />
-          <HeaderUser />
-          <FriendPannelUser />
-          <MainContentUser />
+          <AvatarMe />
+          <HeaderMe />
+          <FriendPannelMe />
+          <MainContentMe />
         </div>
       </div>
     </Layout>

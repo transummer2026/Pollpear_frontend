@@ -43,7 +43,7 @@ const polls = [
   },
 ];
 
-export default function MainContentUser() {
+export default function MainContentMe() {
   return (
     <Card>
       <CardHeader className="text-center">

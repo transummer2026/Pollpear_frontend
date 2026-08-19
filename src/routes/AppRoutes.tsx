@@ -3,7 +3,7 @@ import AdminPage from "@/pages/SettingsPage";
 import FeedPage from "@/pages/FeedPage";
 import NewPollPage from "@/pages/NewPollPage";
 import NewRoomPage from "@/pages/NewRoomPage";
-import ProfilePage from "@/pages/ProfilePage";
+import MePage from "@/pages/MePage";
 import UserPage from "@/pages/UserPage";
 import RoomsPage from "@/pages/RoomsPage";
 import SettingsPage from "@/pages/SettingsPage";
@@ -50,11 +50,11 @@ export default function AppRoutes() {
 
       <Route element={<ProtectedRoute />}>
         <Route path="/polls/new" element={<NewPollPage />} />
-        <Route path="/me" element={<ProfilePage />} />
+        <Route path="/me" element={<MePage />} />
         <Route path="/feed" element={<FeedPage />} />
         <Route path="/admin" element={<AdminPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
         <Route path="/settings/api" element={<ApiPage />} />
+        <Route path="/settings/:section?" element={<SettingsPage />} />
         <Route path="/users/:id" element={<UserPage />} />
         <Route path="/rooms/:id" element={<RoomsPage />} />
         <Route path="/rooms/new" element={<NewRoomPage />} />

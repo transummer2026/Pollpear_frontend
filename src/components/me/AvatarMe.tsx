@@ -13,7 +13,7 @@ import {
   type UploadImageMeta,
 } from "@shared/schemas/uploads.schema";
 
-export default function AvatarUser() {
+export default function AvatarMe() {
   const { data: user } = useMe();
 
   const { mutate } = useSWRConfig();
