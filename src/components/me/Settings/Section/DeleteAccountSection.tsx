@@ -46,9 +46,9 @@ export default function DeleteAccountSection() {
     if (!next) reset();
   };
 
-  const onSubmit: SubmitHandler<UserDeleteDTO> = async () => {
+  const onSubmit: SubmitHandler<UserDeleteDTO> = async (data) => {
     try {
-      await trigger();
+      await trigger(data);
       await mutate("/me", null, { revalidate: false });
       setOpen(false);
       navigate("/auth/login", { replace: true });
