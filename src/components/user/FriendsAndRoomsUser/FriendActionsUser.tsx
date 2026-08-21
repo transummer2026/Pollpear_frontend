@@ -25,6 +25,8 @@ export default function FriendActionsUser({ friendId }: { friendId: number }) {
 
   const isMutating = isSending || isUpdating || isRemoving;
 
+  if (friendId === me?.id) return null;
+
   async function runAction(action: () => Promise<unknown>) {
     if (isMutating) return;
     try {
