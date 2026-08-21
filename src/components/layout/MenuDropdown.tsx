@@ -1,5 +1,6 @@
-import { Menu } from "lucide-react";
+import { ChevronDown, Menu } from "lucide-react";
 import { Link, useNavigate } from "react-router";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,11 +10,18 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { NavbarSearchTrigger } from "@/components/layout/NavbarSearch/NavbarSearchTrigger";
 import { useLogout } from "@/hooks/auth/use-logout";
+import { useMe } from "@/hooks/user/use-me";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
 
-export function MenuDropdown() {
+type MenuDropdownProps = {
+  /** "avatar" pour le desktop (photo de profil), "burger" pour le mobile */
+  variant?: "burger" | "avatar";
+};
+
+export function MenuDropdown({ variant = "burger" }: MenuDropdownProps) {
   const { trigger, isMutating } = useLogout();
+  const { data: user } = useMe();
 
   const navigate = useNavigate();
 
@@ -27,16 +35,57 @@ export function MenuDropdown() {
     }
   };
 
+  const isAvatar = variant === "avatar";
+
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Menu />
+      <DropdownMenuTrigger
+        className="outline-none"
+        aria-label={isAvatar ? "Open profile menu" : "Open menu"}
+      >
+        {isAvatar ? (
+          <div className="relative cursor-pointer">
+            <Avatar size="lg">
+              <AvatarImage src={user?.avatarUrl} alt="my avatar" />
+              <AvatarFallback>
+                {user?.username?.slice(0, 2).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            <span className="absolute -right-0.5 -bottom-0.5 z-10 flex size-4 items-center justify-center rounded-full bg-background ring-1 ring-border">
+              <ChevronDown className="size-3 text-muted-foreground" />
+            </span>
+          </div>
+        ) : (
+          <Menu />
+        )}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-40" align="start">
-        <NavbarSearchTrigger className="mb-2 w-full" />
-        <Link to="/me" className="block w-full">
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-        </Link>
+      <DropdownMenuContent
+        className={isAvatar ? "w-56" : "w-40"}
+        align={isAvatar ? "end" : "start"}
+      >
+        {isAvatar ? (
+          <>
+            <Link to="/me" className="block w-full">
+              <DropdownMenuItem className="gap-2 py-2">
+                <Avatar>
+                  <AvatarImage src={user?.avatarUrl} alt="my avatar" />
+                  <AvatarFallback>
+                    {user?.username?.slice(0, 2).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="truncate font-medium">{user?.username}</span>
+              </DropdownMenuItem>
+            </Link>
+            <DropdownMenuSeparator />
+          </>
+        ) : (
+          <>
+            <NavbarSearchTrigger className="mb-2 w-full" />
+            <Link to="/me" className="block w-full">
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+            </Link>
+          </>
+        )}
         <Link to="/settings" className="block w-full">
           <DropdownMenuItem>Settings</DropdownMenuItem>
         </Link>
