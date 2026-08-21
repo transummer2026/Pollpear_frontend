@@ -19,11 +19,11 @@ function patchPresence(
 }
 
 export function useFriendPresence() {
-  const { data: me } = useAuth();
+  const { data: me, isAuthenticated } = useAuth();
   const { mutate } = useSWRConfig();
 
   useEffect(() => {
-    if (!me?.id) return;
+    if (!isAuthenticated || !me?.id) return;
     const key = `/users/${me.id}/friends`;
     const socket = getSocket();
     const onOnline = ({ userId }: FriendPresenceEvent) =>
@@ -45,5 +45,5 @@ export function useFriendPresence() {
       socket.off("friend:online", onOnline);
       socket.off("friend:offline", onOffline);
     };
-  }, [me?.id, mutate]);
+  }, [me?.id, isAuthenticated, mutate]);
 }
