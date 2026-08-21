@@ -1,9 +1,13 @@
 import { Link } from "react-router";
 import logo from "@/assets/pwar.jpg";
 
-export function LogoButton() {
+type LogoButtonProps = {
+  to?: string;
+};
+
+export function LogoButton({ to = "/" }: LogoButtonProps) {
   return (
-    <Link to="/">
+    <Link to={to}>
       <img
         src={logo}
         alt="Logo"
