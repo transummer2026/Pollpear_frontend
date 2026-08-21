@@ -48,6 +48,40 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+@theme {
+  /* poll surfaces: one hue per poll type, saturated once the results are in */
+  --color-poll-single-vote: #fcfcf8;
+  --color-poll-single-result: #f5f4e6;
+  --color-poll-multi-vote: #fbfcf8;
+  --color-poll-multi-result: #f0f4e6;
+  --color-poll-scale-vote: #f8fcf9;
+  --color-poll-scale-result: #e7f4ea;
+
+  /* poll depth: vote cards pop out (light from top-left), result cards are pressed in */
+  --shadow-poll-raised:
+    6px 8px 20px -8px oklch(0 0 0 / 0.09), 2px 3px 8px -4px oklch(0 0 0 / 0.06);
+  --shadow-poll-raised-dark:
+    8px 10px 24px -10px oklch(0 0 0 / 0.3), 3px 4px 10px -5px oklch(0 0 0 / 0.2);
+  --inset-shadow-poll-sunken:
+    inset 5px 7px 12px -7px oklch(0 0 0 / 0.15),
+    inset 2px 3px 5px -3px oklch(0 0 0 / 0.08),
+    inset -4px -5px 10px -7px oklch(0 0 0 / 0.06);
+  --inset-shadow-poll-sunken-dark:
+    inset 5px 7px 12px -7px oklch(0 0 0 / 0.38),
+    inset 2px 3px 5px -3px oklch(0 0 0 / 0.25),
+    inset -4px -5px 10px -7px oklch(0 0 0 / 0.16);
+}
+
+/** vote card: lifted off the feed, shadow cast to the bottom right */
+@utility poll-card-raised {
+  @apply shadow-poll-raised dark:shadow-poll-raised-dark;
+}
+
+/** result card: recessed into the feed, shadow inside the top left edges */
+@utility poll-card-sunken {
+  @apply inset-shadow-poll-sunken dark:inset-shadow-poll-sunken-dark;
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);

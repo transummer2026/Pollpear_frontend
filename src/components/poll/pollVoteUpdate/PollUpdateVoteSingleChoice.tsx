@@ -1,0 +1,78 @@
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ApiError } from "@/lib/fetcher";
+import { toast } from "sonner";
+import { useSWRConfig } from "swr";
+import { useVotePollUpdate } from "@/hooks/poll/use-poll";
+import { type PollUpdateVoteProps } from "@/components/poll/pollVoteUpdate/PollUpdateVoteCard";
+import PollHashtags from "@/components/poll/PollHashtags";
+import PollCardHeader from "@/components/poll/PollCardHeader";
+import PollCardFooter from "@/components/poll/PollCardFooter";
+import { getVisibleOptions } from "@/lib/poll";
+
+export default function PollUpdateVoteSingleChoice({
+  poll,
+  onDone,
+}: PollUpdateVoteProps) {
+  const { mutate } = useSWRConfig();
+  const { trigger, isMutating } = useVotePollUpdate(poll.id);
+
+  const handleVote = async (optionId: number) => {
+    try {
+      await trigger({
+        type: "single_choice",
+        optionsVoted: [{ optionId }],
+      });
+      await mutate(`/polls/${poll.id}`);
+      await mutate(`/polls`);
+      toast.success("Vote recorded");
+      onDone();
+    } catch (err) {
+      if (err instanceof ApiError) toast.error(err.message);
+      else toast.error("An unknown error occurred");
+    }
+  };
+
+  return (
+    <Card size="sm" className="w-full self-start p-4 space-y-4">
+      <PollCardHeader poll={poll} />
+
+      <h2 className="text-sm font-bold">{poll.title}</h2>
+
+      {poll.description && (
+        <p className="text-sm text-muted-foreground">{poll.description}</p>
+      )}
+
+      <div className="space-y-2">
+        {getVisibleOptions(poll).map((option) => (
+          <Button
+            key={option.id}
+            type="button"
+            variant="outline"
+            size="sm"
+            className="w-full justify-between h-12 hover:bg-muted"
+            disabled={isMutating}
+            onClick={() => handleVote(option.id)}
+          >
+            <span>{option.text}</span>
+          </Button>
+        ))}
+      </div>
+
+      <Button
+        type="button"
+        variant="ghost"
+        size="sm"
+        className="w-full text-muted-foreground"
+        disabled={isMutating}
+        onClick={onDone}
+      >
+        Cancel
+      </Button>
+
+      <PollHashtags poll={poll} />
+
+      <PollCardFooter poll={poll} />
+    </Card>
+  );
+}

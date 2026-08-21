@@ -30,8 +30,8 @@ export default function AnonymousSwitch({
 
             <TooltipContent>
               {anonymous
-                ? "The creator name will be hidden"
-                : "The creator name will be visible"}
+                ? "The creator name will be visible"
+                : "The creator name will be hidden"}
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>

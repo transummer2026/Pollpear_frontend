@@ -7,15 +7,18 @@ import {
   PollCreateSchema,
   type PollCreateDTO,
 } from "@shared/schemas/polls.schema";
-import { useCreatePoll } from "@/hooks/poll/use-create-poll";
+import { usePollCreate } from "@/hooks/poll/use-poll";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
-import ScaleHeader from "@/components/poll/pollCreation/SectionParts/HeaderScale";
-import OptionsScale from "@/components/poll/pollCreation/SectionParts/OptionsScale";
-import { scaleDefaultValues, type ScaleFormValues } from "./pollForm";
+import ScaleHeader from "@/components/poll/pollCreation/SectionParts/HeaderSlider";
+import OptionsScale from "@/components/poll/pollCreation/SectionParts/OptionsSlider";
+import { scaleDefaultValues, type SliderFormValues } from "./pollForm";
+import { useSWRConfig } from "swr";
+import { useNavigate } from "react-router";
 
-export default function ScaleSection() {
-  const { trigger, isMutating } = useCreatePoll();
+export default function SliderSection() {
+  const { mutate } = useSWRConfig();
+  const { trigger, isMutating } = usePollCreate();
   const {
     control,
     register,
@@ -24,20 +27,25 @@ export default function ScaleSection() {
     setValue,
     reset,
     formState: { errors },
-  } = useForm<ScaleFormValues, unknown, PollCreateDTO>({
+  } = useForm<SliderFormValues, unknown, PollCreateDTO>({
     resolver: zodResolver(PollCreateSchema) as Resolver<
-      ScaleFormValues,
+      SliderFormValues,
       unknown,
       PollCreateDTO
     >,
     defaultValues: scaleDefaultValues,
   });
 
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<PollCreateDTO> = async (data) => {
+    console.log(data);
     try {
-      await trigger(data);
+      const updated = await trigger(data);
+      await mutate("/poll/{id}", updated, { revalidate: false });
       toast.success("Poll created");
       reset(scaleDefaultValues);
+      navigate("/me", { replace: true });
     } catch (err) {
       if (err instanceof ApiError) toast.error(err.message);
       else toast.error("An unknown error occurred");

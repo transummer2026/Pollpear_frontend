@@ -12,7 +12,10 @@ export type PollFormValues = Extract<
   { type: "single_choice" | "multiple_choice" }
 > & { endsAt: Date };
 
-export type ScaleFormValues = Extract<PollCreationInput, { type: "slider" }> & {
+export type SliderFormValues = Extract<
+  PollCreationInput,
+  { type: "slider" }
+> & {
   endsAt: Date;
 };
 
@@ -45,21 +48,32 @@ export const defaultValues: DefaultValues<PollFormValues> = {
 };
 
 /**
- * A slider poll holds exactly one option: its label is the statement being
- * rated, and the two slider labels are the ends of the scale (left / right).
+ * A slider poll has no per-option label, but the DB (and so the shared schema)
+ * requires a non-empty `text`. We fill it here rather than with a hidden input:
+ * react-hook-form applies its own defaultValues over the DOM `defaultValue`,
+ * so a hardcoded value in the markup is silently replaced by "".
  */
-export const scaleDefaultValues: DefaultValues<ScaleFormValues> = {
+export const SLIDER_OPTION_TEXT = "slider";
+
+export const scaleDefaultValues: DefaultValues<SliderFormValues> = {
   title: "",
   description: "",
   type: "slider",
   endsAt: daysFromNow(INITIAL_DAYS),
   allowChangeVote: true,
   isAnonymous: false,
-  options: [{ text: "", order: 0, sliderLeftLabel: "", sliderRightLabel: "" }],
+  options: [
+    {
+      text: SLIDER_OPTION_TEXT,
+      order: 0,
+      sliderLeftLabel: "",
+      sliderRightLabel: "",
+    },
+  ],
   hashtags: [],
 };
 
-// Free field poll type on hold, see FreeFormValues above.
+// Free field poll type on hold
 // /**
 //  * A free field poll carries no option at all: the question is the title and
 //  * each voter writes their own answer.

@@ -3,11 +3,7 @@ import { Chart01Icon } from "@hugeicons/core-free-icons";
 import { CommandGroup, CommandItem } from "@/components/ui/command";
 import type { PollSearchResultDTO } from "@shared/schemas/search.schema";
 
-type PollSearchGroupProps = {
-  polls: PollSearchResultDTO[];
-};
-
-export function PollSearchGroup({ polls }: PollSearchGroupProps) {
+export function PollSearchGroup({ polls }: { polls: PollSearchResultDTO[] }) {
   if (polls.length === 0) return null;
 
   return (

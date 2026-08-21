@@ -19,7 +19,6 @@ type GenderField = {
   gender?: GenderDTO | null;
 };
 
-
 const GENDER_LABELS: Record<GenderDTO, string> = {
   male: "Male",
   female: "Female",

@@ -1,15 +1,16 @@
 import type { UseFormRegister, FieldErrors } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
 import { CardTitle } from "@/components/ui/card";
-import type { ScaleFormValues } from "@/components/poll/pollCreation/pollForm";
+import type { SliderFormValues } from "@/components/poll/pollCreation/pollForm";
 
 type ScaleChoiceSectionProps = {
-  register: UseFormRegister<ScaleFormValues>;
-  errors: FieldErrors<ScaleFormValues>;
+  register: UseFormRegister<SliderFormValues>;
+  errors: FieldErrors<SliderFormValues>;
 };
 
-export default function ScaleChoiceSection({
+export default function SliderChoiceSection({
   register,
   errors,
 }: ScaleChoiceSectionProps) {
@@ -18,12 +19,10 @@ export default function ScaleChoiceSection({
   return (
     <div className="space-y-5 flex flex-col w-full">
       <CardTitle>Scale</CardTitle>
-
       <div className="space-y-2">
-        <Label htmlFor="scale-label">Statement</Label>
         <Input
           id="scale-label"
-          placeholder="How much do you agree?"
+          type="hidden"
           {...register("options.0.text" as const)}
         />
         {optionErrors?.text && (
@@ -32,7 +31,13 @@ export default function ScaleChoiceSection({
           </p>
         )}
       </div>
-
+      <Slider
+        defaultValue={[50]}
+        max={100}
+        step={1}
+        disabled
+        className="mx-auto w-full"
+      />
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="scale-left">Left label</Label>
@@ -49,14 +54,17 @@ export default function ScaleChoiceSection({
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="scale-right">Right label</Label>
+          <Label htmlFor="scale-right" className="block text-right">
+            Right label
+          </Label>
           <Input
             id="scale-right"
             placeholder="Agree"
+            className="text-right"
             {...register("options.0.sliderRightLabel" as const)}
           />
           {optionErrors?.sliderRightLabel && (
-            <p className="text-sm text-destructive">
+            <p className="text-sm text-destructive text-right">
               {optionErrors.sliderRightLabel.message}
             </p>
           )}

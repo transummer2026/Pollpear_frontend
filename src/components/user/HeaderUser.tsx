@@ -19,7 +19,7 @@ export default function HeaderUser({ id }: HeaderUserProps) {
   const { data: user } = useUser(id);
 
   return (
-    <Card>
+    <Card className="lg:min-h-40 lg:max-h-50 lg:[--card-spacing:--spacing(4)]">
       <CardHeader className="space-y-2">
         <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
           <CardTitle className="text-lg font-bold">{user?.username}</CardTitle>
@@ -31,7 +31,7 @@ export default function HeaderUser({ id }: HeaderUserProps) {
         <CardDescription>{user?.bio}</CardDescription>
       </CardHeader>
       <Separator />
-      <CardContent className="space-y-2 grid grid-cols-1 lg:grid-cols-5 mx-auto max-w-7xl gap-4 p-4">
+      <CardContent className="grid grid-cols-1 gap-4 lg:grid-cols-5 lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
         <div className="lg:col-span-4 md:col-span-2">
           <HeaderUserScores id={id} />
         </div>
