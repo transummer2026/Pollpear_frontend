@@ -7,9 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import SingleChoiceSection from "@/components/poll/pollCreation/SingleChoiceSection";
 import Layout from "@/layout/Layout";
-import ScaleSection from "@/components/poll/pollCreation/ScaleSection";
-// Free field poll type on hold, not implemented yet (see FreeFormSection.tsx).
-// import FreeFormSection from "@/components/poll/pollCreation/FreeFormSection";
+import SliderSection from "@/components/poll/pollCreation/SliderSection";
 
 const pollTypes = [
   {
@@ -18,15 +16,10 @@ const pollTypes = [
     icon: ListChecks,
   },
   {
-    id: "scale",
-    label: "Scale",
+    id: "slider",
+    label: "slider",
     icon: Gauge,
   },
-  // {
-  //   id: "freeForm",
-  //   label: "free form",
-  //   icon: MessageSquareText,
-  // },
 ];
 
 export default function PollCreatorCard() {
@@ -66,8 +59,7 @@ export default function PollCreatorCard() {
 
           <CardContent>
             {activeTab === "single" && <SingleChoiceSection />}
-            {activeTab === "scale" && <ScaleSection />}
-            {/* {activeTab === "freeForm" && <FreeFormSection />} */}
+            {activeTab === "slider" && <SliderSection />}
           </CardContent>
         </Card>
       </div>

@@ -1,11 +1,11 @@
 import type { UseFormRegister, FieldErrors } from "react-hook-form";
 import TitleSetting from "@/components/poll/pollCreation/SectionParts/TitleSetting";
 import PollDescription from "@/components/poll/pollCreation/SectionParts/PollDescription";
-import type { ScaleFormValues } from "@/components/poll/pollCreation/pollForm";
+import type { SliderFormValues } from "@/components/poll/pollCreation/pollForm";
 
 type ScaleHeaderProps = {
-  register: UseFormRegister<ScaleFormValues>;
-  errors: FieldErrors<ScaleFormValues>;
+  register: UseFormRegister<SliderFormValues>;
+  errors: FieldErrors<SliderFormValues>;
 };
 
 /** No poll type picker here: the type is already fixed by the "Scale" tab. */

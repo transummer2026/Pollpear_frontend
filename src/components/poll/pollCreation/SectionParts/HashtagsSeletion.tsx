@@ -24,7 +24,9 @@ export default function HashtagsSelection({
       hashtags.length < 5 &&
       !hashtags.some((tag) => tag.name === cleaned)
     ) {
-      setValue("hashtags", [...hashtags, { name: cleaned }]);
+      setValue("hashtags", [...hashtags, { name: cleaned }], {
+        shouldDirty: true,
+      });
       setTagInput("");
     }
   };
@@ -33,6 +35,7 @@ export default function HashtagsSelection({
     setValue(
       "hashtags",
       hashtags.filter((tag) => tag.name !== name),
+      { shouldDirty: true },
     );
   };
 

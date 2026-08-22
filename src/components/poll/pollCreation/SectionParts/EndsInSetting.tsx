@@ -20,7 +20,7 @@ export default function EndsInSetting({
         <Input
           type="number"
           min={1}
-          max={5}
+          max={365}
           className="w-28"
           value={days}
           onChange={(e) => {

@@ -7,15 +7,18 @@ import {
   PollCreateSchema,
   type PollCreateDTO,
 } from "@shared/schemas/polls.schema";
-import { useCreatePoll } from "@/hooks/poll/use-create-poll";
+import { usePollCreate } from "@/hooks/poll/use-poll";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
 import SingleMultiChoiceHeader from "@/components/poll/pollCreation/SectionParts/HeaderSingleMultiChoice";
 import SingleMultiChoiceOptions from "@/components/poll/pollCreation/SectionParts/OptionsSingleMultiChoice";
 import { defaultValues, type PollFormValues } from "./pollForm";
+import { useSWRConfig } from "swr";
+import { useNavigate } from "react-router";
 
 export default function SingleChoiceSection() {
-  const { trigger, isMutating } = useCreatePoll();
+  const { mutate } = useSWRConfig();
+  const { trigger, isMutating } = usePollCreate();
   const {
     control,
     register,
@@ -34,11 +37,15 @@ export default function SingleChoiceSection() {
     defaultValues,
   });
 
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<PollCreateDTO> = async (data) => {
     try {
-      await trigger(data);
+      const updated = await trigger(data);
+      await mutate("/poll/{id}", updated, { revalidate: false });
       toast.success("Poll created");
       reset(defaultValues);
+      navigate("/me", { replace: true });
     } catch (err) {
       if (err instanceof ApiError) toast.error(err.message);
       else toast.error("An unknown error occurred");

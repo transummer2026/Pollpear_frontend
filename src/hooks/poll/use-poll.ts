@@ -1,46 +1,44 @@
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
-import { fetcher, postJson, type ApiError } from "@/lib/fetcher";
+import {
+  fetcher,
+  patchJson,
+  postJson,
+  deleteJson,
+  type ApiError,
+} from "@/lib/fetcher";
 import type { VoteCreateDTO } from "@shared/schemas/vote.schema";
-import type { PollReadDTO } from "@shared/schemas/polls.schema";
-
-/**
- * Shape we expect from the read routes. They are not implemented yet
- * (the backend answers 503 and the gateway does not even proxy them), so this
- * is the contract to line up with once they are, not something observed.
- * Derived from PollReadDTO; its top-level date fields are re-typed as strings
- * since dates go through JSON as ISO strings, and myVote is added on top
- * since it's per-requesting-user state, not part of the Poll model itself.
- */
-export type PollDetailDTO = Omit<
+import type {
+  PollCreateDTO,
   PollReadDTO,
-  "publishedAt" | "endsAt" | "createdAt" | "updatedAt" | "deletedAt"
-> & {
-  publishedAt: string | null;
-  endsAt: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
-  /** ids the current user already voted for, empty or absent if they did not */
-  myVote?: { optionIds: number[] } | null;
-};
+  PollUpdateDTO,
+} from "@shared/schemas/polls.schema";
 
 export type PollResultsDTO = {
   totalVotes: number;
-  options: (PollDetailDTO["options"][number] & { votes: number })[];
+  options: (PollReadDTO["options"][number] & { votes: number })[];
 };
 
 export function usePoll(pollId?: number) {
-  return useSWR<PollDetailDTO, ApiError>(
+  return useSWR<PollReadDTO, ApiError>(
     pollId ? `/polls/${pollId}` : null,
     fetcher,
   );
 }
 
-/**
- * `enabled` lets a caller hold the request back until the vote is cast, so the
- * results are only fetched once they are meant to be shown.
- */
+export function usePolls() {
+  return useSWR<PollReadDTO[], ApiError>("/polls", fetcher);
+}
+
+export function usePollsUser(userId?: number) {
+  return useSWR<PollReadDTO[], ApiError>(
+    userId
+      ? `/polls?${new URLSearchParams({ userId: userId.toString() })}`
+      : null,
+    fetcher,
+  );
+}
+
 export function usePollResults(pollId?: number, enabled = true) {
   return useSWR<PollResultsDTO, ApiError>(
     pollId && enabled ? `/polls/${pollId}/results` : null,
@@ -48,9 +46,37 @@ export function usePollResults(pollId?: number, enabled = true) {
   );
 }
 
+export function usePollCreate() {
+  return useSWRMutation<PollCreateDTO, ApiError, string, PollCreateDTO>(
+    "/polls/new",
+    (resource, { arg }) => postJson<PollCreateDTO>(resource, arg),
+  );
+}
+
+export function usePollUpdate(pollId: number) {
+  return useSWRMutation<PollUpdateDTO, ApiError, string, PollUpdateDTO>(
+    `/polls/${pollId}`,
+    (resource, { arg }) => patchJson<PollUpdateDTO>(resource, arg),
+  );
+}
+
 export function useVotePoll(pollId: number) {
-  return useSWRMutation<unknown, ApiError, string, VoteCreateDTO>(
+  return useSWRMutation<VoteCreateDTO, ApiError, string, VoteCreateDTO>(
     `/polls/${pollId}/vote`,
-    (resource, { arg }) => postJson<unknown>(resource, arg),
+    (resource, { arg }) => postJson<VoteCreateDTO>(resource, arg),
+  );
+}
+
+export function useVotePollUpdate(pollId: number) {
+  return useSWRMutation<VoteCreateDTO, ApiError, string, VoteCreateDTO>(
+    `/polls/${pollId}/vote`,
+    (resource, { arg }) => patchJson<VoteCreateDTO>(resource, arg),
+  );
+}
+
+export function usePollDelete(pollId: number) {
+  return useSWRMutation<VoteCreateDTO, ApiError, string>(
+    `/polls/${pollId}`,
+    (ressource) => deleteJson<VoteCreateDTO>(ressource),
   );
 }

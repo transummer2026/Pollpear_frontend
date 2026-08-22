@@ -75,10 +75,7 @@ export default function RegisterCardAuth({
         )}
       </div>
       <div>
-        <ProfileCardGender
-          errors={errors}
-          control={control}
-        />
+        <ProfileCardGender errors={errors} control={control} />
       </div>
     </div>
   );

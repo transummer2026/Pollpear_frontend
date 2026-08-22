@@ -10,7 +10,8 @@ type PollResultProps = {
 };
 
 export default function PollResult({ answer, totalVotes }: PollResultProps) {
-  const percent = Math.round((answer.votes / totalVotes) * 100);
+  const percent =
+    totalVotes > 0 ? Math.round((answer.votes / totalVotes) * 100) : 0;
 
   return (
     <div>

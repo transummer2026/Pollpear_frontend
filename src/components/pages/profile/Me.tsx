@@ -8,17 +8,17 @@ export default function Me() {
   return (
     <Layout>
       <div className="hidden lg:block">
-        <div className="grid grid-cols-1 lg:grid-cols-6 mx-auto max-w-7xl gap-4 p-4 ">
-          <div className="lg:col-span-1 ">
+        <div className="grid grid-cols-1 lg:grid-cols-4 mx-auto max-w-7xl gap-4 p-4 ">
+          <div className="lg:col-span-1 flex items-center justify-center">
             <AvatarMe />
           </div>
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-3">
             <HeaderMe />
           </div>
-          <div className="lg:col-span-4 ">
+          <div className="lg:col-span-3 ">
             <MainContentMe />
           </div>
-          <div className="lg:col-span-2 ">
+          <div className="lg:col-span-1 ">
             <FriendPannelMe />
           </div>
         </div>

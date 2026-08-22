@@ -28,8 +28,8 @@ export default function AllowVoteChangeSwitch({
 
           <TooltipContent>
             {allowChangeVote
-              ? "Changing the vote is disabled after viewing the results."
-              : "The vote can be changed after viewing the results."}
+              ? "The vote can be changed after viewing the results."
+              : "Changing the vote is disabled after viewing the results."}
           </TooltipContent>
         </Tooltip>
       </div>
