@@ -1,18 +1,15 @@
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-
+import NewRoomCard from "@/components/room/roomCreation/NewRoomCard";
+import Layout from "@/layout/Layout";
 export default function NewRoom() {
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
-
-      <main className="flex-1">
-        <div className="flex justify-center">
-          <h1>NewRoom</h1>
-        </div>
-      </main>
-
-      <Footer />
+      <Layout>
+        <main className="flex-1">
+          <div className="flex justify-center mt-6">
+            <NewRoomCard />
+          </div>
+        </main>
+      </Layout>
     </div>
   );
 }
