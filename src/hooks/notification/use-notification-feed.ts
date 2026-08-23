@@ -22,9 +22,24 @@ export function useNotificationFeed() {
             : [notification, ...(current ?? [])],
         { revalidate: false },
       );
+    const onRemoved = ({
+      type,
+      actorId,
+    }: {
+      type: NotificationDTO["type"];
+      actorId: NotificationDTO["actorId"];
+    }) =>
+      void mutate(
+        KEY,
+        (current?: NotificationDTO[]) =>
+          current?.filter((n) => !(n.type === type && n.actorId === actorId)),
+        { revalidate: false },
+      );
     socket.on("notification:new", onNew);
+    socket.on("notification:removed", onRemoved);
     return () => {
       socket.off("notification:new", onNew);
+      socket.off("notification:removed", onRemoved);
     };
   }, [isAuthenticated, mutate]);
 }
