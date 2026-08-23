@@ -36,6 +36,7 @@ export default function FriendActionsUser({ friendId }: { friendId: number }) {
       if (me) {
         await mutate(`/users/${me.id}/friends`);
         await mutate(`/users/${me.id}/friend-requests`);
+        await mutate(`/me/notifications`);
       }
     } catch (e) {
       if (e instanceof ApiError) toast.error(e.message);
