@@ -5,6 +5,8 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar";
 import { useUser } from "@/hooks/user/use-user";
+import { useAuth } from "@/hooks/auth/use-auth";
+import { useFriends } from "@/hooks/friend/use-friendship";
 import { cn } from "@/lib/utils";
 import { statusBadgeClass } from "./FriendsAndRoomsUser/friends";
 
@@ -14,8 +16,10 @@ type AvatarUserProps = {
 
 export default function AvatarUser({ id }: AvatarUserProps) {
   const { data: user } = useUser(id);
+  const { data: me } = useAuth();
+  const { data: friends } = useFriends(me?.id);
 
-  const status = user?.isOnline ? "online" : "offline";
+  const friend = friends?.find((item) => item.user.id === id);
 
   return (
     <div className="relative h-40 w-40">
@@ -24,12 +28,14 @@ export default function AvatarUser({ id }: AvatarUserProps) {
         <AvatarFallback>
           {user?.username?.slice(0, 2).toUpperCase()}
         </AvatarFallback>
-        <AvatarBadge
-          className={cn(
-            "right-2 bottom-2 ring-4 group-data-[size=default]/avatar:size-7",
-            statusBadgeClass(status),
-          )}
-        />
+        {friend && (
+          <AvatarBadge
+            className={cn(
+              "right-2 bottom-2 ring-4 group-data-[size=default]/avatar:size-7",
+              statusBadgeClass(friend.user.isOnline ? "online" : "offline"),
+            )}
+          />
+        )}
       </Avatar>
     </div>
   );
