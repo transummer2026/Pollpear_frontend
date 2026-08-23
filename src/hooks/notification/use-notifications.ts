@@ -1,10 +1,8 @@
-import { useEffect } from "react";
 import useSWR from "swr";
 import { useSWRConfig } from "swr";
 import type { NotificationDTO } from "@shared/schemas/notification.schema";
-import { ApiError, fetcher, patchJson } from "@/lib/fetcher";
+import { ApiError, fetcher, patchJson, deleteJson } from "@/lib/fetcher";
 import { useAuth } from "@/hooks/auth/use-auth";
-import { getSocket } from "@/lib/socket";
 
 const KEY = "/me/notifications";
 
@@ -16,21 +14,6 @@ export function useNotifications() {
     isAuthenticated ? KEY : null,
     fetcher,
   );
-
-  useEffect(() => {
-    if (!isAuthenticated) return;
-    const socket = getSocket();
-    const onNew = (notification: NotificationDTO) =>
-      void mutate(
-        KEY,
-        (current?: NotificationDTO[]) => [notification, ...(current ?? [])],
-        { revalidate: false },
-      );
-    socket.on("notification:new", onNew);
-    return () => {
-      socket.off("notification:new", onNew);
-    };
-  }, [isAuthenticated, mutate]);
 
   const notifications = data ?? [];
   const unreadCount = notifications.filter((n) => !n.isRead).length;
@@ -46,5 +29,14 @@ export function useNotifications() {
     );
   }
 
-  return { notifications, unreadCount, isLoading, error, markAllRead };
+  async function dismiss(id: number) {
+    await deleteJson(`${KEY}/${id}`);
+    await mutate(
+      KEY,
+      (current?: NotificationDTO[]) => current?.filter((n) => n.id !== id),
+      { revalidate: false },
+    );
+  }
+
+  return { notifications, unreadCount, isLoading, error, markAllRead, dismiss };
 }
