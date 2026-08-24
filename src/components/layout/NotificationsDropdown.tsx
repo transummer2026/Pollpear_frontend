@@ -107,11 +107,7 @@ export function NotificationsDropdown() {
                     variant="ghost"
                     size="icon"
                     className="size-6 shrink-0 text-muted-foreground"
-                    aria-label={
-                      isInvitation(notification)
-                        ? "Ignore invitation"
-                        : "Dismiss notification"
-                    }
+                    aria-label="Dismiss notification"
                     onClick={() => void onDismiss(notification.id)}
                   >
                     {isInvitation(notification) ? (
