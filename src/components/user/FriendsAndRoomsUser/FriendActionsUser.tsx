@@ -13,7 +13,7 @@ import {
 
 export default function FriendActionsUser({ friendId }: { friendId: number }) {
   const { data: me } = useAuth();
-  const { data: friendship } = useFriendshipWithUser(friendId);
+  const { data: friendship, isLoading } = useFriendshipWithUser(friendId);
   const { mutate } = useSWRConfig();
 
   const { trigger: sendRequest, isMutating: isSending } =
@@ -42,6 +42,19 @@ export default function FriendActionsUser({ friendId }: { friendId: number }) {
       if (e instanceof ApiError) toast.error(e.message);
       else toast.error("An unknown error occurred");
     }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex gap-1" aria-hidden>
+        <Badge variant="secondary" className="invisible">
+          <X />
+        </Badge>
+        <Badge variant="default" className="invisible">
+          <Check />
+        </Badge>
+      </div>
+    );
   }
 
   if (!friendship || friendship.status === "rejected") {
