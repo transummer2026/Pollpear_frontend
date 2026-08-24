@@ -10,7 +10,7 @@ export function useNotifications() {
   const { isAuthenticated } = useAuth();
   const { mutate } = useSWRConfig();
 
-  const { data, error, isLoading } = useSWR<NotificationDTO[], ApiError>(
+  const { data } = useSWR<NotificationDTO[], ApiError>(
     isAuthenticated ? KEY : null,
     fetcher,
   );
@@ -38,5 +38,5 @@ export function useNotifications() {
     );
   }
 
-  return { notifications, unreadCount, isLoading, error, markAllRead, dismiss };
+  return { notifications, unreadCount, markAllRead, dismiss };
 }
