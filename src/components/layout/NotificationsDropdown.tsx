@@ -19,6 +19,8 @@ import {
 import FriendActionsUser from "@/components/user/FriendsAndRoomsUser/FriendActionsUser";
 import { ApiError } from "@/lib/fetcher";
 import { useNotifications } from "@/hooks/notification/use-notifications";
+import { useAuth } from "@/hooks/auth/use-auth";
+import { useFriendRequests } from "@/hooks/friend/use-friendship";
 import type { NotificationDTO } from "@shared/schemas/notification.schema";
 
 function isInvitation(n: NotificationDTO) {
@@ -28,6 +30,9 @@ function isInvitation(n: NotificationDTO) {
 export function NotificationsDropdown() {
   const { notifications, unreadCount, markAllRead, dismiss } =
     useNotifications();
+  const { data: me } = useAuth();
+  const { data: friendRequests } = useFriendRequests(me?.id);
+  const pendingFrom = new Set((friendRequests ?? []).map((r) => r.user.id));
 
   const ordered = [...notifications].sort(
     (a, b) => Number(isInvitation(b)) - Number(isInvitation(a)),
@@ -100,9 +105,17 @@ export function NotificationsDropdown() {
                   )}
                 </ItemContent>
                 <ItemActions className="gap-1">
-                  {isInvitation(notification) && notification.actorId && (
-                    <FriendActionsUser friendId={notification.actorId} />
-                  )}
+                  {isInvitation(notification) &&
+                    notification.actorId &&
+                    pendingFrom.has(notification.actorId) && (
+                      <FriendActionsUser
+                        friendId={notification.actorId}
+                        friendship={{
+                          status: "pending",
+                          requesterId: notification.actorId,
+                        }}
+                      />
+                    )}
                   <Button
                     variant="ghost"
                     size="icon"
