@@ -5,11 +5,17 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Item, ItemActions, ItemContent } from "@/components/ui/item";
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemGroup,
+} from "@/components/ui/item";
 import FriendActionsUser from "@/components/user/FriendsAndRoomsUser/FriendActionsUser";
 import { ApiError } from "@/lib/fetcher";
 import { useNotifications } from "@/hooks/notification/use-notifications";
@@ -46,14 +52,18 @@ export function NotificationsDropdown() {
         <Button
           variant="outline"
           size="icon"
-          aria-label="Notifications"
+          aria-label={
+            unreadCount > 0
+              ? `Notifications, ${unreadCount} unread`
+              : "Notifications"
+          }
           className="relative"
         >
           <Bell />
           {unreadCount > 0 && (
             <span
               className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-medium text-white"
-              aria-label={`${unreadCount} unread notifications`}
+              aria-hidden
             >
               {unreadCount > 9 ? "9+" : unreadCount}
             </span>
@@ -68,7 +78,7 @@ export function NotificationsDropdown() {
             No notifications yet
           </p>
         ) : (
-          <ul className="max-h-96 overflow-y-auto">
+          <ItemGroup className="max-h-96 overflow-y-auto">
             {ordered.map((notification) => (
               <Item key={notification.id} className="gap-2 p-2">
                 <ItemContent
@@ -79,9 +89,11 @@ export function NotificationsDropdown() {
                   {notification.actorId ? (
                     <Link
                       to={`/users/${notification.actorId}`}
-                      className="hover:underline"
+                      className="block w-full"
                     >
-                      {notification.content}
+                      <DropdownMenuItem className="p-0 hover:underline">
+                        {notification.content}
+                      </DropdownMenuItem>
                     </Link>
                   ) : (
                     notification.content
@@ -111,7 +123,7 @@ export function NotificationsDropdown() {
                 </ItemActions>
               </Item>
             ))}
-          </ul>
+          </ItemGroup>
         )}
       </DropdownMenuContent>
     </DropdownMenu>
