@@ -10,7 +10,7 @@ import { NavbarSearchTrigger } from "@/components/layout/NavbarSearch/NavbarSear
 export default function NavbarUser() {
   return (
     <NavbarSearchProvider>
-      <Menubar className="flex h-16 items-center px-6 border-x-0 border-t-0">
+      <Menubar className="flex h-16 items-center sticky bg-white top-0 px-6 border-x-0 border-t-0">
         <LogoButton to="/feed" />
         <div className="ml-auto hidden md:flex items-center flex-1">
           <NavbarSearchTrigger className="ml-4" />

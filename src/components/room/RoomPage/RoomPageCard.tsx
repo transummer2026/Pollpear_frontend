@@ -1,8 +1,8 @@
 import Layout from "@/layout/Layout";
-import RoomInfoCard from "@/components/room/RoomInfoCard";
-import RoomPearticipants from "@/components/room/RoomPearticipants";
-import RoomPolls from "@/components/room/RoomPolls";
-import RoomMessages from "@/components/room/RoomMessages";
+import RoomInfoCard from "@/components/room/RoomPage/Section/RoomInfoCard";
+import RoomPearticipants from "@/components/room/RoomPage/Section/RoomPearticipants";
+import RoomPolls from "@/components/room/RoomPage/Section/RoomPolls";
+import RoomMessages from "@/components/room/RoomPage/Section/RoomMessages";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRoom } from "@/hooks/room/use-room";
 

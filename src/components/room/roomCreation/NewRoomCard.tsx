@@ -78,7 +78,7 @@ export default function NewRoomCard() {
             <div className="space-y-2">
               <Label htmlFor="name">Name</Label>
 
-              <Input id="name" placeholder="Room title" {...register("name")} />
+              <Input id="name" placeholder="Room name" {...register("name")} />
               {errors.name && (
                 <p className="text-sm text-destructive">
                   {errors.name.message}

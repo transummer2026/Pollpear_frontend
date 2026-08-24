@@ -7,7 +7,8 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { PaginationControls } from "@/components/ui/pagination-controls";
-import RoomPearticipantBadge from "@/components/room/RoomPearticipantBadge";
+import RoomPearticipantBadge from "@/components/room/RoomPage/Section/RoomPearticipantBadge";
+import RoomAddPearticipantButton from "@/components/room/RoomPage/Section/RoomAddPearticipantButton";
 import { usePagination } from "@/hooks/use-pagination";
 import type { RoomReadDTO } from "@shared/schemas/rooms.schema";
 
@@ -34,8 +35,9 @@ export default function RoomPearticipants({ room }: RoomPearticipantsProps) {
     <Card>
       <CardHeader className="text-center">
         <CardTitle className="text-lg">Pearticipants</CardTitle>
-        <CardAction>
+        <CardAction className="flex items-center gap-2">
           <Badge variant="secondary">{pearticipants.length}</Badge>
+          <RoomAddPearticipantButton room={room} />
         </CardAction>
       </CardHeader>
       <CardContent>

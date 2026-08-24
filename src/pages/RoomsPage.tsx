@@ -1,4 +1,4 @@
-import RoomPageCard from "@/components/room/RoomPageCard";
+import RoomPageCard from "@/components/room/RoomPage/RoomPageCard";
 import { useParams } from "react-router";
 
 export default function RoomsPage() {

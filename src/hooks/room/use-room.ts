@@ -1,8 +1,15 @@
 import {
   type RoomCreateDTO,
   type RoomReadDTO,
+  type RoomUpdateDTO,
 } from "@shared/schemas/rooms.schema";
-import { ApiError, fetcher, postJson } from "@/lib/fetcher";
+import {
+  ApiError,
+  fetcher,
+  postJson,
+  patchJson,
+  deleteJson,
+} from "@/lib/fetcher";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
@@ -17,5 +24,19 @@ export function useRoomCreate() {
   return useSWRMutation<RoomCreateDTO, ApiError, string, RoomCreateDTO>(
     "/rooms/new",
     (resource, { arg }) => postJson<RoomCreateDTO>(resource, arg),
+  );
+}
+
+export function useRoomUpdate(roomId: number) {
+  return useSWRMutation<RoomUpdateDTO, ApiError, string, RoomUpdateDTO>(
+    `/rooms/${roomId}`,
+    (resource, { arg }) => patchJson<RoomUpdateDTO>(resource, arg),
+  );
+}
+
+export function useRoomDelete(roomId: number) {
+  return useSWRMutation<void, ApiError, string>(
+    `/rooms/${roomId}`,
+    (resource) => deleteJson<void>(resource),
   );
 }
