@@ -7,13 +7,14 @@ import { getSocket } from "@/lib/socket";
 const KEY = "/me/notifications";
 
 export function useNotificationFeed() {
-  const { isAuthenticated } = useAuth();
+  const { data: me, isAuthenticated } = useAuth();
   const { mutate } = useSWRConfig();
+  const meId = me?.id;
 
   useEffect(() => {
-    if (!isAuthenticated) return;
+    if (!isAuthenticated || !meId) return;
     const socket = getSocket();
-    const onNew = (notification: NotificationDTO) =>
+    const onNew = (notification: NotificationDTO) => {
       void mutate(
         KEY,
         (current?: NotificationDTO[]) =>
@@ -22,6 +23,11 @@ export function useNotificationFeed() {
             : [notification, ...(current ?? [])],
         { revalidate: false },
       );
+      if (notification.type === "friend_accepted" && notification.actorId) {
+        void mutate(`/users/${notification.actorId}/friendship`);
+        void mutate(`/users/${meId}/friends`);
+      }
+    };
     const onRemoved = ({
       type,
       actorId,
@@ -41,5 +47,5 @@ export function useNotificationFeed() {
       socket.off("notification:new", onNew);
       socket.off("notification:removed", onRemoved);
     };
-  }, [isAuthenticated, mutate]);
+  }, [isAuthenticated, meId, mutate]);
 }
