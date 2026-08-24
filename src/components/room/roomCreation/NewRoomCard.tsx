@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Card,
   CardHeader,
@@ -7,66 +6,62 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-// import { useForm, type Resolver, type SubmitHandler } from "react-hook-form";
-// import { Controller } from "react-hook-form";
-// import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, type Resolver, type SubmitHandler } from "react-hook-form";
+import { Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-// import {
-//   RoomCreateSchema,
-//   type RoomCreateDTO,
-// } from "@shared/schemas/rooms.schema";
-// import { useCreateRoom } from "@/hooks/poll/use-create-room";
-// import { toast } from "sonner";
-// import { ApiError } from "@/lib/fetcher";
+import {
+  RoomCreateSchema,
+  type RoomCreateDTO,
+} from "@shared/schemas/rooms.schema";
+import { useRoomCreate } from "@/hooks/room/use-room";
+import { toast } from "sonner";
+import { ApiError } from "@/lib/fetcher";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import VisibilitySwitch from "@/components/room/roomCreation/SectionParts/VisibilitySwitch";
 import DeadlineSetting from "@/components/room/roomCreation/SectionParts/DeadlineSetting";
-
-const INITIAL_DAYS = 1;
+import {
+  type RoomCreationInput,
+  defaultValues,
+  daysFromNow,
+  daysUntil,
+  INITIAL_DAYS,
+} from "@/components/room/RoomForm";
 
 export default function NewRoomCard() {
-  // UI only for now, will be moved to the form once the back is ready
-  const [isPublic, setIsPublic] = useState(true);
-  const [hasDeadline, setHasDeadline] = useState(false);
-  const [days, setDays] = useState(INITIAL_DAYS);
+  const { trigger, isMutating } = useRoomCreate();
+  const {
+    control,
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<RoomCreationInput, unknown, RoomCreateDTO>({
+    resolver: zodResolver(RoomCreateSchema) as Resolver<
+      RoomCreationInput,
+      unknown,
+      RoomCreateDTO
+    >,
+    defaultValues,
+  });
 
-  // const { trigger, isMutating } = useCreateRoom();
-  // const {
-  //   control,
-  //   register,
-  //   handleSubmit,
-  //   watch,
-  //   setValue,
-  //   getValues,
-  //   reset,
-  //   formState: { errors },
-  // } = useForm<RoomFormValues, unknown, RoomCreateDTO>({
-  //   resolver: zodResolver(RoomCreateSchema) as Resolver<
-  //     RoomFormValues,
-  //     unknown,
-  //     RoomCreateDTO
-  //   >,
-  //   defaultValues,
-  // });
-
-  // const onSubmit: SubmitHandler<RoomCreateDTO> = async (data) => {
-  //   try {
-  //     await trigger(data);
-  //     toast.success("Poll created");
-  //     reset(defaultValues);
-  //   } catch (err) {
-  //     if (err instanceof ApiError) toast.error(err.message);
-  //     else toast.error("An unknown error occurred");
-  //   }
-  // };
+  const onSubmit: SubmitHandler<RoomCreateDTO> = async (data) => {
+    try {
+      await trigger(data);
+      toast.success("Poll created");
+      reset(defaultValues);
+    } catch (err) {
+      if (err instanceof ApiError) toast.error(err.message);
+      else toast.error("An unknown error occurred");
+    }
+  };
 
   return (
     <Card className="w-full max-w-4xl">
-      <form className="space-y-8">
-        {/* <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}> */}
+      <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
         <CardHeader>
           <CardTitle className="text-2xl">Create a room</CardTitle>
           <CardDescription>
@@ -81,25 +76,33 @@ export default function NewRoomCard() {
             <CardTitle>Infos</CardTitle>
 
             <div className="space-y-2">
-              <Label>Name</Label>
+              <Label htmlFor="name">Name</Label>
 
-              <Input placeholder="Room name" />
-              {/* <Input placeholder="Room title" {...register} /> */}
-              {/* {error && <p className="text-sm text-destructive">{error}</p>} */}
+              <Input id="name" placeholder="Room title" {...register("name")} />
+              {errors.name && (
+                <p className="text-sm text-destructive">
+                  {errors.name.message}
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
-              <Label>
+              <Label htmlFor="description">
                 Description
                 <span className="text-muted-foreground"> optional</span>
               </Label>
 
               <Textarea
+                id="description"
                 placeholder="Write a description..."
                 className="min-h-32"
+                {...register("description")}
               />
-              {/* <Textarea placeholder="Write a description..." {...register} /> */}
-              {/* {error && <p className="text-sm text-destructive">{error}</p>} */}
+              {errors.description && (
+                <p className="text-sm text-destructive">
+                  {errors.description.message}
+                </p>
+              )}
             </div>
           </div>
 
@@ -108,46 +111,46 @@ export default function NewRoomCard() {
           <div className="space-y-6">
             <CardTitle>Settings</CardTitle>
 
-            <VisibilitySwitch isPublic={isPublic} setIsPublic={setIsPublic} />
-            {/* <Controller
+            <Controller
               control={control}
-              name="isPublic"
+              name="visibility"
               render={({ field }) => (
                 <VisibilitySwitch
-                  isPublic={field.value}
-                  setIsPublic={field.onChange}
+                  isPublic={field.value === "public"}
+                  setIsPublic={(checked) =>
+                    field.onChange(checked ? "public" : "private")
+                  }
                 />
               )}
-            /> */}
+            />
 
             <Separator />
 
-            <DeadlineSetting
-              hasDeadline={hasDeadline}
-              setHasDeadline={setHasDeadline}
-              days={days}
-              initialDays={INITIAL_DAYS}
-              setDays={setDays}
-            />
-            {/* <Controller
+            <Controller
               control={control}
-              name="endsInDays"
+              name="endsAt"
               render={({ field }) => (
                 <DeadlineSetting
-                  hasDeadline={hasDeadline}
-                  setHasDeadline={setHasDeadline}
-                  days={field.value}
+                  hasDeadline={field.value !== null}
+                  setHasDeadline={(checked) =>
+                    field.onChange(checked ? daysFromNow(INITIAL_DAYS) : null)
+                  }
+                  days={field.value ? daysUntil(field.value) : INITIAL_DAYS}
                   initialDays={INITIAL_DAYS}
-                  setDays={field.onChange}
+                  setDays={(days) => field.onChange(daysFromNow(days))}
                 />
               )}
-            /> */}
+            />
+            {errors.endsAt && (
+              <p className="text-sm text-destructive">
+                {errors.endsAt.message}
+              </p>
+            )}
           </div>
         </CardContent>
 
         <CardFooter className="justify-end">
-          <Button type="submit" size="lg">
-            {/* <Button type="submit" size="lg" disabled={isMutating}> */}
+          <Button type="submit" size="lg" disabled={isMutating}>
             Create room
           </Button>
         </CardFooter>
