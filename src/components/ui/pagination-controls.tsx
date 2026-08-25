@@ -20,14 +20,33 @@ function getPageRange(
   pageCount: number,
 ): (number | "ellipsis")[] {
   const siblings = 1;
+  // first + last + current + (siblings * 2) + up to 2 ellipses
+  const maxVisible = siblings * 2 + 5;
+
+  if (pageCount <= maxVisible) {
+    return Array.from({ length: pageCount }, (_, i) => i + 1);
+  }
+
   const start = Math.max(2, page - siblings);
   const end = Math.min(pageCount - 1, page + siblings);
 
   const range: (number | "ellipsis")[] = [1];
-  if (start > 2) range.push("ellipsis");
+
+  if (start > 3) {
+    range.push("ellipsis");
+  } else {
+    for (let i = 2; i < start; i++) range.push(i);
+  }
+
   for (let i = start; i <= end; i++) range.push(i);
-  if (end < pageCount - 1) range.push("ellipsis");
-  if (pageCount > 1) range.push(pageCount);
+
+  if (end < pageCount - 2) {
+    range.push("ellipsis");
+  } else {
+    for (let i = end + 1; i < pageCount; i++) range.push(i);
+  }
+
+  range.push(pageCount);
 
   return range;
 }
