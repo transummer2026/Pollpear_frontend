@@ -35,6 +35,12 @@ const extractErrorMessage = (status: number, body: unknown): string => {
   return `HTTP ${status}`;
 };
 
+// Matches exactly `/users/:id` (not sub-resources like `/users/:id/friends`):
+// a private profile 403s there, which is an expected, common outcome the
+// viewing component should render inline, not a full-page redirect.
+const isUserProfileResource = (resource: string) =>
+  /^\/users\/\d+$/.test(resource);
+
 let onUnhandledApiError: ((status: number) => void) | null = null;
 
 const setApiErrorHandler = (handler: ((status: number) => void) | null) => {
@@ -69,6 +75,7 @@ const fetcher = async <T>(
     if (
       method === "GET" &&
       resource !== "/me" &&
+      !isUserProfileResource(resource) &&
       (res.status === 401 || res.status === 403 || res.status >= 500)
     ) {
       onUnhandledApiError?.(res.status);

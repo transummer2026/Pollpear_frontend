@@ -6,6 +6,7 @@ import NewRoomPage from "@/pages/NewRoomPage";
 import MePage from "@/pages/MePage";
 import UserPage from "@/pages/UserPage";
 import RoomsPage from "@/pages/RoomsPage";
+import SearchPage from "@/pages/SearchPage";
 import SettingsPage from "@/pages/SettingsPage";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import LoginPage from "@/pages/LoginPage";
@@ -56,6 +57,7 @@ export default function AppRoutes() {
         <Route path="/settings/api" element={<ApiPage />} />
         <Route path="/settings/:section?" element={<SettingsPage />} />
         <Route path="/users/:id" element={<UserPage />} />
+        <Route path="/search" element={<SearchPage />} />
         <Route path="/rooms/:id" element={<RoomsPage />} />
         <Route path="/rooms/new" element={<NewRoomPage />} />
       </Route>
