@@ -30,8 +30,11 @@ import {
   daysUntil,
   INITIAL_DAYS,
 } from "@/components/room/RoomForm";
+import { useNavigate } from "react-router";
+import { useSWRConfig } from "swr";
 
 export default function NewRoomCard() {
+  const { mutate } = useSWRConfig();
   const { trigger, isMutating } = useRoomCreate();
   const {
     control,
@@ -48,11 +51,19 @@ export default function NewRoomCard() {
     defaultValues,
   });
 
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<RoomCreateDTO> = async (data) => {
     try {
-      await trigger(data);
-      toast.success("Poll created");
+      const room = await trigger(data);
+
+      await mutate(
+        (key) => typeof key === "string" && key.startsWith("/rooms"),
+      );
       reset(defaultValues);
+      toast.success("Room created");
+
+      navigate(room ? `/rooms/${room.id}` : "/feed", { replace: true });
     } catch (err) {
       if (err instanceof ApiError) toast.error(err.message);
       else toast.error("An unknown error occurred");

@@ -20,7 +20,12 @@ import {
 const SCALE_START = 50;
 const SCALE_STEP = 5;
 
-export default function PollVoteSlider({ poll }: { poll: PollReadDTO }) {
+type PollVoteSliderProps = {
+  poll: PollReadDTO;
+  roomId?: number;
+};
+
+export default function PollVoteSlider({ poll, roomId }: PollVoteSliderProps) {
   const { leftLabel, rightLabel } = getSliderLabels(poll);
   const { mutate } = useSWRConfig();
   const { trigger, isMutating } = useVotePoll(poll.id);
@@ -37,6 +42,7 @@ export default function PollVoteSlider({ poll }: { poll: PollReadDTO }) {
         optionsVoted: [{ optionId: sliderOption.id }],
         freeField: String(value),
       });
+      if (roomId) await mutate(`/rooms/${roomId}`);
       await mutate(`/polls/${poll.id}`);
       await mutate(`/polls`);
       toast.success("Vote recorded");

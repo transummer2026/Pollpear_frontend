@@ -5,7 +5,12 @@ import PollUpdateVoteCard from "@/components/poll/pollVoteUpdate/PollUpdateVoteC
 import { isPollClosed } from "@/lib/poll";
 import type { PollReadDTO } from "@shared/schemas/polls.schema";
 
-export default function PollCard({ poll }: { poll: PollReadDTO }) {
+type PollCardProps = {
+  poll: PollReadDTO;
+  roomId?: number;
+};
+
+export default function PollCard({ poll, roomId }: PollCardProps) {
   const [isEditingVote, setIsEditingVote] = useState(false);
 
   const hasVoted = poll.hasVoted;
@@ -19,6 +24,6 @@ export default function PollCard({ poll }: { poll: PollReadDTO }) {
   return hasVoted || isClosed ? (
     <PollResultCard poll={poll} onUpdateVote={() => setIsEditingVote(true)} />
   ) : (
-    <PollVoteCard poll={poll} />
+    <PollVoteCard poll={poll} roomId={roomId} />
   );
 }

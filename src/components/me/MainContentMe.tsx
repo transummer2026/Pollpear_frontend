@@ -1,5 +1,5 @@
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import PollCard from "../poll/PollCard";
+import PollColumns from "@/components/poll/PollColumns";
 import { usePolls } from "@/hooks/poll/use-poll";
 import { usePagination } from "@/hooks/use-pagination";
 import { PaginationControls } from "@/components/ui/pagination-controls";
@@ -19,12 +19,8 @@ export default function MainContentMe() {
 
   return (
     <Card>
-      <CardContent className="columns-1 md:columns-2 xl:columns-3 gap-5">
-        {pageItems.map((poll) => (
-          <div key={poll.id} className="mb-5 break-inside-avoid">
-            <PollCard poll={poll} />
-          </div>
-        ))}
+      <CardContent>
+        <PollColumns polls={pageItems} />
       </CardContent>
       <CardFooter>
         <PaginationControls

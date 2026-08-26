@@ -18,11 +18,15 @@ import PollCardFooter from "@/components/poll/PollCardFooter";
 import { Check } from "lucide-react";
 import { getVisibleOptions } from "@/lib/poll";
 
+type PollVoteMultipleChoiceProps = {
+  poll: PollReadDTO;
+  roomId?: number;
+};
+
 export default function PollVoteMultipleChoice({
   poll,
-}: {
-  poll: PollReadDTO;
-}) {
+  roomId,
+}: PollVoteMultipleChoiceProps) {
   const { mutate } = useSWRConfig();
   const { trigger, isMutating } = useVotePoll(poll.id);
   const {
@@ -54,6 +58,7 @@ export default function PollVoteMultipleChoice({
   const onSubmit: SubmitHandler<VoteCreateDTO> = async (data) => {
     try {
       await trigger(data);
+      if (roomId) await mutate(`/rooms/${roomId}`);
       await mutate(`/polls/${poll.id}`);
       await mutate(`/polls`);
       toast.success("Vote recorded");

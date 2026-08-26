@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ListChecks, Gauge } from "lucide-react";
-
+import { useSearchParams } from "react-router";
 import { cn } from "@/lib/utils";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -23,6 +23,10 @@ const pollTypes = [
 ];
 
 export default function PollCreatorCard() {
+  const [searchParams] = useSearchParams();
+  const roomIdParam = Number(searchParams.get("roomId"));
+  const roomId =
+    Number.isInteger(roomIdParam) && roomIdParam > 0 ? roomIdParam : undefined;
   const [activeTab, setActiveTab] = useState("single");
 
   return (
@@ -58,8 +62,8 @@ export default function PollCreatorCard() {
           </CardHeader>
 
           <CardContent>
-            {activeTab === "single" && <SingleChoiceSection />}
-            {activeTab === "slider" && <SliderSection />}
+            {activeTab === "single" && <SingleChoiceSection roomId={roomId} />}
+            {activeTab === "slider" && <SliderSection roomId={roomId} />}
           </CardContent>
         </Card>
       </div>

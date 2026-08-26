@@ -3,6 +3,7 @@ import RoomInfoCard from "@/components/room/RoomPage/Section/RoomInfoCard";
 import RoomPearticipants from "@/components/room/RoomPage/Section/RoomPearticipants";
 import RoomPolls from "@/components/room/RoomPage/Section/RoomPolls";
 import RoomMessages from "@/components/room/RoomPage/Section/RoomMessages";
+import RoomNewPollCard from "@/components/room/RoomPage/Section/RoomNewPollCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRoom } from "@/hooks/room/use-room";
 
@@ -13,7 +14,7 @@ type RoomProps = {
 export default function RoomPageCard({ id }: RoomProps) {
   const { data: room, isLoading } = useRoom(id);
 
-  if (!id) {
+  if (!id || !room) {
     return (
       <Layout>
         <div className="p-4 text-center">Room not found</div>
@@ -31,27 +32,18 @@ export default function RoomPageCard({ id }: RoomProps) {
     );
   }
 
-  if (!room) {
-    return (
-      <Layout>
-        <div className="p-4 text-center">Room not found</div>
-      </Layout>
-    );
-  }
-
   return (
-    <Layout>
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-4 p-4 lg:grid-cols-4">
+    <Layout roomId={id}>
+      <div className="mx-auto grid max-w-7xl grid-cols-1 items-start gap-4 p-4 lg:grid-cols-4">
         <div className="lg:col-span-4">
           <RoomInfoCard room={room} />
         </div>
-        <div className="lg:col-span-1 lg:col-start-4 lg:row-start-2">
-          <RoomPearticipants room={room} />
-        </div>
-        <div className="lg:col-span-3 lg:col-start-1 lg:row-span-2 lg:row-start-2">
+        <div className="lg:col-span-3">
           <RoomPolls room={room} />
         </div>
-        <div className="lg:col-span-1 lg:col-start-4 lg:row-start-3">
+        <div className="flex flex-col gap-4 lg:col-span-1">
+          <RoomNewPollCard room={room} />
+          <RoomPearticipants room={room} />
           <RoomMessages room={room} />
         </div>
       </div>

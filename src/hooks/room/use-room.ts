@@ -1,5 +1,6 @@
 import {
   type RoomCreateDTO,
+  type RoomPublicDTO,
   type RoomReadDTO,
   type RoomUpdateDTO,
 } from "@shared/schemas/rooms.schema";
@@ -21,9 +22,9 @@ export function useRoom(roomId?: number) {
 }
 
 export function useRoomCreate() {
-  return useSWRMutation<RoomCreateDTO, ApiError, string, RoomCreateDTO>(
+  return useSWRMutation<RoomPublicDTO, ApiError, string, RoomCreateDTO>(
     "/rooms/new",
-    (resource, { arg }) => postJson<RoomCreateDTO>(resource, arg),
+    (resource, { arg }) => postJson<RoomPublicDTO>(resource, arg),
   );
 }
 
