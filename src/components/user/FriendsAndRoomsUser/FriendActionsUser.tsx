@@ -10,10 +10,25 @@ import {
   useUpdateFriendship,
   useRemoveFriendship,
 } from "@/hooks/friend/use-friendship";
+import type { FriendshipDTO } from "@shared/schemas/friendship.schema";
 
-export default function FriendActionsUser({ friendId }: { friendId: number }) {
+type KnownFriendship = {
+  status: FriendshipDTO["status"];
+  requesterId: number;
+} | null;
+
+export default function FriendActionsUser({
+  friendId,
+  friendship: known,
+}: {
+  friendId: number;
+  friendship?: KnownFriendship;
+}) {
   const { data: me } = useAuth();
-  const { data: friendship } = useFriendshipWithUser(friendId);
+  const { data: fetched, isLoading } = useFriendshipWithUser(
+    known === undefined ? friendId : undefined,
+  );
+  const friendship = known === undefined ? fetched : known;
   const { mutate } = useSWRConfig();
 
   const { trigger: sendRequest, isMutating: isSending } =
@@ -36,11 +51,25 @@ export default function FriendActionsUser({ friendId }: { friendId: number }) {
       if (me) {
         await mutate(`/users/${me.id}/friends`);
         await mutate(`/users/${me.id}/friend-requests`);
+        await mutate(`/me/notifications`);
       }
     } catch (e) {
       if (e instanceof ApiError) toast.error(e.message);
       else toast.error("An unknown error occurred");
     }
+  }
+
+  if (known === undefined && isLoading) {
+    return (
+      <div className="flex gap-1" aria-hidden>
+        <Badge variant="secondary" className="invisible">
+          <X />
+        </Badge>
+        <Badge variant="default" className="invisible">
+          <Check />
+        </Badge>
+      </div>
+    );
   }
 
   if (!friendship || friendship.status === "rejected") {
