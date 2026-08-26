@@ -6,19 +6,19 @@ import {
   CommandInput,
   CommandList,
   CommandEmpty,
+  CommandGroup,
+  CommandItem,
 } from "@/components/ui/command";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useSearch } from "@/hooks/search/use-search";
 import { SEARCH_MODELS, type SearchScope } from "@shared/schemas/search.schema";
 import { UserSearchGroup } from "@/components/layout/NavbarSearch/UserSearchGroup";
-import { PollSearchGroup } from "@/components/layout/NavbarSearch/PollSearchGroup";
 import { RoomSearchGroup } from "@/components/layout/NavbarSearch/RoomSearchGroup";
 import { SearchDialogContext } from "@/components/layout/NavbarSearch/search-context";
 
 const SCOPE_LABELS: Record<SearchScope, string> = {
   all: "All",
   user: "Users",
-  poll: "Polls",
   room: "Rooms",
 };
 
@@ -61,15 +61,11 @@ export function NavbarSearchProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const showUsers = scope === "all" || scope === "user";
-  const showPolls = scope === "all" || scope === "poll";
   const showRooms = scope === "all" || scope === "room";
   const hasQuery = text.trim().length >= 2;
-  const hasResults =
-    !!data &&
-    (data.users.length > 0 || data.polls.length > 0 || data.rooms.length > 0);
+  const hasResults = !!data && (data.users.length > 0 || data.rooms.length > 0);
   const groupLimit = scope === "all" ? ALL_SCOPE_GROUP_LIMIT : undefined;
   const users = data?.users.slice(0, groupLimit) ?? [];
-  const polls = data?.polls.slice(0, groupLimit) ?? [];
   const rooms = data?.rooms.slice(0, groupLimit) ?? [];
 
   useEffect(() => {
@@ -86,13 +82,13 @@ export function NavbarSearchProvider({ children }: { children: ReactNode }) {
         open={open}
         onOpenChange={(next) => (next ? setOpen(true) : close())}
         title="Search"
-        description="Search for users, polls or rooms"
+        description="Search for users or rooms"
       >
         <Command shouldFilter={false}>
           <CommandInput
             value={text}
             onValueChange={onQueryChange}
-            placeholder="Search users, polls, rooms..."
+            placeholder="Search users, rooms..."
           />
           <div className="px-2 pt-1 pb-2">
             <ToggleGroup
@@ -125,13 +121,24 @@ export function NavbarSearchProvider({ children }: { children: ReactNode }) {
                     onSelect={(id) => goTo(`/users/${id}`)}
                   />
                 )}
-                {showPolls && <PollSearchGroup polls={polls} />}
                 {showRooms && (
                   <RoomSearchGroup
                     rooms={rooms}
                     onSelect={(id) => goTo(`/rooms/${id}`)}
                   />
                 )}
+                <CommandGroup>
+                  <CommandItem
+                    value="view-all-results"
+                    onSelect={() =>
+                      goTo(
+                        `/search?q=${encodeURIComponent(text.trim())}&type=${scope}`,
+                      )
+                    }
+                  >
+                    View all results for &quot;{text.trim()}&quot;
+                  </CommandItem>
+                </CommandGroup>
               </>
             )}
             {hasOverflow && (
