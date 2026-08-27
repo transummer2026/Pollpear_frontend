@@ -1,16 +1,11 @@
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import Layout from "@/layout/Layout";
 
 export default function Feed() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-1">
-        <div className="flex justify-center">
-          <h1>Feed</h1>
-        </div>
-      </main>
-      <Footer />
-    </div>
+    <Layout>
+      <div className="flex justify-center">
+        <h1>Feed</h1>
+      </div>
+    </Layout>
   );
 }

@@ -1,9 +1,15 @@
 import { useState } from "react";
 import { ListChecks, Gauge } from "lucide-react";
-
+import { useSearchParams } from "react-router";
 import { cn } from "@/lib/utils";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 import SingleChoiceSection from "@/components/poll/pollCreation/SingleChoiceSection";
 import Layout from "@/layout/Layout";
@@ -14,16 +20,25 @@ const pollTypes = [
     id: "single",
     label: "Single choice poll",
     icon: ListChecks,
+    description: "Ask a question and let people pick from your options.",
   },
   {
     id: "slider",
     label: "slider",
     icon: Gauge,
+    description: "Ask people to place their answer on a scale.",
   },
 ];
 
 export default function PollCreatorCard() {
+  const [searchParams] = useSearchParams();
+  const roomIdParam = Number(searchParams.get("roomId"));
+  const roomId =
+    Number.isInteger(roomIdParam) && roomIdParam > 0 ? roomIdParam : undefined;
   const [activeTab, setActiveTab] = useState("single");
+
+  const activeType =
+    pollTypes.find((tab) => tab.id === activeTab) ?? pollTypes[0];
 
   return (
     <Layout>
@@ -55,11 +70,12 @@ export default function PollCreatorCard() {
         <Card className="rounded-t-none">
           <CardHeader>
             <CardTitle className="text-2xl">Create a poll</CardTitle>
+            <CardDescription>{activeType.description}</CardDescription>
           </CardHeader>
 
           <CardContent>
-            {activeTab === "single" && <SingleChoiceSection />}
-            {activeTab === "slider" && <SliderSection />}
+            {activeTab === "single" && <SingleChoiceSection roomId={roomId} />}
+            {activeTab === "slider" && <SliderSection roomId={roomId} />}
           </CardContent>
         </Card>
       </div>

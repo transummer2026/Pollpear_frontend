@@ -15,8 +15,13 @@ import SingleMultiChoiceOptions from "@/components/poll/pollCreation/SectionPart
 import { defaultValues, type PollFormValues } from "./pollForm";
 import { useSWRConfig } from "swr";
 import { useNavigate } from "react-router";
+import { Input } from "@/components/ui/input";
 
-export default function SingleChoiceSection() {
+type RoomProps = {
+  roomId?: number;
+};
+
+export default function SingleChoiceSection({ roomId }: RoomProps) {
   const { mutate } = useSWRConfig();
   const { trigger, isMutating } = usePollCreate();
   const {
@@ -45,7 +50,7 @@ export default function SingleChoiceSection() {
       await mutate("/poll/{id}", updated, { revalidate: false });
       toast.success("Poll created");
       reset(defaultValues);
-      navigate("/me", { replace: true });
+      navigate(roomId ? `/rooms/${roomId}` : "/me", { replace: true });
     } catch (err) {
       if (err instanceof ApiError) toast.error(err.message);
       else toast.error("An unknown error occurred");
@@ -54,6 +59,13 @@ export default function SingleChoiceSection() {
 
   return (
     <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
+      {roomId !== undefined && (
+        <Input
+          type="hidden"
+          defaultValue={roomId}
+          {...register("roomId", { valueAsNumber: true })}
+        />
+      )}
       <CardHeader className="space-y-4">
         <SingleMultiChoiceHeader
           control={control}

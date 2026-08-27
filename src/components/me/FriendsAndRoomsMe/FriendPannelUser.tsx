@@ -1,5 +1,6 @@
 import FriendPanelDesktop from "@/components/me/FriendsAndRoomsMe/FriendPanelDesktop";
 import FriendPanelMobile from "@/components/me/FriendsAndRoomsMe/FriendPanelMobile";
+import RoomSection from "@/components/me/FriendsAndRoomsMe/RoomSection";
 import {
   sortByStatus,
   toFriend,
@@ -15,13 +16,14 @@ export default function FriendPannelUser() {
   const invitations = (requestsData ?? []).map(toFriend);
 
   return (
-    <>
+    <div className="flex w-full flex-col gap-4">
       <div className="hidden lg:block">
         <FriendPanelDesktop friends={sortedFriends} invitations={invitations} />
       </div>
       <div className="w-full lg:hidden">
         <FriendPanelMobile friends={sortedFriends} invitations={invitations} />
       </div>
-    </>
+      <RoomSection />
+    </div>
   );
 }

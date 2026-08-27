@@ -9,6 +9,7 @@ import RoomsPage from "@/pages/RoomsPage";
 import SearchPage from "@/pages/SearchPage";
 import SettingsPage from "@/pages/SettingsPage";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import GuestRoute from "@/components/auth/GuestRoute";
 import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
 import LegalPage from "@/pages/LegalPage";
@@ -30,8 +31,6 @@ import ServerErrorPage from "@/pages/ServerErrorPage";
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route path="/auth/login" element={<LoginPage />} />
-      <Route path="/auth/register" element={<RegisterPage />} />
       <Route path="/legal" element={<LegalPage />} />
       <Route path="/privacy" element={<PrivacyPage />} />
       <Route path="/maintenance" element={<MaintenancePage />} />
@@ -39,15 +38,20 @@ export default function AppRoutes() {
       <Route path="/server-error" element={<ServerErrorPage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/faq" element={<FaqPage />} />
-      <Route path="/" element={<HomePage />} />
-      <Route path="/auth/password-forgot" element={<PasswordForgotPage />} />
       <Route path="/auth/change-password" element={<ChangePasswordPage />} />
-      <Route path="/auth/complete-profile" element={<OAuthRegisterPage />} />
       <Route path="/auth/verify-email" element={<VerifyEmailPage />} />
-      <Route
-        path="/auth/verify-email/resend"
-        element={<ResendVerificationPage />}
-      />
+
+      <Route element={<GuestRoute />}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/auth/login" element={<LoginPage />} />
+        <Route path="/auth/register" element={<RegisterPage />} />
+        <Route path="/auth/password-forgot" element={<PasswordForgotPage />} />
+        <Route path="/auth/complete-profile" element={<OAuthRegisterPage />} />
+        <Route
+          path="/auth/verify-email/resend"
+          element={<ResendVerificationPage />}
+        />
+      </Route>
 
       <Route element={<ProtectedRoute />}>
         <Route path="/polls/new" element={<NewPollPage />} />

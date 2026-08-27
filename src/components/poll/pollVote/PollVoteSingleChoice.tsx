@@ -10,7 +10,15 @@ import PollCardHeader from "@/components/poll/PollCardHeader";
 import PollCardFooter from "@/components/poll/PollCardFooter";
 import { getVisibleOptions } from "@/lib/poll";
 
-export default function PollVoteSingleChoice({ poll }: { poll: PollReadDTO }) {
+type PollVoteSingleChoiceProps = {
+  poll: PollReadDTO;
+  roomId?: number;
+};
+
+export default function PollVoteSingleChoice({
+  poll,
+  roomId,
+}: PollVoteSingleChoiceProps) {
   const { mutate } = useSWRConfig();
   const { trigger, isMutating } = useVotePoll(poll.id);
 
@@ -20,6 +28,7 @@ export default function PollVoteSingleChoice({ poll }: { poll: PollReadDTO }) {
         type: "single_choice",
         optionsVoted: [{ optionId }],
       });
+      if (roomId) await mutate(`/rooms/${roomId}`);
       await mutate(`/polls/${poll.id}`);
       await mutate(`/polls`);
       toast.success("Vote recorded");

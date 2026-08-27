@@ -15,9 +15,6 @@ import { usePagination } from "@/hooks/use-pagination";
 
 const PAGE_SIZE = 4;
 
-// TODO: brancher Rooms sur des données réelles ; pour l'instant elle n'a aucune source de données donc toujours masquée.
-const hasRooms = false;
-
 type FriendPanelDesktopProps = {
   friends: Friend[];
   invitations: Friend[];
@@ -40,7 +37,7 @@ export default function FriendPanelDesktop({
   const hasInvitations = invitations.length > 0;
   const hasFriends = friends.length > 0;
 
-  if (!hasInvitations && !hasFriends && !hasRooms) {
+  if (!hasInvitations && !hasFriends) {
     return null;
   }
 
@@ -96,14 +93,6 @@ export default function FriendPanelDesktop({
             />
           </CardContent>
         </>
-      )}
-
-      {(hasInvitations || hasFriends) && hasRooms && <Separator />}
-
-      {hasRooms && (
-        <CardHeader className="text-center">
-          <CardTitle className="text-lg">Rooms</CardTitle>
-        </CardHeader>
       )}
     </Card>
   );
