@@ -51,7 +51,7 @@ export default function RoomInfoCard({ room }: RoomInfoCardProps) {
       <Separator />
       <CardContent className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm lg:grid-cols-4">
         <div className="flex items-baseline gap-2">
-          <span className="text-muted-foreground">Pearent</span>
+          <span className="text-muted-foreground">Created by</span>
           {room.createdBy ? (
             <Link
               to={`/users/${room.createdBy.id}`}

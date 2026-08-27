@@ -21,6 +21,10 @@ export function useRoom(roomId?: number) {
   );
 }
 
+export function useRooms() {
+  return useSWR<RoomReadDTO[], ApiError>("/rooms", fetcher);
+}
+
 export function useRoomCreate() {
   return useSWRMutation<RoomPublicDTO, ApiError, string, RoomCreateDTO>(
     "/rooms/new",

@@ -1,8 +1,9 @@
 import { Link } from "react-router";
+import { cn } from "@/lib/utils";
 
-export default function Footer() {
+export default function Footer({ className }: { className?: string }) {
   return (
-    <footer className="border-t mt-10 py-6 px-6">
+    <footer className={cn("border-t mt-10 py-6 px-6", className)}>
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="text-sm text-muted-foreground">
           PollPear © {new Date().getFullYear()}

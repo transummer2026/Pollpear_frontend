@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Bell, EyeOff, X } from "lucide-react";
 import { Link } from "react-router";
 import { toast } from "sonner";
@@ -21,13 +22,31 @@ import { ApiError } from "@/lib/fetcher";
 import { useNotifications } from "@/hooks/notification/use-notifications";
 import { useAuth } from "@/hooks/auth/use-auth";
 import { useFriendRequests } from "@/hooks/friend/use-friendship";
+import { cn } from "@/lib/utils";
 import type { NotificationDTO } from "@shared/schemas/notification.schema";
+
+type NotificationsDropdownProps = {
+  /** Custom trigger; defaults to the outlined bell button of the navbar. */
+  children?: ReactNode;
+  align?: "start" | "center" | "end";
+  side?: "top" | "right" | "bottom" | "left";
+  sideOffset?: number;
+  collisionPadding?: number;
+  className?: string;
+};
 
 function isInvitation(n: NotificationDTO) {
   return n.type === "friend_request";
 }
 
-export function NotificationsDropdown() {
+export function NotificationsDropdown({
+  children,
+  align = "end",
+  side,
+  sideOffset,
+  collisionPadding,
+  className,
+}: NotificationsDropdownProps) {
   const { notifications, unreadCount, markAllRead, dismiss } =
     useNotifications();
   const { data: me } = useAuth();
@@ -54,28 +73,36 @@ export function NotificationsDropdown() {
   return (
     <DropdownMenu onOpenChange={onOpenChange}>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          size="icon"
-          aria-label={
-            unreadCount > 0
-              ? `Notifications, ${unreadCount} unread`
-              : "Notifications"
-          }
-          className="relative"
-        >
-          <Bell />
-          {unreadCount > 0 && (
-            <span
-              className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-medium text-white"
-              aria-hidden
-            >
-              {unreadCount > 9 ? "9+" : unreadCount}
-            </span>
-          )}
-        </Button>
+        {children ?? (
+          <Button
+            variant="outline"
+            size="icon"
+            aria-label={
+              unreadCount > 0
+                ? `Notifications, ${unreadCount} unread`
+                : "Notifications"
+            }
+            className="relative"
+          >
+            <Bell />
+            {unreadCount > 0 && (
+              <span
+                className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-medium text-white"
+                aria-hidden
+              >
+                {unreadCount > 9 ? "9+" : unreadCount}
+              </span>
+            )}
+          </Button>
+        )}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-80" align="end">
+      <DropdownMenuContent
+        className={cn("w-80", className)}
+        align={align}
+        side={side}
+        sideOffset={sideOffset}
+        collisionPadding={collisionPadding}
+      >
         <DropdownMenuLabel>Notifications</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {ordered.length === 0 ? (

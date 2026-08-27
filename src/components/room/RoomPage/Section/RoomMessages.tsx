@@ -16,18 +16,20 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
+import { cn } from "@/lib/utils";
 import type { RoomReadDTO } from "@shared/schemas/rooms.schema";
 
 type RoomMessagesProps = {
   room: RoomReadDTO;
+  className?: string;
 };
 
 /**
  * @note: shell only, the chat itself (websocket, send, history) comes later.
  */
-export default function RoomMessages({ room }: RoomMessagesProps) {
+export default function RoomMessages({ room, className }: RoomMessagesProps) {
   return (
-    <Card className="lg:h-80">
+    <Card className={cn("lg:h-80", className)}>
       <CardHeader>
         <CardTitle className="text-lg">Messages</CardTitle>
       </CardHeader>
