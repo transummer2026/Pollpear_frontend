@@ -7,9 +7,14 @@ type PollResultProps = {
     votes: number;
   };
   totalVotes: number;
+  barClassName?: string;
 };
 
-export default function PollResult({ answer, totalVotes }: PollResultProps) {
+export default function PollResult({
+  answer,
+  totalVotes,
+  barClassName,
+}: PollResultProps) {
   const percent =
     totalVotes > 0 ? Math.round((answer.votes / totalVotes) * 100) : 0;
 
@@ -20,7 +25,7 @@ export default function PollResult({ answer, totalVotes }: PollResultProps) {
         <span className="font-semibold">{percent}%</span>
       </div>
 
-      <Progress value={percent} />
+      <Progress value={percent} className={barClassName} />
 
       <p className="text-xs text-muted-foreground mt-1">{answer.votes} votes</p>
     </div>

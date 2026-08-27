@@ -13,6 +13,10 @@ export default function PollResultSingleMultipleChoice({
 }: PollResultProps) {
   const options = getVisibleOptions(poll);
   const totalVotes = getTotalVotes(options);
+  const barClassName =
+    poll.type === "multiple_choice"
+      ? "bg-poll-bar-track poll-bar-multi"
+      : "bg-poll-bar-track poll-bar-single";
 
   return (
     <Card size="sm" className="mx-auto p-4 space-y-3 poll-card-sunken ring-0">
@@ -34,6 +38,7 @@ export default function PollResultSingleMultipleChoice({
               votes: option._count.voteOptions,
             }}
             totalVotes={totalVotes}
+            barClassName={barClassName}
           />
         ))}
       </div>

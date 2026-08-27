@@ -29,7 +29,7 @@ export default function PollResultSlider({
             max={100}
             step={5}
             disabled
-            className="mx-auto w-full max-w-xs"
+            className="mx-auto w-full max-w-xs poll-bar-slider"
           />
           <div className="flex justify-between gap-4 text-xs text-muted-foreground">
             <span className="max-w-[45%] text-left">{leftLabel}</span>

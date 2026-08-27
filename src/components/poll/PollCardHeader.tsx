@@ -9,7 +9,7 @@ export default function PollCardHeader({ poll }: { poll: PollReadDTO }) {
 
   return (
     <CardContent className="flex items-center justify-between gap-2 p-0">
-      <Badge variant={isClosed ? "destructive" : "default"}>
+      <Badge variant={isClosed ? "closed" : "open"}>
         {isClosed ? "Closed" : "Open"}
       </Badge>
 

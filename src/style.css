@@ -57,6 +57,19 @@
   --color-poll-scale-vote: #f8fcf9;
   --color-poll-scale-result: #e7f4ea;
 
+  /* result bars: shared track, same fill for all three types for now — the
+     tokens stay split so one type can diverge without touching the others */
+  --color-poll-bar-track: #f3f7ed;
+  --color-poll-bar-single: #6b8f3d;
+  --color-poll-bar-multi: #6b8f3d;
+  --color-poll-bar-slider: #6b8f3d;
+
+  /* status labels: solid fills, foregrounds picked to clear WCAG AA at 12px */
+  --color-status-open: #325024;
+  --color-status-open-foreground: #ffffff; /* 9.1:1 */
+  --color-status-closed: #fd7878;
+  --color-status-closed-foreground: #2c3327; /* 5.1:1 */
+
   /* poll depth: vote cards pop out (light from top-left), result cards are pressed in */
   --shadow-poll-raised:
     6px 8px 20px -8px oklch(0 0 0 / 0.09), 2px 3px 8px -4px oklch(0 0 0 / 0.06);
@@ -80,6 +93,37 @@
 /** result card: recessed into the feed, shadow inside the top left edges */
 @utility poll-card-sunken {
   @apply inset-shadow-poll-sunken dark:inset-shadow-poll-sunken-dark;
+}
+
+/**
+ * result bars: tint the filled portion, track on --color-poll-bar-track.
+ * Applied to the Progress/Slider root, reaching the inner parts by data-slot so
+ * the shadcn primitives in ui/ stay untouched and regenerable.
+ *
+ * The Progress root IS its own track, so those two utilities only handle the
+ * indicator — pair them with `bg-poll-bar-track` at the call site, which lets
+ * twMerge drop the primitive's `bg-muted` instead of relying on rule order.
+ */
+@utility poll-bar-single {
+  & [data-slot="progress-indicator"] {
+    @apply bg-poll-bar-single;
+  }
+}
+
+@utility poll-bar-multi {
+  & [data-slot="progress-indicator"] {
+    @apply bg-poll-bar-multi;
+  }
+}
+
+@utility poll-bar-slider {
+  & [data-slot="slider-track"] {
+    @apply bg-poll-bar-track;
+  }
+
+  & [data-slot="slider-range"] {
+    @apply bg-poll-bar-slider;
+  }
 }
 
 :root {
