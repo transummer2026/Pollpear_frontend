@@ -29,7 +29,7 @@ export default function FriendPanelMobile({
   }
 
   return (
-    <Card className="w-full">
+    <Card className="w-full ring-0">
       {hasInvitations && (
         <>
           <CardHeader className="text-center">

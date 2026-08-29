@@ -79,7 +79,12 @@ export default function SliderSection({ roomId }: RoomProps) {
         />
       </CardContent>
       <div className="flex justify-end">
-        <Button type="submit" size="lg" disabled={isMutating}>
+        <Button
+          type="submit"
+          size="lg"
+          className="bg-[#6F8459] text-white hover:bg-[#6F8459]/90"
+          disabled={isMutating}
+        >
           Create poll
         </Button>
       </div>

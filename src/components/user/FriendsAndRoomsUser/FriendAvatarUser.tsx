@@ -8,11 +8,15 @@ import {
   statusBadgeClass,
   type Friend,
 } from "@/components/user/FriendsAndRoomsUser/friends";
+import { resolveAvatarUrl } from "@/lib/avatar";
 
 export default function FriendAvatarUser({ friend }: { friend: Friend }) {
   return (
     <Avatar>
-      <AvatarImage src={friend.avatarUrl} alt={friend.name} />
+      <AvatarImage
+        src={resolveAvatarUrl(friend.avatarUrl, friend.name)}
+        alt={friend.name}
+      />
       <AvatarFallback>{friend.name.slice(0, 2).toUpperCase()}</AvatarFallback>
       <AvatarBadge className={statusBadgeClass(friend.status)} />
     </Avatar>

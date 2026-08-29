@@ -14,18 +14,22 @@ export default function HeaderUserScores({ id }: HeaderUserScoresProps) {
     {
       label: "Score",
       value: user?.score ?? undefined,
+      className: "bg-[#6F8459] text-white",
     },
     {
       label: "PearsPals",
       value: undefined,
+      className: "bg-[#D4E7CB] text-black",
     },
     {
       label: "Active Rooms",
       value: undefined,
+      className: "bg-[#885053] text-white",
     },
     {
       label: "Polls Created",
       value: undefined,
+      className: "bg-[#325024] text-white",
     },
   ];
 
@@ -36,6 +40,7 @@ export default function HeaderUserScores({ id }: HeaderUserScoresProps) {
           key={stat.label}
           label={stat.label}
           value={stat.value}
+          className={stat.className}
         />
       ))}
     </ItemGroup>

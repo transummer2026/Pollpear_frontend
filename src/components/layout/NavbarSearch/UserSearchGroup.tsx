@@ -2,6 +2,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { UserIcon } from "@hugeicons/core-free-icons";
 import { CommandGroup, CommandItem } from "@/components/ui/command";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { resolveAvatarUrl } from "@/lib/avatar";
 import type { UserSearchResultDTO } from "@shared/schemas/search.schema";
 
 type UserSearchGroupProps = {
@@ -21,7 +22,10 @@ export function UserSearchGroup({ users, onSelect }: UserSearchGroupProps) {
           onSelect={() => onSelect(user.id)}
         >
           <Avatar size="sm">
-            <AvatarImage src={user.avatarUrl} alt={user.username} />
+            <AvatarImage
+              src={resolveAvatarUrl(user.avatarUrl, user.name ?? user.username)}
+              alt={user.username}
+            />
             <AvatarFallback>
               <HugeiconsIcon
                 icon={UserIcon}

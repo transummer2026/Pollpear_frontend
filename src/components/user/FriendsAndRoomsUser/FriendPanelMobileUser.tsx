@@ -29,7 +29,7 @@ export default function FriendPanelMobileUser({
   }
 
   return (
-    <Card className="w-full">
+    <Card className="w-full ring-0">
       <CardHeader className="text-center">
         <CardTitle className="text-lg">PearPals</CardTitle>
       </CardHeader>

@@ -76,7 +76,7 @@ export default function HeaderMe() {
 
   return (
     <Card
-      className={`lg:min-h-40 lg:[--card-spacing:--spacing(4)] ${
+      className={`ring-0 lg:min-h-40 lg:[--card-spacing:--spacing(4)] ${
         isEditing ? "" : "lg:max-h-50"
       }`}
     >
@@ -94,7 +94,7 @@ export default function HeaderMe() {
                 )}
               </div>
             ) : (
-              <CardTitle className="text-lg font-bold">
+              <CardTitle className="text-2xl font-bold">
                 {user?.username}
               </CardTitle>
             )}

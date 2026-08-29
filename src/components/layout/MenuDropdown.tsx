@@ -11,6 +11,7 @@ import {
 import { NavbarSearchTrigger } from "@/components/layout/NavbarSearch/NavbarSearchTrigger";
 import { useLogout } from "@/hooks/auth/use-logout";
 import { useMe } from "@/hooks/user/use-me";
+import { resolveAvatarUrl } from "@/lib/avatar";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
 
@@ -46,7 +47,13 @@ export function MenuDropdown({ variant = "burger" }: MenuDropdownProps) {
         {isAvatar ? (
           <div className="relative cursor-pointer">
             <Avatar size="lg">
-              <AvatarImage src={user?.avatarUrl} alt="my avatar" />
+              <AvatarImage
+                src={resolveAvatarUrl(
+                  user?.avatarUrl,
+                  user?.name ?? user?.username,
+                )}
+                alt="my avatar"
+              />
               <AvatarFallback>
                 {user?.username?.slice(0, 2).toUpperCase()}
               </AvatarFallback>
@@ -68,7 +75,13 @@ export function MenuDropdown({ variant = "burger" }: MenuDropdownProps) {
             <Link to="/me" className="block w-full">
               <DropdownMenuItem className="gap-2 py-2">
                 <Avatar>
-                  <AvatarImage src={user?.avatarUrl} alt="my avatar" />
+                  <AvatarImage
+                    src={resolveAvatarUrl(
+                      user?.avatarUrl,
+                      user?.name ?? user?.username,
+                    )}
+                    alt="my avatar"
+                  />
                   <AvatarFallback>
                     {user?.username?.slice(0, 2).toUpperCase()}
                   </AvatarFallback>

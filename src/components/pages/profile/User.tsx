@@ -37,7 +37,7 @@ export default function User({ id }: UserProps) {
     <Layout>
       <div className="hidden lg:block">
         <div className="grid grid-cols-1 lg:grid-cols-4 mx-auto max-w-7xl gap-4 p-4 ">
-          <div className="lg:col-span-1 ">
+          <div className="lg:col-span-1 flex items-center justify-center">
             <AvatarUser id={id} />
           </div>
           <div className="lg:col-span-3">

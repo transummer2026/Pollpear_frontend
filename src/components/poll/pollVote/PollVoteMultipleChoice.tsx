@@ -75,7 +75,7 @@ export default function PollVoteMultipleChoice({
     >
       <PollCardHeader poll={poll} />
 
-      <h2 className="text-sm font-bold">{poll.title}</h2>
+      <h2 className="text-base font-bold">{poll.title}</h2>
 
       {poll.description && (
         <p className="text-sm text-muted-foreground">{poll.description}</p>
@@ -95,6 +95,7 @@ export default function PollVoteMultipleChoice({
                 variant={selected ? "default" : "outline"}
                 className={cn(
                   "w-full justify-between h-12",
+                  selected && "bg-[#6F8459] text-white hover:bg-[#6F8459]/90",
                   !selected && "hover:bg-muted",
                 )}
                 aria-pressed={selected}
@@ -115,7 +116,11 @@ export default function PollVoteMultipleChoice({
           </p>
         )}
 
-        <Button type="submit" className="w-full" disabled={isMutating}>
+        <Button
+          type="submit"
+          className="w-full bg-[#3A4336] text-white hover:bg-[#3A4336]/80"
+          disabled={isMutating}
+        >
           Submit vote
         </Button>
       </form>

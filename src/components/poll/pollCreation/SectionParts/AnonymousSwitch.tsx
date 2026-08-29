@@ -37,7 +37,11 @@ export default function AnonymousSwitch({
         </TooltipProvider>
       </div>
 
-      <Switch checked={anonymous} onCheckedChange={setAnonymous} />
+      <Switch
+        checked={anonymous}
+        onCheckedChange={setAnonymous}
+        className="data-checked:bg-[#6F8459]"
+      />
     </div>
   );
 }

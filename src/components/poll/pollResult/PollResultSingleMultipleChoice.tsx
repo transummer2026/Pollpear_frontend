@@ -22,7 +22,7 @@ export default function PollResultSingleMultipleChoice({
     <Card size="sm" className="mx-auto p-4 space-y-3 poll-card-sunken ring-0">
       <PollCardHeader poll={poll} />
 
-      <CardTitle className="text-sm font-bold">{poll.title}</CardTitle>
+      <CardTitle className="text-base font-bold">{poll.title}</CardTitle>
 
       {poll.description && (
         <p className="text-sm text-muted-foreground">{poll.description}</p>

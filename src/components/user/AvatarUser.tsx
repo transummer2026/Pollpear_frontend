@@ -22,9 +22,12 @@ export default function AvatarUser({ id }: AvatarUserProps) {
   const friend = friends?.find((item) => item.user.id === id);
 
   return (
-    <div className="relative h-40 w-40">
-      <Avatar className="h-40 w-40 rounded-full object-cover border-2">
-        <AvatarImage src={user?.avatarUrl} alt={`${user?.username} avatar`} />
+    <div className="relative h-52 w-52">
+      <Avatar className="h-52 w-52 rounded-full object-cover border-2">
+        <AvatarImage
+          src={resolveAvatarUrl(user?.avatarUrl, user?.name ?? user?.username)}
+          alt={`${user?.username} avatar`}
+        />
         <AvatarFallback>
           {user?.username?.slice(0, 2).toUpperCase()}
         </AvatarFallback>

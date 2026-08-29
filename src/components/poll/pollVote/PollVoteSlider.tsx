@@ -59,7 +59,7 @@ export default function PollVoteSlider({ poll, roomId }: PollVoteSliderProps) {
     >
       <PollCardHeader poll={poll} />
 
-      <h2 className="text-sm font-bold">{poll.title}</h2>
+      <h2 className="text-base font-bold">{poll.title}</h2>
 
       {poll.description && (
         <p className="text-sm text-muted-foreground">{poll.description}</p>
@@ -76,6 +76,7 @@ export default function PollVoteSlider({ poll, roomId }: PollVoteSliderProps) {
             step={SCALE_STEP}
             disabled={isMutating}
             onValueChange={(values) => setValue(values[0])}
+            className="poll-bar-slider"
           />
 
           <div className="flex justify-between gap-4 text-xs text-muted-foreground">
@@ -87,7 +88,7 @@ export default function PollVoteSlider({ poll, roomId }: PollVoteSliderProps) {
 
       <Button
         type="button"
-        className="w-full"
+        className="w-full bg-[#3A4336] text-white hover:bg-[#3A4336]/80"
         disabled={isMutating || !sliderOption}
         onClick={handleVote}
       >

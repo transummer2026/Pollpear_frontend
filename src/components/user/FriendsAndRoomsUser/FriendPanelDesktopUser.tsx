@@ -36,7 +36,7 @@ export default function FriendPanelDesktopUser({
   }
 
   return (
-    <Card>
+    <Card className="ring-0 ">
       <CardHeader className="text-center">
         <CardTitle className="text-lg">PearPals</CardTitle>
         <CardAction>

@@ -42,7 +42,7 @@ export default function FriendPanelDesktop({
   }
 
   return (
-    <Card>
+    <Card className="ring-0">
       {hasInvitations && (
         <>
           <CardHeader className="text-center">

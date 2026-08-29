@@ -13,10 +13,10 @@ export default function HeaderUser({ id }: HeaderUserProps) {
   const { data: user } = useUser(id);
 
   return (
-    <Card className="lg:min-h-40 lg:max-h-50 lg:[--card-spacing:--spacing(4)]">
+    <Card className="ring-0 lg:min-h-40 lg:max-h-50 lg:[--card-spacing:--spacing(4)]">
       <CardHeader className="space-y-2">
         <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
-          <CardTitle className="text-lg font-bold">{user?.username}</CardTitle>
+          <CardTitle className="text-2xl font-bold">{user?.username}</CardTitle>
           <div className="flex gap-2">
             <FriendshipButton userId={id} />
             <BlockButton userId={id} />

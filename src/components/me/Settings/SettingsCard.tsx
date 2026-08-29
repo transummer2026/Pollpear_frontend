@@ -66,7 +66,7 @@ export default function SettingsCard() {
   const [language, setLanguage] = useState("en");
 
   return (
-    <Card className="max-w-5xl mx-auto mt-4">
+    <Card className="max-w-5xl mx-auto mt-4 ring-0">
       <CardHeader>
         <CardTitle>Settings</CardTitle>
       </CardHeader>

@@ -67,7 +67,7 @@ export default function PollUpdateVoteMultipleChoice({
     <Card size="sm" className="w-full self-start p-4 space-y-4">
       <PollCardHeader poll={poll} />
 
-      <h2 className="text-sm font-bold">{poll.title}</h2>
+      <h2 className="text-base font-bold">{poll.title}</h2>
 
       {poll.description && (
         <p className="text-sm text-muted-foreground">{poll.description}</p>
@@ -87,6 +87,7 @@ export default function PollUpdateVoteMultipleChoice({
                 variant={selected ? "default" : "outline"}
                 className={cn(
                   "w-full justify-between h-12",
+                  selected && "bg-[#6F8459] text-white hover:bg-[#6F8459]/90",
                   !selected && "hover:bg-muted",
                 )}
                 aria-pressed={selected}
@@ -111,7 +112,7 @@ export default function PollUpdateVoteMultipleChoice({
           <Button
             type="submit"
             size="sm"
-            className="flex-1"
+            className="flex-1 bg-[#3A4336] text-white hover:bg-[#3A4336]/80"
             disabled={isMutating}
           >
             Update my vote
