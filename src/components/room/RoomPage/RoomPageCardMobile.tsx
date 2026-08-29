@@ -58,11 +58,7 @@ export default function RoomPageCardMobile({ id }: RoomProps) {
       >
         <Send />
       </Button>
-      <RoomMessagesDialog
-        room={room}
-        open={messagesOpen}
-        onOpenChange={setMessagesOpen}
-      />
+      <RoomMessagesDialog open={messagesOpen} onOpenChange={setMessagesOpen} />
     </div>
   );
 }

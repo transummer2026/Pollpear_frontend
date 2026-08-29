@@ -42,7 +42,7 @@ export default function RoomPageCardDesktop({ id }: RoomProps) {
         </div>
         <div className="flex flex-col gap-4 lg:col-span-1">
           <RoomPearticipants room={room} />
-          <RoomMessages room={room} />
+          <RoomMessages />
         </div>
       </div>
     </Layout>
