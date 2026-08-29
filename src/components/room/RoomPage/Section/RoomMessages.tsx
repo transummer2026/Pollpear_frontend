@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { MessageCircle, Send } from "lucide-react";
 import { format } from "date-fns";
+import { MAX_MESSAGE_LENGTH } from "@shared/schemas/messages.schema";
 import {
   Card,
   CardContent,
@@ -21,10 +22,16 @@ import {
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/auth/use-auth";
 import { useRoomChat } from "@/components/room/RoomChat/room-chat-context";
+import type { ChatMessage } from "@/hooks/room/chat-reducer";
 
 type RoomMessagesProps = {
   className?: string;
 };
+
+const NEAR_BOTTOM_PX = 48;
+
+const keyOf = (message?: ChatMessage) =>
+  message ? (message.tempId ?? message.id) : null;
 
 export default function RoomMessages({ className }: RoomMessagesProps) {
   const { data: me } = useAuth();
@@ -32,18 +39,65 @@ export default function RoomMessages({ className }: RoomMessagesProps) {
     useRoomChat();
   const [draft, setDraft] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
+  const anchorRef = useRef<{
+    bottomDistance: number;
+    firstKey: string | number | null;
+  } | null>(null);
+  const stickyRef = useRef(true);
+  const hasMessages = messages.length > 0;
+
+  const viewportOf = () =>
+    bottomRef.current?.closest<HTMLElement>(
+      "[data-radix-scroll-area-viewport]",
+    ) ?? null;
 
   useEffect(() => {
-    const viewport = bottomRef.current?.closest<HTMLElement>(
-      "[data-radix-scroll-area-viewport]",
-    );
-    if (viewport) viewport.scrollTop = viewport.scrollHeight;
-  }, [messages.length]);
+    const viewport = viewportOf();
+    if (!viewport) return;
+    const anchor = anchorRef.current;
 
-  const onSubmit = (event: React.FormEvent) => {
+    if (anchor && keyOf(messages[0]) !== anchor.firstKey) {
+      viewport.scrollTop = viewport.scrollHeight - anchor.bottomDistance;
+      anchorRef.current = null;
+      return;
+    }
+    if (stickyRef.current) viewport.scrollTop = viewport.scrollHeight;
+  }, [messages]);
+
+  useEffect(() => {
+    const viewport = viewportOf();
+    if (!viewport) return;
+
+    const onScroll = () => {
+      stickyRef.current =
+        viewport.scrollHeight - viewport.scrollTop - viewport.clientHeight <
+        NEAR_BOTTOM_PX;
+    };
+
+    viewport.addEventListener("scroll", onScroll, { passive: true });
+    return () => viewport.removeEventListener("scroll", onScroll);
+  }, [hasMessages]);
+
+  const onLoadOlder = () => {
+    const viewport = viewportOf();
+    anchorRef.current = viewport
+      ? {
+          bottomDistance: viewport.scrollHeight - viewport.scrollTop,
+          firstKey: keyOf(messages[0]),
+        }
+      : null;
+    void loadOlder().then((added) => {
+      if (!added) anchorRef.current = null;
+    });
+  };
+
+  const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    send(draft);
+    const pending = draft;
     setDraft("");
+    stickyRef.current = true;
+    const sent = await send(pending);
+    if (!sent) setDraft((current) => (current === "" ? pending : current));
   };
 
   return (
@@ -53,7 +107,7 @@ export default function RoomMessages({ className }: RoomMessagesProps) {
       </CardHeader>
       <CardContent className="min-h-0 flex-1">
         <ScrollArea className="h-full pr-2">
-          {messages.length === 0 ? (
+          {!hasMessages ? (
             <Empty>
               <EmptyHeader>
                 <EmptyMedia variant="icon">
@@ -74,7 +128,7 @@ export default function RoomMessages({ className }: RoomMessagesProps) {
                   size="sm"
                   className="mb-2 w-full"
                   disabled={isLoading}
-                  onClick={loadOlder}
+                  onClick={onLoadOlder}
                 >
                   Load older messages
                 </Button>
@@ -108,6 +162,7 @@ export default function RoomMessages({ className }: RoomMessagesProps) {
           <Input
             value={draft}
             onChange={(event) => setDraft(event.target.value)}
+            maxLength={MAX_MESSAGE_LENGTH}
             placeholder="Write a message…"
             aria-label="Message"
           />

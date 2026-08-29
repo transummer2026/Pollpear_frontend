@@ -2,6 +2,7 @@ import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { toast } from "sonner";
 import {
+  MESSAGE_PAGE_MAX,
   MESSAGE_PAGE_SIZE,
   type MessageReadDTO,
 } from "@shared/schemas/messages.schema";
@@ -16,6 +17,7 @@ import {
 import { RoomChatContext } from "@/components/room/RoomChat/room-chat-context";
 
 const SEND_TIMEOUT_MS = 5000;
+const CATCHUP_MAX_PAGES = 20;
 
 type RoomChatProviderProps = {
   roomId?: number;
@@ -27,6 +29,7 @@ export function RoomChatProvider({ roomId, children }: RoomChatProviderProps) {
   const [state, dispatch] = useReducer(chatReducer, initialChatState);
   const [isLoading, setIsLoading] = useState(true);
   const [isSending, setIsSending] = useState(false);
+  const [reloadKey, setReloadKey] = useState(0);
   const newestIdRef = useRef<number | null>(null);
   const draftSeqRef = useRef(0);
 
@@ -49,21 +52,18 @@ export function RoomChatProvider({ roomId, children }: RoomChatProviderProps) {
           hasMore: messages.length === MESSAGE_PAGE_SIZE,
         });
       })
-      .catch((error) => {
-        if (!cancelled) {
-          toast.error(
-            error instanceof ApiError
-              ? error.message
-              : "Could not load the chat",
-          );
-        }
+      .catch((cause) => {
+        if (cancelled) return;
+        toast.error(
+          cause instanceof ApiError ? cause.message : "Could not load the chat",
+        );
       })
       .finally(() => !cancelled && setIsLoading(false));
 
     return () => {
       cancelled = true;
     };
-  }, [roomId, isAuthenticated]);
+  }, [roomId, isAuthenticated, reloadKey]);
 
   useEffect(() => {
     if (!roomId || !isAuthenticated) return;
@@ -74,13 +74,30 @@ export function RoomChatProvider({ roomId, children }: RoomChatProviderProps) {
       dispatch({ type: "incoming", message });
     };
 
+    const catchUp = async (from: number) => {
+      let cursor = from;
+      for (let page = 0; page < CATCHUP_MAX_PAGES; page++) {
+        const messages = await fetcher<MessageReadDTO[]>(
+          `/rooms/${roomId}/messages?after=${cursor}&limit=${MESSAGE_PAGE_MAX}`,
+        );
+        if (messages.length === 0) return;
+        dispatch({ type: "catchup", messages });
+        if (messages.length < MESSAGE_PAGE_MAX) return;
+        cursor = messages[messages.length - 1].id;
+      }
+      setReloadKey((key) => key + 1);
+    };
+
     const onConnect = () => {
       socket.emit("room:join", { roomId });
       const newestId = newestIdRef.current;
-      if (newestId === null) return;
-      fetcher<MessageReadDTO[]>(`/rooms/${roomId}/messages?after=${newestId}`)
-        .then((messages) => dispatch({ type: "catchup", messages }))
-        .catch(() => toast.error("Could not catch up on missed messages"));
+      if (newestId === null) {
+        setReloadKey((key) => key + 1);
+        return;
+      }
+      catchUp(newestId).catch(() =>
+        toast.error("Could not catch up on missed messages"),
+      );
     };
 
     if (socket.connected) socket.emit("room:join", { roomId });
@@ -94,28 +111,32 @@ export function RoomChatProvider({ roomId, children }: RoomChatProviderProps) {
     };
   }, [roomId, isAuthenticated]);
 
-  const loadOlder = useCallback(() => {
+  const loadOlder = useCallback(async () => {
     if (!roomId || !state.hasMore || isLoading || state.oldestId === null)
-      return;
+      return false;
     setIsLoading(true);
-    fetcher<MessageReadDTO[]>(
-      `/rooms/${roomId}/messages?before=${state.oldestId}&limit=${MESSAGE_PAGE_SIZE}`,
-    )
-      .then((messages) =>
-        dispatch({
-          type: "history",
-          messages,
-          hasMore: messages.length === MESSAGE_PAGE_SIZE,
-        }),
-      )
-      .catch(() => toast.error("Could not load older messages"))
-      .finally(() => setIsLoading(false));
+    try {
+      const messages = await fetcher<MessageReadDTO[]>(
+        `/rooms/${roomId}/messages?before=${state.oldestId}&limit=${MESSAGE_PAGE_SIZE}`,
+      );
+      dispatch({
+        type: "history",
+        messages,
+        hasMore: messages.length === MESSAGE_PAGE_SIZE,
+      });
+      return messages.length > 0;
+    } catch {
+      toast.error("Could not load older messages");
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
   }, [roomId, state.hasMore, state.oldestId, isLoading]);
 
   const send = useCallback(
     (content: string) => {
       const trimmed = content.trim();
-      if (!roomId || !me || trimmed.length === 0) return;
+      if (!roomId || !me || trimmed.length === 0) return Promise.resolve(false);
 
       const seq = ++draftSeqRef.current;
       const tempId = `temp-${seq}`;
@@ -131,21 +152,26 @@ export function RoomChatProvider({ roomId, children }: RoomChatProviderProps) {
 
       dispatch({ type: "sending", message: optimistic });
       setIsSending(true);
-      getSocket()
-        .timeout(SEND_TIMEOUT_MS)
-        .emit(
-          "message:send",
-          { roomId, content: trimmed },
-          (error: unknown, message: MessageReadDTO) => {
-            setIsSending(false);
-            if (error) {
-              dispatch({ type: "failed", tempId });
-              toast.error("Message not sent");
-              return;
-            }
-            dispatch({ type: "sent", tempId, message });
-          },
-        );
+
+      return new Promise<boolean>((resolve) => {
+        getSocket()
+          .timeout(SEND_TIMEOUT_MS)
+          .emit(
+            "message:send",
+            { roomId, content: trimmed },
+            (cause: unknown, message: MessageReadDTO) => {
+              setIsSending(false);
+              if (cause) {
+                dispatch({ type: "failed", tempId });
+                toast.error("Message not sent");
+                resolve(false);
+                return;
+              }
+              dispatch({ type: "sent", tempId, message });
+              resolve(true);
+            },
+          );
+      });
     },
     [roomId, me],
   );
