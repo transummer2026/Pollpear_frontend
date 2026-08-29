@@ -1,12 +1,17 @@
 import { Link } from "react-router";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { cn } from "@/lib/utils";
 
 export default function Footer({ className }: { className?: string }) {
   return (
     <footer className={cn("border-t mt-10 py-6 px-6", className)}>
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="text-sm text-muted-foreground">
-          PollPear © {new Date().getFullYear()}
+        <div className="flex items-center gap-4">
+          <div className="text-sm text-muted-foreground">
+            PollPear © {new Date().getFullYear()}
+          </div>
+          {/* mobile gets it in the burger menu instead */}
+          <ThemeToggle className="hidden md:flex" />
         </div>
         <div className="flex items-center gap-6 text-sm">
           <Link to="/legal" className="hover:underline">
