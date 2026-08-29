@@ -1,2 +1,10 @@
+export { AddIcon } from "./AddIcon";
+export { BlockedIcon } from "./BlockedIcon";
+export { CalendarIcon } from "./CalendarIcon";
+export { ClockIcon } from "./ClockIcon";
+export { FriendsIcon } from "./FriendsIcon";
 export { LockedIcon } from "./LockedIcon";
+export { OpenTrashIcon } from "./OpenTrashIcon";
+export { PointerIcon } from "./PointerIcon";
+export { TrashIcon } from "./TrashIcon";
 export { UnlockedIcon } from "./UnlockedIcon";

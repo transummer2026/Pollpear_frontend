@@ -1,5 +1,12 @@
-import { Badge } from "@/components/ui/badge";
-import { Lock, Pencil, Trash } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Pencil } from "lucide-react";
+import {
+  LockedIcon,
+  OpenTrashIcon,
+  TrashIcon,
+  UnlockedIcon,
+} from "@/components/icons";
+import { HoverIcon } from "@/components/icons/HoverIcon";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useSWRConfig } from "swr";
@@ -73,34 +80,43 @@ export default function RoomOwnerButtons({ room }: RoomOwnerButtonsProps) {
       <div className="flex gap-2">
         {!isClosed && (
           <>
-            <Badge
+            <Button
+              type="button"
+              size="icon"
               variant="secondary"
               aria-label="Edit room"
-              className="group rounded-full border-2 shadow-md cursor-pointer"
+              title="Edit room"
+              className="group cursor-pointer rounded-full shadow-md"
               onClick={() => setIsEditing(true)}
             >
-              <Pencil className="h-4 w-4 transition-transform group-hover:rotate-12" />
-            </Badge>
+              <Pencil className="transition-transform group-hover:rotate-12" />
+            </Button>
 
-            <Badge
+            <Button
+              type="button"
+              size="icon"
               variant="outline"
               aria-label="Close room"
-              className="group rounded-full border-2 shadow-md cursor-pointer"
+              title="Close room"
+              className="group cursor-pointer rounded-full shadow-md"
               onClick={() => setConfirming("close")}
             >
-              <Lock className="h-4 w-4 transition-transform group-hover:scale-110" />
-            </Badge>
+              <HoverIcon idle={UnlockedIcon} hover={LockedIcon} />
+            </Button>
           </>
         )}
 
-        <Badge
+        <Button
+          type="button"
+          size="icon"
           variant="destructive"
           aria-label="Delete room"
-          className="cursor-pointer"
+          title="Delete room"
+          className="group cursor-pointer rounded-full shadow-md"
           onClick={() => setConfirming("delete")}
         >
-          <Trash />
-        </Badge>
+          <HoverIcon idle={TrashIcon} hover={OpenTrashIcon} />
+        </Button>
       </div>
 
       <RoomUpdateDialog

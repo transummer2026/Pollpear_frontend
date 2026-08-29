@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
-import { Plus, Check, X, UserMinus } from "lucide-react";
+import { Check, X, UserMinus } from "lucide-react";
+import { AddIcon } from "@/components/icons";
 import { toast } from "sonner";
 import { useSWRConfig } from "swr";
 import { ApiError } from "@/lib/fetcher";
@@ -80,7 +81,7 @@ export default function FriendActionsUser({
         aria-label="Add friend"
         onClick={() => runAction(() => sendRequest())}
       >
-        <Plus />
+        <AddIcon />
       </Badge>
     );
   }

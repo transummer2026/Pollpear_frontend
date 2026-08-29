@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { BlockedIcon, LockedIcon, UnlockedIcon } from "@/components/icons";
+import { HoverIcon } from "@/components/icons/HoverIcon";
 import { useAuth } from "@/hooks/auth/use-auth";
 import {
   useBlockStatus,
@@ -45,12 +47,15 @@ export default function BlockButton({ userId }: BlockButtonProps) {
     return (
       <Button
         type="button"
-        className="cursor-pointer"
+        size="icon"
         variant="outline"
+        className="group cursor-pointer rounded-full"
+        aria-label="Unblock user"
+        title="Unblock"
         disabled={isMutating}
         onClick={() => runAction(() => unblockUser())}
       >
-        Unblock
+        <HoverIcon idle={LockedIcon} hover={UnlockedIcon} />
       </Button>
     );
   }
@@ -58,12 +63,15 @@ export default function BlockButton({ userId }: BlockButtonProps) {
   return (
     <Button
       type="button"
-      className="cursor-pointer"
+      size="icon"
       variant="destructive"
+      className="group cursor-pointer rounded-full"
+      aria-label="Block user"
+      title="Block"
       disabled={isMutating}
       onClick={() => runAction(() => blockUser())}
     >
-      Block
+      <BlockedIcon />
     </Button>
   );
 }

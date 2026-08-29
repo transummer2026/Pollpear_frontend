@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router";
-import { ArrowLeft, Lock, LogIn } from "lucide-react";
+import { ArrowLeft, LogIn } from "lucide-react";
+import { LockedIcon } from "@/components/icons";
 
 import Layout from "@/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -37,7 +38,7 @@ export default function Unauthorized({
       <Empty className="mx-auto mt-4 max-w-3xl border">
         <EmptyHeader>
           <EmptyMedia variant="icon">
-            <Lock />
+            <LockedIcon />
           </EmptyMedia>
           <EmptyTitle>{title}</EmptyTitle>
           <EmptyDescription>{description}</EmptyDescription>

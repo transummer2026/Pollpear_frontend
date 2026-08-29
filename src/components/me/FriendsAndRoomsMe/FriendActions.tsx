@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
-import { Trash } from "lucide-react";
+import { OpenTrashIcon, TrashIcon } from "@/components/icons";
+import { HoverIcon } from "@/components/icons/HoverIcon";
 import { toast } from "sonner";
 import { useSWRConfig } from "swr";
 import { ApiError } from "@/lib/fetcher";
@@ -28,11 +29,11 @@ export default function FriendActions({ friendId }: { friendId: number }) {
   return (
     <Badge
       variant="destructive"
-      className="cursor-pointer"
+      className="group cursor-pointer"
       aria-label="Remove friend"
       onClick={handleRemove}
     >
-      <Trash />
+      <HoverIcon idle={TrashIcon} hover={OpenTrashIcon} />
     </Badge>
   );
 }

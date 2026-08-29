@@ -1,4 +1,4 @@
-import { Lock, Trash } from "lucide-react";
+import { LockedIcon, TrashIcon } from "@/components/icons";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -59,9 +59,9 @@ export default function RoomCloseDeleteConfirm({
         <AlertDialogHeader>
           <AlertDialogMedia>
             {isDelete ? (
-              <Trash className="text-destructive" />
+              <TrashIcon className="text-destructive" />
             ) : (
-              <Lock className="text-muted-foreground" />
+              <LockedIcon className="text-muted-foreground" />
             )}
           </AlertDialogMedia>
           <AlertDialogTitle>{copy.title}</AlertDialogTitle>

@@ -66,7 +66,7 @@ export default function AvatarMe() {
             size: "icon",
             variant: "secondary",
             className:
-              "absolute bottom-2.5 right-2.5 h-10 w-10 cursor-pointer rounded-full border-2 shadow-md",
+              "group absolute bottom-2.5 right-2.5 h-10 w-10 cursor-pointer rounded-full border-2 shadow-md",
           })}
         >
           <input
@@ -76,7 +76,7 @@ export default function AvatarMe() {
             disabled={isMutating}
             onChange={onChange}
           />
-          <Pencil className="h-4 w-4" />
+          <Pencil className="h-4 w-4 transition-transform group-hover:rotate-12" />
         </label>
       </form>
     </div>

@@ -36,7 +36,7 @@ export default function RoomInfoCard({ room }: RoomInfoCardProps) {
       <CardHeader>
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <Badge variant={isClosed ? "secondary" : "default"}>
+            <Badge variant={isClosed ? "closed" : "open"}>
               {isClosed ? "Closed" : "Active"}
             </Badge>
             <Badge variant="outline">{room.visibility}</Badge>

@@ -1,4 +1,5 @@
-import { Clock3, User, Vote } from "lucide-react";
+import { User, Vote } from "lucide-react";
+import { ClockIcon } from "@/components/icons";
 import { Link } from "react-router";
 import {
   differenceInCalendarDays,
@@ -20,7 +21,7 @@ export default function PollCardFooter({ poll }: { poll: PollReadDTO }) {
         </div>
 
         <div className="flex items-center gap-2">
-          <Clock3 size={16} />
+          <ClockIcon className="size-4" />
           {formatExpiresIn(poll)}
         </div>
 
