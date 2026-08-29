@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { Link } from "react-router";
-import PollResult from "@/components/poll/PollResult";
+import PollResult from "@/components/poll/pollResult/PollResult";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -14,7 +14,6 @@ import {
   Hash,
   Lock,
   MessagesSquare,
-  Sparkles,
   TrendingUp,
   Trophy,
   UserPlus,
@@ -23,6 +22,25 @@ import {
 } from "lucide-react";
 
 /* Landing page for guests: everything below is hardcoded on purpose, no API call. */
+
+/* Brand palette, kept local to the landing page so it never fights the theme tokens.
+   Greens carry the public side, the warm pair marks everything private. */
+const BRAND = {
+  primaryButton:
+    "bg-[#325024] text-[#D4E7CB] hover:bg-[#3A4336] focus-visible:ring-[#6F8459]",
+  outlineButton:
+    "border-[#6F8459] text-[#325024] hover:bg-[#D4E7CB] hover:text-[#325024] dark:text-[#D4E7CB] dark:hover:bg-[#3A4336] dark:hover:text-[#D4E7CB]",
+  sectionBorder: "border-t border-[#D4E7CB] dark:border-[#3A4336]",
+  softBorder: "border-[#D4E7CB] dark:border-[#3A4336]",
+  greenText: "text-[#325024] dark:text-[#D4E7CB]",
+  sageText: "text-[#6F8459]",
+  wineText: "text-[#885053] dark:text-[#F67373]",
+  openBadge: "bg-[#325024] text-[#D4E7CB] border-transparent",
+  closedBadge: "bg-[#885053] text-[#FFE0E0] border-transparent",
+  greenBadge: "bg-[#D4E7CB] text-[#325024] border-transparent",
+  warmBadge: "bg-[#FFE0E0] text-[#885053] border-transparent",
+  hashtagBadge: "border-[#6F8459]/60 text-[#6F8459]",
+} as const;
 
 type DemoOption = {
   id: number;
@@ -64,7 +82,7 @@ function DemoHashtags({ hashtags }: { hashtags: string[] }) {
   return (
     <div className="flex flex-wrap gap-2">
       {hashtags.map((hashtag) => (
-        <Badge key={hashtag} variant="outline">
+        <Badge key={hashtag} variant="outline" className={BRAND.hashtagBadge}>
           #{hashtag}
         </Badge>
       ))}
@@ -90,11 +108,13 @@ function DemoSingleChoicePoll() {
         className="w-full self-start p-4 space-y-4 poll-card-raised ring-0"
       >
         <div className="flex items-center justify-between gap-2">
-          <Badge>Open</Badge>
-          <span className="text-xs text-muted-foreground">Single choice</span>
+          <Badge className={BRAND.openBadge}>Open</Badge>
+          <span className={`text-xs ${BRAND.sageText}`}>Single choice</span>
         </div>
 
-        <h3 className="text-sm font-bold">{SINGLE_CHOICE_DEMO.title}</h3>
+        <h3 className={`text-sm font-bold ${BRAND.greenText}`}>
+          {SINGLE_CHOICE_DEMO.title}
+        </h3>
 
         <p className="text-sm text-muted-foreground">
           {SINGLE_CHOICE_DEMO.description}
@@ -106,7 +126,7 @@ function DemoSingleChoicePoll() {
               key={option.id}
               type="button"
               variant="outline"
-              className="w-full justify-between h-12 hover:bg-muted"
+              className="w-full justify-between h-12 border-[#6F8459]/40 hover:border-[#6F8459] hover:bg-[#D4E7CB]/50 dark:hover:bg-[#3A4336]"
               onClick={() => setVotedOptionId(option.id)}
             >
               <span>{option.text}</span>
@@ -116,7 +136,7 @@ function DemoSingleChoicePoll() {
 
         <DemoHashtags hashtags={SINGLE_CHOICE_DEMO.hashtags} />
 
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-[#F67373]">
           Try it — this one is a demo, nothing is saved.
         </p>
       </Card>
@@ -128,11 +148,13 @@ function DemoSingleChoicePoll() {
       className="w-full self-start p-4 space-y-3 poll-card-sunken ring-0"
     >
       <div className="flex items-center justify-between gap-2">
-        <Badge>Open</Badge>
-        <span className="text-xs text-muted-foreground">Single choice</span>
+        <Badge className={BRAND.openBadge}>Open</Badge>
+        <span className={`text-xs ${BRAND.sageText}`}>Single choice</span>
       </div>
 
-      <h3 className="text-sm font-bold">{SINGLE_CHOICE_DEMO.title}</h3>
+      <h3 className={`text-sm font-bold ${BRAND.greenText}`}>
+        {SINGLE_CHOICE_DEMO.title}
+      </h3>
 
       <div className="space-y-3">
         {options.map((option) => (
@@ -142,7 +164,9 @@ function DemoSingleChoicePoll() {
         ))}
       </div>
 
-      <div className="border-t pt-4 flex items-center justify-between gap-2 text-sm text-muted-foreground">
+      <div
+        className={`pt-4 flex items-center justify-between gap-2 text-sm ${BRAND.sageText} ${BRAND.sectionBorder}`}
+      >
         <span className="flex items-center gap-2">
           <Vote size={16} />
           {totalVotes} votes
@@ -152,6 +176,7 @@ function DemoSingleChoicePoll() {
           type="button"
           variant="ghost"
           size="sm"
+          className={`${BRAND.wineText} hover:bg-[#FFE0E0]/60 hover:text-[#885053] dark:hover:bg-[#885053]/25 dark:hover:text-[#FFE0E0]`}
           onClick={() => setVotedOptionId(null)}
         >
           Change my vote
@@ -173,11 +198,13 @@ function DemoMultipleChoicePoll() {
       className="w-full self-start p-4 space-y-3 poll-card-sunken ring-0"
     >
       <div className="flex items-center justify-between gap-2">
-        <Badge variant="destructive">Closed</Badge>
-        <span className="text-xs text-muted-foreground">Multiple choice</span>
+        <Badge className={BRAND.closedBadge}>Closed</Badge>
+        <span className={`text-xs ${BRAND.sageText}`}>Multiple choice</span>
       </div>
 
-      <h3 className="text-sm font-bold">{MULTIPLE_CHOICE_DEMO.title}</h3>
+      <h3 className={`text-sm font-bold ${BRAND.greenText}`}>
+        {MULTIPLE_CHOICE_DEMO.title}
+      </h3>
 
       <div className="space-y-3">
         {MULTIPLE_CHOICE_DEMO.options.map((option) => (
@@ -189,7 +216,9 @@ function DemoMultipleChoicePoll() {
 
       <DemoHashtags hashtags={MULTIPLE_CHOICE_DEMO.hashtags} />
 
-      <div className="border-t pt-4 flex items-center gap-2 text-sm text-muted-foreground">
+      <div
+        className={`pt-4 flex items-center gap-2 text-sm ${BRAND.sageText} ${BRAND.sectionBorder}`}
+      >
         <Vote size={16} />
         {totalVotes} votes
       </div>
@@ -204,14 +233,16 @@ function DemoSliderPoll() {
       className="w-full self-start p-4 space-y-4 poll-card-raised ring-0"
     >
       <div className="flex items-center justify-between gap-2">
-        <Badge>Open</Badge>
-        <span className="text-xs text-muted-foreground">Slider</span>
+        <Badge className={BRAND.openBadge}>Open</Badge>
+        <span className={`text-xs ${BRAND.sageText}`}>Slider</span>
       </div>
 
-      <h3 className="text-sm font-bold">{SLIDER_DEMO.title}</h3>
+      <h3 className={`text-sm font-bold ${BRAND.greenText}`}>
+        {SLIDER_DEMO.title}
+      </h3>
 
       <div className="space-y-6 py-4">
-        <div className="text-center text-2xl font-bold">
+        <div className={`text-center text-2xl font-bold ${BRAND.greenText}`}>
           {SLIDER_DEMO.average}%
         </div>
 
@@ -224,7 +255,9 @@ function DemoSliderPoll() {
             disabled
           />
 
-          <div className="flex justify-between gap-4 text-xs text-muted-foreground">
+          <div
+            className={`flex justify-between gap-4 text-xs ${BRAND.sageText}`}
+          >
             <span className="max-w-[45%] text-left">
               {SLIDER_DEMO.leftLabel}
             </span>
@@ -235,7 +268,9 @@ function DemoSliderPoll() {
         </div>
       </div>
 
-      <div className="border-t pt-4 flex items-center gap-2 text-sm text-muted-foreground">
+      <div
+        className={`pt-4 flex items-center gap-2 text-sm ${BRAND.sageText} ${BRAND.sectionBorder}`}
+      >
         <Vote size={16} />
         Average of {SLIDER_DEMO.voters} answers
       </div>
@@ -251,10 +286,10 @@ type FeatureCardProps = {
 
 function FeatureCard({ icon, title, children }: FeatureCardProps) {
   return (
-    <Card size="sm" className="p-4 space-y-2">
+    <Card size="sm" className={`p-4 space-y-2 ${BRAND.softBorder}`}>
       <div className="flex items-center gap-2">
-        <span className="text-muted-foreground">{icon}</span>
-        <h3 className="text-sm font-bold">{title}</h3>
+        <span className={BRAND.sageText}>{icon}</span>
+        <h3 className={`text-sm font-bold ${BRAND.greenText}`}>{title}</h3>
       </div>
       <p className="text-sm text-muted-foreground">{children}</p>
     </Card>
@@ -267,19 +302,28 @@ type PathCardProps = {
   title: string;
   intro: string;
   steps: string[];
+  tone: "green" | "warm";
 };
 
 /* One of the two ways to ask: the public feed, or a private room. */
-function PathCard({ icon, badge, title, intro, steps }: PathCardProps) {
+function PathCard({ icon, badge, title, intro, steps, tone }: PathCardProps) {
+  const isWarm = tone === "warm";
+
   return (
-    <Card size="sm" className="p-4 space-y-4">
+    <Card size="sm" className={`p-4 space-y-4 ${BRAND.softBorder}`}>
       <div className="flex items-center gap-2">
-        <span className="text-muted-foreground">{icon}</span>
-        <Badge variant="secondary">{badge}</Badge>
+        <span className={isWarm ? BRAND.wineText : BRAND.sageText}>{icon}</span>
+        <Badge className={isWarm ? BRAND.warmBadge : BRAND.greenBadge}>
+          {badge}
+        </Badge>
       </div>
 
       <div className="space-y-2">
-        <h3 className="text-sm font-bold">{title}</h3>
+        <h3
+          className={`text-sm font-bold ${isWarm ? BRAND.wineText : BRAND.greenText}`}
+        >
+          {title}
+        </h3>
         <p className="text-sm text-muted-foreground">{intro}</p>
       </div>
 
@@ -288,7 +332,13 @@ function PathCard({ icon, badge, title, intro, steps }: PathCardProps) {
       <ol className="space-y-3">
         {steps.map((step, index) => (
           <li key={step} className="flex items-start gap-3">
-            <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border text-xs font-medium">
+            <span
+              className={`mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border text-xs font-medium ${
+                isWarm
+                  ? "border-[#885053] text-[#885053] dark:border-[#F67373] dark:text-[#F67373]"
+                  : "border-[#6F8459] text-[#325024] dark:text-[#D4E7CB]"
+              }`}
+            >
               {index + 1}
             </span>
             <span className="text-sm text-muted-foreground">{step}</span>
@@ -306,13 +356,9 @@ export default function HomePage() {
         {/* Hero */}
         <section className="px-6 py-16 md:py-24">
           <div className="mx-auto max-w-5xl text-center space-y-6">
-            <Badge variant="outline" className="mx-auto">
-              <Sparkles size={14} className="mr-1" />
-              Polls, but social
-            </Badge>
-
             <h1 className="font-heading text-4xl md:text-6xl font-bold tracking-tight">
-              Ask anything. Decide together.
+              Ask anything.{" "}
+              <span className={BRAND.greenText}>Decide together.</span>
             </h1>
 
             <p className="mx-auto max-w-2xl text-base md:text-lg text-muted-foreground">
@@ -323,14 +369,19 @@ export default function HomePage() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Button asChild size="lg">
+              <Button asChild size="lg" className={BRAND.primaryButton}>
                 <Link to="/auth/register">
                   Create your account
                   <ArrowRight size={16} />
                 </Link>
               </Button>
 
-              <Button asChild variant="outline" size="lg">
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className={BRAND.outlineButton}
+              >
                 <Link to="/auth/login">Sign in</Link>
               </Button>
             </div>
@@ -342,7 +393,7 @@ export default function HomePage() {
         </section>
 
         {/* Poll examples */}
-        <section className="px-6 py-12 border-t">
+        <section className={`px-6 py-12 ${BRAND.sectionBorder}`}>
           <div className="mx-auto max-w-6xl space-y-8">
             <div className="max-w-2xl space-y-2">
               <h2 className="font-heading text-2xl md:text-3xl font-bold">
@@ -364,10 +415,10 @@ export default function HomePage() {
         </section>
 
         {/* Social network */}
-        <section className="px-6 py-12 border-t">
+        <section className={`px-6 py-12 ${BRAND.sectionBorder}`}>
           <div className="mx-auto max-w-6xl space-y-8">
             <div className="max-w-2xl space-y-2">
-              <Badge variant="secondary">The public side</Badge>
+              <Badge className={BRAND.greenBadge}>The public side</Badge>
               <h2 className="font-heading text-2xl md:text-3xl font-bold">
                 A social network built around opinions
               </h2>
@@ -409,8 +460,10 @@ export default function HomePage() {
               </FeatureCard>
             </div>
 
-            <Card size="sm" className="p-4 space-y-4">
-              <p className="text-xs uppercase tracking-wide text-muted-foreground">
+            <Card size="sm" className={`p-4 space-y-4 ${BRAND.softBorder}`}>
+              <p
+                className={`text-xs uppercase tracking-wide font-semibold ${BRAND.sageText}`}
+              >
                 Trending right now
               </p>
 
@@ -434,12 +487,14 @@ export default function HomePage() {
                 ].map((poll) => (
                   <div
                     key={poll.title}
-                    className="rounded-xl border p-3 space-y-2"
+                    className={`rounded-xl border p-3 space-y-2 bg-[#D4E7CB]/25 dark:bg-[#3A4336]/40 ${BRAND.softBorder}`}
                   >
                     <p className="text-sm font-medium">{poll.title}</p>
                     <div className="flex items-center justify-between">
-                      <Badge variant="outline">#{poll.tag}</Badge>
-                      <span className="text-xs text-muted-foreground">
+                      <Badge variant="outline" className={BRAND.hashtagBadge}>
+                        #{poll.tag}
+                      </Badge>
+                      <span className={`text-xs ${BRAND.sageText}`}>
                         {poll.votes}
                       </span>
                     </div>
@@ -451,10 +506,10 @@ export default function HomePage() {
         </section>
 
         {/* Rooms */}
-        <section className="px-6 py-12 border-t">
+        <section className={`px-6 py-12 ${BRAND.sectionBorder}`}>
           <div className="mx-auto max-w-6xl space-y-8">
             <div className="max-w-2xl space-y-2">
-              <Badge variant="secondary">The private side</Badge>
+              <Badge className={BRAND.warmBadge}>The private side</Badge>
               <h2 className="font-heading text-2xl md:text-3xl font-bold">
                 Rooms: vote in private, decide with your people
               </h2>
@@ -499,17 +554,20 @@ export default function HomePage() {
               </div>
 
               {/* Room example */}
-              <Card size="sm" className="p-4 space-y-4">
+              <Card
+                size="sm"
+                className="p-4 space-y-4 border-[#FFE0E0] dark:border-[#885053]/60"
+              >
                 <div className="flex items-center justify-between gap-2">
                   <div className="space-y-1">
-                    <h3 className="text-sm font-bold">
+                    <h3 className={`text-sm font-bold`}>
                       Sarah &amp; Tom — Wedding
                     </h3>
                     <p className="text-xs text-muted-foreground">
                       Private room · 14 members · closes in 6 days
                     </p>
                   </div>
-                  <Badge>
+                  <Badge className={BRAND.closedBadge}>
                     <Lock size={12} className="mr-1" />
                     Private
                   </Badge>
@@ -528,12 +586,14 @@ export default function HomePage() {
                   ].map((poll) => (
                     <div
                       key={poll.title}
-                      className="flex items-center justify-between gap-2 rounded-xl border p-3"
+                      className={`flex items-center justify-between gap-2 rounded-xl border p-3 ${BRAND.softBorder}`}
                     >
                       <span className="text-sm">{poll.title}</span>
                       <Badge
-                        variant={
-                          poll.status === "Closed" ? "destructive" : "default"
+                        className={
+                          poll.status === "Closed"
+                            ? BRAND.closedBadge
+                            : BRAND.openBadge
                         }
                       >
                         {poll.status}
@@ -545,7 +605,9 @@ export default function HomePage() {
                 <Separator />
 
                 <div className="space-y-3">
-                  <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                  <p
+                    className={`text-xs uppercase tracking-wide font-semibold ${BRAND.wineText}`}
+                  >
                     Room messages
                   </p>
 
@@ -562,7 +624,9 @@ export default function HomePage() {
                     },
                   ].map((message) => (
                     <div key={message.author} className="text-sm">
-                      <span className="font-medium">{message.author}</span>{" "}
+                      <span className={`font-medium ${BRAND.wineText}`}>
+                        {message.author}
+                      </span>{" "}
                       <span className="text-muted-foreground">
                         {message.message}
                       </span>
@@ -571,7 +635,7 @@ export default function HomePage() {
                 </div>
 
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <Users size={14} />
+                  <Users size={14} className="text-[#F67373]" />
                   Family, friends and the caterer — nobody else can see this.
                 </div>
               </Card>
@@ -579,8 +643,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* How it works */}
-        <section className="px-6 py-12 border-t">
+        <section className={`px-6 py-12`}>
           <div className="mx-auto max-w-6xl space-y-8">
             <div className="max-w-2xl space-y-2">
               <h2 className="font-heading text-2xl md:text-3xl font-bold">
@@ -594,6 +657,7 @@ export default function HomePage() {
 
             <div className="grid gap-6 md:grid-cols-2 items-start">
               <PathCard
+                tone="green"
                 icon={<Globe size={18} />}
                 badge="Ask randoms"
                 title="Create a public poll"
@@ -606,6 +670,7 @@ export default function HomePage() {
               />
 
               <PathCard
+                tone="warm"
                 icon={<Users size={18} />}
                 badge="Ask your pears"
                 title="Create a room and fill it with polls"
@@ -620,10 +685,11 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Final call to action */}
-        <section className="px-6 py-16 border-t">
+        <section className={`px-6 py-16 ${BRAND.sectionBorder}`}>
           <div className="mx-auto max-w-3xl text-center space-y-4">
-            <h2 className="font-heading text-2xl md:text-3xl font-bold">
+            <h2
+              className={`font-heading text-2xl md:text-3xl font-bold ${BRAND.greenText}`}
+            >
               What are you going to ask first?
             </h2>
             <p className="text-muted-foreground">
@@ -631,13 +697,18 @@ export default function HomePage() {
               group chat.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Button asChild size="lg">
+              <Button asChild size="lg" className={BRAND.primaryButton}>
                 <Link to="/auth/register">
                   Get started
                   <ArrowRight size={16} />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg">
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className={BRAND.outlineButton}
+              >
                 <Link to="/contact">Contact us</Link>
               </Button>
             </div>
