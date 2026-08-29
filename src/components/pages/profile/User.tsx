@@ -3,18 +3,34 @@ import HeaderUser from "@/components/user/HeaderUser";
 import MainContentUser from "@/components/user/MainContentUser";
 import FriendPannelUser from "@/components/user/FriendsAndRoomsUser/FriendPannelUser";
 import Layout from "@/layout/Layout";
+import NotFound from "@/components/pages/error/NotFound";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useUser } from "@/hooks/user/use-user";
 
 type UserProps = {
   id?: number;
 };
 
 export default function User({ id }: UserProps) {
+  const { data: user, error, isLoading } = useUser(id);
+
   if (!id) {
+    return <NotFound title="User not found" />;
+  }
+
+  if (isLoading) {
     return (
       <Layout>
-        <div className="p-4 text-center">User not found</div>
+        <div className="grid grid-cols-1 lg:grid-cols-4 mx-auto max-w-7xl gap-4 p-4">
+          <Skeleton className="h-40 lg:col-span-1" />
+          <Skeleton className="h-40 lg:col-span-3" />
+        </div>
       </Layout>
     );
+  }
+
+  if (error || !user) {
+    return <NotFound title="User not found" />;
   }
 
   return (
