@@ -7,7 +7,8 @@ export default function PollUpdateVoteButton({
   poll,
   onUpdateVote,
 }: PollResultProps) {
-  if (!poll.allowChangeVote || isPollClosed(poll)) return null;
+  if (!poll.hasVoted || !poll.allowChangeVote || isPollClosed(poll))
+    return null;
 
   return (
     <Button

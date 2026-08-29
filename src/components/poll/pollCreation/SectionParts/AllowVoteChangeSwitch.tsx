@@ -37,7 +37,7 @@ export default function AllowVoteChangeSwitch({
       <Switch
         checked={allowChangeVote}
         onCheckedChange={setAllowChangeVote}
-        className="data-checked:bg-[#6F8459]"
+        className="data-checked:bg-[#325024]"
       />
     </div>
   );

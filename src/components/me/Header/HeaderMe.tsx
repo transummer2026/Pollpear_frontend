@@ -77,14 +77,19 @@ export default function HeaderMe() {
   return (
     <Card
       className={`ring-0 lg:min-h-40 lg:[--card-spacing:--spacing(4)] ${
-        isEditing ? "" : "lg:max-h-50"
+        isEditing ? "" : "lg:max-h-64"
       }`}
     >
       <CardHeader className="space-y-2">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
+          {/*
+            Stacks as username / description / buttons on mobile, the DOM
+            order. From md the grid lifts the buttons back up beside the
+            username.
+          */}
+          <div className="grid gap-2 md:grid-cols-[1fr_auto]">
             {isEditing ? (
-              <div className="flex flex-1 flex-col gap-2">
+              <div className="flex flex-col gap-2 md:col-start-1 md:row-start-1">
                 <Label htmlFor="username">Username</Label>
                 <Input id="username" {...register("username")} />
                 {errors.username && (
@@ -94,11 +99,28 @@ export default function HeaderMe() {
                 )}
               </div>
             ) : (
-              <CardTitle className="text-2xl font-bold">
+              <CardTitle className="min-w-0 truncate text-2xl font-bold md:col-start-1 md:row-start-1">
                 {user?.username}
               </CardTitle>
             )}
-            <div className="flex gap-2">
+
+            {isEditing ? (
+              <div className="flex flex-col gap-2 md:col-start-1 md:row-start-2">
+                <Label htmlFor="bio">Bio</Label>
+                <Textarea id="bio" {...register("bio")} />
+                {errors.bio && (
+                  <p className="text-destructive text-sm mt-1">
+                    {errors.bio?.message}
+                  </p>
+                )}
+              </div>
+            ) : (
+              <CardDescription className="md:col-start-1 md:row-start-2">
+                {user?.bio}
+              </CardDescription>
+            )}
+
+            <div className="flex gap-2 md:col-start-2 md:row-start-1 md:justify-self-end">
               <Button asChild type="button" variant="outline">
                 <Link to="/settings">Settings</Link>
               </Button>
@@ -133,19 +155,6 @@ export default function HeaderMe() {
               )}
             </div>
           </div>
-          {isEditing ? (
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="bio">Bio</Label>
-              <Textarea id="bio" {...register("bio")} />
-              {errors.bio && (
-                <p className="text-destructive text-sm mt-1">
-                  {errors.bio?.message}
-                </p>
-              )}
-            </div>
-          ) : (
-            <CardDescription>{user?.bio}</CardDescription>
-          )}
         </form>
       </CardHeader>
       <Separator />

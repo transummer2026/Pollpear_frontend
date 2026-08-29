@@ -161,7 +161,12 @@ export default function NewRoomCard() {
         </CardContent>
 
         <CardFooter className="justify-end">
-          <Button type="submit" size="lg" disabled={isMutating}>
+          <Button
+            type="submit"
+            size="lg"
+            className="bg-[#325024] text-white hover:bg-[#325024]/90"
+            disabled={isMutating}
+          >
             Create room
           </Button>
         </CardFooter>

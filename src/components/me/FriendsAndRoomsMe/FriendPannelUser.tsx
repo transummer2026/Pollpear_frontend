@@ -25,7 +25,10 @@ export default function FriendPannelUser() {
         <FriendPanelMobile friends={sortedFriends} invitations={invitations} />
       </div>
       <RoomInvitationSection />
-      <RoomSection />
+      {/* on mobile the rooms live as a row of the panel above */}
+      <div className="hidden lg:block">
+        <RoomSection />
+      </div>
     </div>
   );
 }

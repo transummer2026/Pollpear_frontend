@@ -1,16 +1,12 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
+import { Card, CardContent } from "@/components/ui/card";
+import { PanelMobileRow } from "@/components/ui/panel-mobile-row";
 import FriendBadgeLarge from "@/components/me/FriendsAndRoomsMe/FriendBadgeLarge";
 import FriendBadgeLargeUser from "@/components/user/FriendsAndRoomsUser/FriendBadgeLargeUser";
 import FriendBadgeMobile from "@/components/me/FriendsAndRoomsMe/FriendBadgeMobile";
+import RoomBadge from "@/components/me/FriendsAndRoomsMe/RoomBadge";
+import RoomBadgeMobile from "@/components/me/FriendsAndRoomsMe/RoomBadgeMobile";
 import type { Friend } from "@/components/me/FriendsAndRoomsMe/friends";
-import {
-  Popover,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { useRooms } from "@/hooks/room/use-room";
 
 type FriendPanelMobileProps = {
   friends: Friend[];
@@ -21,77 +17,53 @@ export default function FriendPanelMobile({
   friends,
   invitations,
 }: FriendPanelMobileProps) {
+  const { data } = useRooms();
+  const rooms = data ?? [];
+
   const hasInvitations = invitations.length > 0;
   const hasFriends = friends.length > 0;
+  const hasRooms = rooms.length > 0;
 
-  if (!hasInvitations && !hasFriends) {
+  if (!hasInvitations && !hasFriends && !hasRooms) {
     return null;
   }
 
   return (
     <Card className="w-full ring-0">
-      {hasInvitations && (
-        <>
-          <CardHeader className="text-center">
-            <CardTitle className="text-lg">Invitations</CardTitle>
-          </CardHeader>
-          <CardContent className="flex justify-center">
-            <Popover>
-              <PopoverTrigger asChild>
-                <button className="cursor-pointer">
-                  <FriendBadgeMobile friends={invitations} />
-                </button>
-              </PopoverTrigger>
-              <PopoverContent className="w-64 p-0">
-                <PopoverHeader className="text-center py-3">
-                  Invitations
-                </PopoverHeader>
-                <ScrollArea className="h-72">
-                  <ul className="space-y-1 p-2">
-                    {invitations.map((invitation) => (
-                      <FriendBadgeLargeUser
-                        key={invitation.id}
-                        friend={invitation}
-                      />
-                    ))}
-                  </ul>
-                </ScrollArea>
-              </PopoverContent>
-            </Popover>
-          </CardContent>
-        </>
-      )}
+      {/* divide-y draws the separators, skipped sections leave no DOM node */}
+      <CardContent className="divide-y">
+        {hasInvitations && (
+          <PanelMobileRow
+            title="Invitations"
+            items={invitations}
+            getKey={(invitation) => invitation.id}
+            bubbles={<FriendBadgeMobile friends={invitations} />}
+            renderItem={(invitation) => (
+              <FriendBadgeLargeUser friend={invitation} />
+            )}
+          />
+        )}
 
-      {hasInvitations && hasFriends && <Separator />}
+        {hasFriends && (
+          <PanelMobileRow
+            title="PearPals"
+            items={friends}
+            getKey={(friend) => friend.id}
+            bubbles={<FriendBadgeMobile friends={friends} />}
+            renderItem={(friend) => <FriendBadgeLarge friend={friend} />}
+          />
+        )}
 
-      {hasFriends && (
-        <>
-          <CardHeader className="text-center">
-            <CardTitle className="text-lg">PearPals</CardTitle>
-          </CardHeader>
-          <CardContent className="flex justify-center">
-            <Popover>
-              <PopoverTrigger asChild>
-                <button className="cursor-pointer">
-                  <FriendBadgeMobile friends={friends} />
-                </button>
-              </PopoverTrigger>
-              <PopoverContent className="w-64 p-0">
-                <PopoverHeader className="text-center py-3">
-                  Friends and Rooms
-                </PopoverHeader>
-                <ScrollArea className="h-72">
-                  <ul className="space-y-1 p-2">
-                    {friends.map((friend) => (
-                      <FriendBadgeLarge key={friend.id} friend={friend} />
-                    ))}
-                  </ul>
-                </ScrollArea>
-              </PopoverContent>
-            </Popover>
-          </CardContent>
-        </>
-      )}
+        {hasRooms && (
+          <PanelMobileRow
+            title="Rooms"
+            items={rooms}
+            getKey={(room) => room.id}
+            bubbles={<RoomBadgeMobile rooms={rooms} />}
+            renderItem={(room) => <RoomBadge room={room} />}
+          />
+        )}
+      </CardContent>
     </Card>
   );
 }

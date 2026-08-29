@@ -20,15 +20,17 @@ export default function HeaderUserScore({
   return (
     <Item
       variant="outline"
-      size="sm"
+      size="xs"
       className={cn("border-transparent", className)}
     >
       <ItemContent>
-        <ItemTitle className="text-lg font-bold">
+        <ItemTitle className="text-base font-bold">
           {value === undefined ? "0" : value}
         </ItemTitle>
 
-        <ItemDescription className="text-current">{label}</ItemDescription>
+        <ItemDescription className="text-xs text-current">
+          {label}
+        </ItemDescription>
       </ItemContent>
     </Item>
   );

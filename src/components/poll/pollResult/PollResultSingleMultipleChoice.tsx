@@ -10,6 +10,7 @@ import PollCardFooter from "@/components/poll/PollCardFooter";
 export default function PollResultSingleMultipleChoice({
   poll,
   onUpdateVote,
+  onBackToVote,
 }: PollResultProps) {
   const options = getVisibleOptions(poll);
   const totalVotes = getTotalVotes(options);
@@ -20,7 +21,11 @@ export default function PollResultSingleMultipleChoice({
 
   return (
     <Card size="sm" className="mx-auto p-4 space-y-3 poll-card-sunken ring-0">
-      <PollCardHeader poll={poll} />
+      <PollCardHeader
+        poll={poll}
+        onToggleResults={onBackToVote}
+        showingResults
+      />
 
       <CardTitle className="text-base font-bold">{poll.title}</CardTitle>
 

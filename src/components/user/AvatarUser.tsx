@@ -7,6 +7,7 @@ import {
 import { useUser } from "@/hooks/user/use-user";
 import { useAuth } from "@/hooks/auth/use-auth";
 import { useFriends } from "@/hooks/friend/use-friendship";
+import { resolveAvatarUrl } from "@/lib/avatar";
 import { cn } from "@/lib/utils";
 import { statusBadgeClass } from "./FriendsAndRoomsUser/friends";
 

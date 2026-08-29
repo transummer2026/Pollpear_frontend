@@ -7,7 +7,7 @@ import { useSWRConfig } from "swr";
 import { ApiError } from "@/lib/fetcher";
 import { useVotePoll } from "@/hooks/poll/use-poll";
 import { pollKeys } from "@/lib/revalidate";
-import type { PollReadDTO } from "@shared/schemas/polls.schema";
+import { type PollVoteProps } from "@/components/poll/pollVote/PollVoteCard";
 import PollHashtags from "@/components/poll/PollHashtags";
 import PollCardHeader from "@/components/poll/PollCardHeader";
 import PollCardFooter from "@/components/poll/PollCardFooter";
@@ -21,12 +21,11 @@ import {
 const SCALE_START = 50;
 const SCALE_STEP = 5;
 
-type PollVoteSliderProps = {
-  poll: PollReadDTO;
-  roomId?: number;
-};
-
-export default function PollVoteSlider({ poll, roomId }: PollVoteSliderProps) {
+export default function PollVoteSlider({
+  poll,
+  roomId,
+  onShowResults,
+}: PollVoteProps) {
   const { leftLabel, rightLabel } = getSliderLabels(poll);
   const { mutate } = useSWRConfig();
   const { trigger, isMutating } = useVotePoll(poll.id);
@@ -57,7 +56,7 @@ export default function PollVoteSlider({ poll, roomId }: PollVoteSliderProps) {
       size="sm"
       className="w-full self-start p-4 space-y-4 poll-card-raised ring-0"
     >
-      <PollCardHeader poll={poll} />
+      <PollCardHeader poll={poll} onToggleResults={onShowResults} />
 
       <h2 className="text-base font-bold">{poll.title}</h2>
 

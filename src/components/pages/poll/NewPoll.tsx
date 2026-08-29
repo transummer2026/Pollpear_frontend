@@ -18,13 +18,13 @@ import SliderSection from "@/components/poll/pollCreation/SliderSection";
 const pollTypes = [
   {
     id: "single",
-    label: "Single choice poll",
+    label: "Choice poll",
     icon: ListChecks,
     description: "Ask a question and let people pick from your options.",
   },
   {
     id: "slider",
-    label: "slider",
+    label: "Slider poll",
     icon: Gauge,
     description: "Ask people to place their answer on a scale.",
   },
@@ -54,10 +54,10 @@ export default function PollCreatorCard() {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
-                  "flex items-center gap-2 rounded-t-xl border px-5 py-3 text-sm font-medium transition-all duration-200",
-                  active
-                    ? "bg-background border-b-background shadow-sm z-10 translate-y-px"
-                    : "bg-muted/60 hover:bg-muted border-b",
+                  "flex items-center gap-2 rounded-t-xl border-x border-t px-5 py-3 text-sm font-medium transition-all duration-200",
+                  // no shadow: it would cast a line along the bottom edge,
+                  // which has to stay open so the tab reads as part of the card
+                  active ? "bg-background" : "bg-muted/60 hover:bg-muted",
                 )}
               >
                 <Icon size={17} />
@@ -67,7 +67,12 @@ export default function PollCreatorCard() {
           })}
         </div>
 
-        <Card className="rounded-t-none">
+        {/*
+          ring-0 + explicit side borders: a ring draws all four edges, and its
+          top one runs right under the tabs. Dropping it welds the tabs to the
+          card while keeping the outline on the three other sides.
+        */}
+        <Card className="rounded-t-none border-x border-b ring-0">
           <CardHeader>
             <CardTitle className="text-2xl">Create a poll</CardTitle>
             <CardDescription>{activeType.description}</CardDescription>

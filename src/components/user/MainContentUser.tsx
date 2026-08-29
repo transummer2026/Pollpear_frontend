@@ -1,6 +1,14 @@
+import { useMemo, useState } from "react";
 import { usePollsUser } from "@/hooks/poll/use-poll";
 import PollColumns from "@/components/poll/PollColumns";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import PollStatusFilter from "@/components/poll/PollStatusFilter";
+import { filterPolls, type PollFilter } from "@/lib/poll";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
 import { usePagination } from "@/hooks/use-pagination";
 import { PaginationControls } from "@/components/ui/pagination-controls";
 
@@ -9,16 +17,25 @@ const NO_POLLS: never[] = [];
 
 export default function MainContentUser({ id: userId }: { id: number }) {
   const { data: polls } = usePollsUser(userId);
+  const [filter, setFilter] = useState<PollFilter>("all");
+
+  const visiblePolls = useMemo(
+    () => filterPolls(polls ?? NO_POLLS, filter),
+    [polls, filter],
+  );
 
   const { page, setPage, pageCount, pageItems } = usePagination(
-    polls ?? NO_POLLS,
+    visiblePolls,
     PAGE_SIZE,
   );
 
   if (!polls) return null;
 
   return (
-    <Card>
+    <Card className="w-full ring-0">
+      <CardHeader className="flex justify-end">
+        <PollStatusFilter value={filter} onChange={setFilter} />
+      </CardHeader>
       <CardContent>
         <PollColumns polls={pageItems} />
       </CardContent>

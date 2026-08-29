@@ -82,7 +82,7 @@ export default function SliderSection({ roomId }: RoomProps) {
         <Button
           type="submit"
           size="lg"
-          className="bg-[#6F8459] text-white hover:bg-[#6F8459]/90"
+          className="bg-[#325024] text-white hover:bg-[#325024]/90"
           disabled={isMutating}
         >
           Create poll

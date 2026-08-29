@@ -10,12 +10,17 @@ import { Slider } from "@/components/ui/slider";
 export default function PollResultSlider({
   poll,
   onUpdateVote,
+  onBackToVote,
 }: PollResultProps) {
   const { leftLabel, rightLabel } = getSliderLabels(poll);
   const result = Math.round(poll.sliderResult * 100);
   return (
     <Card size="sm" className="mx-auto p-4 space-y-4 poll-card-sunken ring-0">
-      <PollCardHeader poll={poll} />
+      <PollCardHeader
+        poll={poll}
+        onToggleResults={onBackToVote}
+        showingResults
+      />
       <h2 className="text-base font-bold">{poll.title}</h2>
 
       {poll.description && (

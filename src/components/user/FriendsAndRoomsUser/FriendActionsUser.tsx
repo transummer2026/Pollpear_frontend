@@ -105,7 +105,7 @@ export default function FriendActionsUser({
       <div className="flex gap-1">
         <Badge
           variant="secondary"
-          className="cursor-pointer"
+          className="cursor-pointer bg-[#FFE0E0] text-[#885053] hover:bg-[#FFE0E0]/80"
           aria-label="Decline friend request"
           onClick={() =>
             runAction(() => updateFriendship({ status: "rejected" }))
@@ -115,7 +115,7 @@ export default function FriendActionsUser({
         </Badge>
         <Badge
           variant="default"
-          className="cursor-pointer"
+          className="cursor-pointer bg-[#3A4336] text-white hover:bg-[#3A4336]/80"
           aria-label="Accept friend request"
           onClick={() =>
             runAction(() => updateFriendship({ status: "accepted" }))

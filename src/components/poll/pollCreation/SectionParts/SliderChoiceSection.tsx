@@ -36,7 +36,7 @@ export default function SliderChoiceSection({
         max={100}
         step={1}
         disabled
-        className="mx-auto w-full"
+        className="mx-auto w-full [&_[data-slot=slider-range]]:bg-[#6F8459] [&_[data-slot=slider-track]]:bg-[#D4E7CB]"
       />
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
