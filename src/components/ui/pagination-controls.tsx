@@ -61,7 +61,7 @@ export function PaginationControls({
 
   return (
     <Pagination className={className}>
-      <PaginationContent>
+      <PaginationContent className="flex-wrap justify-center">
         <PaginationItem>
           <Button
             type="button"
