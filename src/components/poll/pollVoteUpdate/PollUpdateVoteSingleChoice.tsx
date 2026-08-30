@@ -4,6 +4,7 @@ import { ApiError } from "@/lib/fetcher";
 import { toast } from "sonner";
 import { useSWRConfig } from "swr";
 import { useVotePollUpdate } from "@/hooks/poll/use-poll";
+import { pollKeys } from "@/lib/revalidate";
 import { type PollUpdateVoteProps } from "@/components/poll/pollVoteUpdate/PollUpdateVoteCard";
 import PollHashtags from "@/components/poll/PollHashtags";
 import PollCardHeader from "@/components/poll/PollCardHeader";
@@ -23,8 +24,7 @@ export default function PollUpdateVoteSingleChoice({
         type: "single_choice",
         optionsVoted: [{ optionId }],
       });
-      await mutate(`/polls/${poll.id}`);
-      await mutate(`/polls`);
+      await mutate(pollKeys);
       toast.success("Vote recorded");
       onDone();
     } catch (err) {

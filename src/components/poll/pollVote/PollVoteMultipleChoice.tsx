@@ -11,6 +11,7 @@ import {
   type VoteCreateDTO,
 } from "@shared/schemas/vote.schema";
 import { useVotePoll } from "@/hooks/poll/use-poll";
+import { pollKeys } from "@/lib/revalidate";
 import type { PollReadDTO } from "@shared/schemas/polls.schema";
 import PollHashtags from "@/components/poll/PollHashtags";
 import PollCardHeader from "@/components/poll/PollCardHeader";
@@ -59,8 +60,7 @@ export default function PollVoteMultipleChoice({
     try {
       await trigger(data);
       if (roomId) await mutate(`/rooms/${roomId}`);
-      await mutate(`/polls/${poll.id}`);
-      await mutate(`/polls`);
+      await mutate(pollKeys);
       toast.success("Vote recorded");
     } catch (err) {
       if (err instanceof ApiError) toast.error(err.message);

@@ -11,6 +11,7 @@ import {
   type VoteCreateDTO,
 } from "@shared/schemas/vote.schema";
 import { useVotePollUpdate } from "@/hooks/poll/use-poll";
+import { pollKeys } from "@/lib/revalidate";
 import { type PollUpdateVoteProps } from "@/components/poll/pollVoteUpdate/PollUpdateVoteCard";
 import PollHashtags from "@/components/poll/PollHashtags";
 import PollCardHeader from "@/components/poll/PollCardHeader";
@@ -53,8 +54,7 @@ export default function PollUpdateVoteMultipleChoice({
   const onSubmit: SubmitHandler<VoteCreateDTO> = async (data) => {
     try {
       await trigger(data);
-      await mutate(`/polls/${poll.id}`);
-      await mutate(`/polls`);
+      await mutate(pollKeys);
       toast.success("Vote recorded");
       onDone();
     } catch (err) {
