@@ -22,6 +22,10 @@ export function sortByStatus(friends: Friend[]): Friend[] {
   );
 }
 
+export function onlineOnly(friends: Friend[]): Friend[] {
+  return friends.filter((friend) => friend.status === "online");
+}
+
 export function statusBadgeClass(status: Friend["status"]): string {
   return status === "online"
     ? "bg-green-600 dark:bg-green-800"

@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { useSWRConfig } from "swr";
 import { ApiError } from "@/lib/fetcher";
 import { useVotePollUpdate } from "@/hooks/poll/use-poll";
+import { pollKeys } from "@/lib/revalidate";
 import { type PollUpdateVoteProps } from "@/components/poll/pollVoteUpdate/PollUpdateVoteCard";
 import PollHashtags from "@/components/poll/PollHashtags";
 import PollCardHeader from "@/components/poll/PollCardHeader";
@@ -40,8 +41,7 @@ export default function PollUpdateVoteSlider({
         optionsVoted: [{ optionId: sliderOption.id }],
         freeField: String(value),
       });
-      await mutate(`/polls/${poll.id}`);
-      await mutate(`/polls`);
+      await mutate(pollKeys);
       toast.success("Vote recorded");
       onDone();
     } catch (err) {
