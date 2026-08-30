@@ -30,6 +30,18 @@ export function usePolls() {
   return useSWR<PollReadDTO[], ApiError>("/polls", fetcher);
 }
 
+export function usePollsFeed(limit: number) {
+  return useSWR<PollReadDTO[], ApiError>(`/feed?limit=${limit}`, fetcher);
+}
+
+/**
+ * Every poll the current user has voted on, most recent vote first. Plain
+ * filter on `/polls`, no recommender involved.
+ */
+export function useVotedPolls() {
+  return useSWR<PollReadDTO[], ApiError>("/polls?voted=true", fetcher);
+}
+
 export function usePollsUser(userId?: number) {
   return useSWR<PollReadDTO[], ApiError>(
     userId

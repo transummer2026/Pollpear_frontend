@@ -1,11 +1,10 @@
 import Layout from "@/layout/Layout";
+import FeedCard from "@/components/feed/FeedCard";
 
 export default function Feed() {
   return (
     <Layout>
-      <div className="flex justify-center">
-        <h1>Feed</h1>
-      </div>
+      <FeedCard />
     </Layout>
   );
 }

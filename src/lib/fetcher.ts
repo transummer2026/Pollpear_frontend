@@ -41,6 +41,13 @@ const extractErrorMessage = (status: number, body: unknown): string => {
 const isUserProfileResource = (resource: string) =>
   /^\/users\/\d+$/.test(resource);
 
+// `/feed` fails with 503 whenever the recommender is down. That's a
+// degraded section, not a broken app, so FeedContent renders it inline
+// instead of the whole page bouncing to /server-error. A 401/403 there
+// still redirects like anywhere else.
+const isFeedResource = (resource: string) =>
+  resource === "/feed" || resource.startsWith("/feed?");
+
 let onUnhandledApiError: ((status: number) => void) | null = null;
 
 const setApiErrorHandler = (handler: ((status: number) => void) | null) => {
@@ -72,11 +79,13 @@ const fetcher = async <T>(
     // "/me" is polled on every page (useAuth) to silently probe whether a
     // session exists; a 401 there just means "logged out" and must never
     // force-navigate the visitor, so it's excluded from the redirect.
+    const isServerFault = res.status >= 500;
     if (
       method === "GET" &&
       resource !== "/me" &&
       !isUserProfileResource(resource) &&
-      (res.status === 401 || res.status === 403 || res.status >= 500)
+      !(isFeedResource(resource) && isServerFault) &&
+      (res.status === 401 || res.status === 403 || isServerFault)
     ) {
       onUnhandledApiError?.(res.status);
     }

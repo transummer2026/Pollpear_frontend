@@ -25,6 +25,14 @@ export function useRooms() {
   return useSWR<RoomReadDTO[], ApiError>("/rooms", fetcher);
 }
 
+/**
+ * Rooms for the feed sidebar: the ones the user owns or belongs to, plus
+ * every public room — not just the ones they already joined (`/rooms`).
+ */
+export function useRoomsFeed() {
+  return useSWR<RoomReadDTO[], ApiError>("/rooms/feed", fetcher);
+}
+
 export function useRoomCreate() {
   return useSWRMutation<RoomPublicDTO, ApiError, string, RoomCreateDTO>(
     "/rooms/new",
