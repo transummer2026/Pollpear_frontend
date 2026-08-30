@@ -71,13 +71,20 @@ export function chatReducer(state: ChatState, action: ChatAction): ChatState {
     case "incoming":
     case "sending":
       return withMessages(state, [...state.messages, action.message]);
-    case "sent":
+    case "sent": {
+      const pending = state.messages.some(
+        (message) => message.tempId === action.tempId,
+      );
+
       return withMessages(
         state,
-        state.messages.map((message) =>
-          message.tempId === action.tempId ? action.message : message,
-        ),
+        pending
+          ? state.messages.map((message) =>
+              message.tempId === action.tempId ? action.message : message,
+            )
+          : [...state.messages, action.message],
       );
+    }
     case "failed":
       return withMessages(
         state,

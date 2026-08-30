@@ -149,6 +149,58 @@ describe("chatReducer", () => {
 
       expect(ids(state)).toEqual([3, 4, 5]);
     });
+
+    it("keeps an acknowledged message whose bubble is already gone", () => {
+      const sending = chatReducer(loaded(), {
+        type: "sending",
+        message: pending(1),
+      });
+      const timedOut = chatReducer(sending, {
+        type: "failed",
+        tempId: "temp-1",
+      });
+
+      const state = chatReducer(timedOut, {
+        type: "sent",
+        tempId: "temp-1",
+        message: message(5),
+      });
+
+      expect(ids(state), "the server stored it, it must not vanish").toEqual([
+        3, 4, 5,
+      ]);
+    });
+  });
+
+  describe("catchup", () => {
+    it("leaves hasMore untouched: it only speaks about older pages", () => {
+      const state = chatReducer(loaded(), {
+        type: "catchup",
+        messages: [message(5)],
+      });
+
+      expect(state.hasMore).toBe(true);
+    });
+  });
+
+  describe("cursors", () => {
+    it("stays without cursor while nothing is settled", () => {
+      const empty = chatReducer(initialChatState, {
+        type: "history",
+        messages: [],
+        hasMore: false,
+      });
+      expect([empty.oldestId, empty.newestId]).toEqual([null, null]);
+
+      const onlyPending = chatReducer(initialChatState, {
+        type: "sending",
+        message: pending(1),
+      });
+      expect([onlyPending.oldestId, onlyPending.newestId]).toEqual([
+        null,
+        null,
+      ]);
+    });
   });
 
   describe("failed", () => {

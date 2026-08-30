@@ -6,8 +6,8 @@ type RoomChatContextValue = {
   hasMore: boolean;
   isLoading: boolean;
   isSending: boolean;
-  loadOlder: () => void;
-  send: (content: string) => void;
+  loadOlder: () => Promise<boolean>;
+  send: (content: string) => Promise<boolean>;
 };
 
 export const RoomChatContext = createContext<RoomChatContextValue | null>(null);
