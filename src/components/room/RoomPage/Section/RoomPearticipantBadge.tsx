@@ -8,6 +8,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Item, ItemTitle } from "@/components/ui/item";
 import { statusBadgeClass } from "@/components/user/FriendsAndRoomsUser/friends";
+import { useAuth } from "@/hooks/auth/use-auth";
+import { useFriends } from "@/hooks/friend/use-friendship";
 import { useUser } from "@/hooks/user/use-user";
 
 type RoomPearticipantBadgeProps = {
@@ -20,9 +22,11 @@ export default function RoomPearticipantBadge({
   isOwner = false,
 }: RoomPearticipantBadgeProps) {
   const { data: user } = useUser(userId);
+  const { data: me } = useAuth();
+  const { data: friends } = useFriends(me?.id);
 
   const username = user?.username ?? "…";
-  const status = user?.isOnline ? "online" : "offline";
+  const friend = friends?.find((item) => item.user.id === userId);
 
   return (
     <Item className="flex items-center justify-between gap-2 p-2 border-b border-gray-200">
@@ -33,7 +37,13 @@ export default function RoomPearticipantBadge({
         <Avatar>
           <AvatarImage src={user?.avatarUrl} alt={`${username} avatar`} />
           <AvatarFallback>{username.slice(0, 2).toUpperCase()}</AvatarFallback>
-          <AvatarBadge className={statusBadgeClass(status)} />
+          {friend && (
+            <AvatarBadge
+              className={statusBadgeClass(
+                friend.user.isOnline ? "online" : "offline",
+              )}
+            />
+          )}
         </Avatar>
         <ItemTitle className="ml-4 min-w-0 flex-1 truncate">
           {username}

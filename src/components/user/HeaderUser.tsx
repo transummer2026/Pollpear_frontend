@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import HeaderUserScores from "@/components/user/HeaderUserScores";
 import FriendshipButton from "@/components/user/FriendshipButton";
@@ -28,7 +22,6 @@ export default function HeaderUser({ id }: HeaderUserProps) {
             <BlockButton userId={id} />
           </div>
         </div>
-        <CardDescription>{user?.bio}</CardDescription>
       </CardHeader>
       <Separator />
       <CardContent className="grid grid-cols-1 gap-4 lg:grid-cols-5 lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
