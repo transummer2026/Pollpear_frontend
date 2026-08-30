@@ -32,7 +32,7 @@ export default function RoomPageCardDesktop({ id }: RoomProps) {
   }
 
   return (
-    <Layout roomId={id}>
+    <Layout>
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-start gap-4 p-4 lg:grid-cols-4">
         <div className="lg:col-span-4">
           <RoomInfoCard room={room} />

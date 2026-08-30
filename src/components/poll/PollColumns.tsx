@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import PollCard from "@/components/poll/PollCard";
 import { useColumnCount } from "@/hooks/use-column-count";
 import type { PollReadDTO } from "@shared/schemas/polls.schema";
@@ -5,6 +6,8 @@ import type { PollReadDTO } from "@shared/schemas/polls.schema";
 type PollColumnsProps = {
   polls: PollReadDTO[];
   roomId?: number;
+  /** Rendered at the top of the first column, before any poll. */
+  leadingCard?: ReactNode;
 };
 
 /**
@@ -35,7 +38,11 @@ function splitIntoColumns<T>(items: T[], columnCount: number): T[][] {
  * visually reshuffled the other polls. Splitting by count keeps every poll at
  * a fixed position whatever the cards measure.
  */
-export default function PollColumns({ polls, roomId }: PollColumnsProps) {
+export default function PollColumns({
+  polls,
+  roomId,
+  leadingCard,
+}: PollColumnsProps) {
   const columnCount = useColumnCount();
   const columns = splitIntoColumns(polls, columnCount);
 
@@ -43,6 +50,7 @@ export default function PollColumns({ polls, roomId }: PollColumnsProps) {
     <div className="flex items-start gap-5">
       {columns.map((column, index) => (
         <div key={index} className="flex min-w-0 flex-1 flex-col gap-5">
+          {index === 0 && leadingCard}
           {column.map((poll) => (
             <PollCard key={poll.id} poll={poll} roomId={roomId} />
           ))}

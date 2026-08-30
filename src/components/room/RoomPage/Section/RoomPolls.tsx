@@ -2,8 +2,9 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { PaginationControls } from "@/components/ui/pagination-controls";
 import PollColumns from "@/components/poll/PollColumns";
 import { usePagination } from "@/hooks/use-pagination";
+import { isRoomClosed } from "@/lib/room";
 import type { RoomReadDTO } from "@shared/schemas/rooms.schema";
-import RoomPollsEmpty from "@/components/room/RoomPage/Section/RoomPollsEmpty";
+import RoomAddPollCard from "@/components/room/RoomPage/Section/RoomAddPollCard";
 
 const PAGE_SIZE = 12;
 
@@ -18,14 +19,24 @@ export default function RoomPolls({ room }: RoomPollsProps) {
   );
 
   const isEmpty = room.polls.length === 0;
+  const isClosed = isRoomClosed(room);
 
   return (
     <Card>
       <CardContent>
-        {isEmpty ? (
-          <RoomPollsEmpty room={room} />
-        ) : (
-          <PollColumns polls={pageItems} roomId={room.id} />
+        <PollColumns
+          polls={pageItems}
+          roomId={room.id}
+          leadingCard={
+            isClosed ? undefined : <RoomAddPollCard roomId={room.id} />
+          }
+        />
+        {isEmpty && (
+          <p className="mt-4 text-center text-sm text-muted-foreground">
+            {isClosed
+              ? "This room is closed — no new poll can be added."
+              : "No poll yet — ask the first question and let the pearticipants vote."}
+          </p>
         )}
       </CardContent>
       {!isEmpty && (

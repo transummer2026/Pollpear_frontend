@@ -12,11 +12,7 @@ import { useNotifications } from "@/hooks/notification/use-notifications";
 import { useMe } from "@/hooks/user/use-me";
 import { cn } from "@/lib/utils";
 
-type MobileBottomNavProps = {
-  roomId?: number;
-};
-
-export default function MobileBottomNav({ roomId }: MobileBottomNavProps) {
+export default function MobileBottomNav() {
   const { pathname } = useLocation();
   const { open } = useSearchDialog();
   const { data: user } = useMe();
@@ -64,7 +60,7 @@ export default function MobileBottomNav({ roomId }: MobileBottomNavProps) {
           />
         </button>
 
-        <MobileCreateMenu roomId={roomId} />
+        <MobileCreateMenu />
 
         {/* Full-width panel so it reads as centred on screen rather than
             hanging off the fourth tab. */}

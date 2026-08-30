@@ -9,10 +9,9 @@ import { useLocation } from "react-router";
 
 type LayoutProps = {
   children: React.ReactNode;
-  roomId?: number;
 };
 
-export default function Layout({ children, roomId }: LayoutProps) {
+export default function Layout({ children }: LayoutProps) {
   const { isAuthenticated } = useAuth();
   const { pathname } = useLocation();
   const isProfile = pathname === "/me";
@@ -20,7 +19,7 @@ export default function Layout({ children, roomId }: LayoutProps) {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen flex flex-col">
-        <Navbar roomId={roomId} />
+        <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
       </div>
@@ -30,7 +29,7 @@ export default function Layout({ children, roomId }: LayoutProps) {
   return (
     <NavbarSearchProvider>
       <div className="min-h-screen flex flex-col">
-        <Navbar roomId={roomId} />
+        <Navbar />
         {isProfile && <MobileMenuMe />}
         <main className="flex-1">{children}</main>
         <Footer className="hidden md:block" />
@@ -39,7 +38,7 @@ export default function Layout({ children, roomId }: LayoutProps) {
           className="h-14 shrink-0 pb-[env(safe-area-inset-bottom)] md:hidden"
         />
         {isProfile && <ScrollToTopButton />}
-        <MobileBottomNav roomId={roomId} />
+        <MobileBottomNav />
       </div>
     </NavbarSearchProvider>
   );
