@@ -16,7 +16,7 @@ type RoomIdProps = {
  */
 export default function NavbarUser({ roomId }: RoomIdProps) {
   return (
-    <Menubar className="hidden h-16 items-center sticky bg-white top-0 px-6 border-x-0 border-t-0 md:flex">
+    <Menubar className="hidden h-16 items-center sticky z-50 bg-white top-0 px-6 border-x-0 border-t-0 md:flex">
       <LogoButton to="/feed" />
       <div className="ml-auto flex items-center flex-1">
         <NavbarSearchTrigger className="ml-4" />
