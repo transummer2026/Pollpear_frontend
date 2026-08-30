@@ -18,6 +18,7 @@ import {
   ItemGroup,
 } from "@/components/ui/item";
 import FriendActionsUser from "@/components/user/FriendsAndRoomsUser/FriendActionsUser";
+import { NotificationBadge } from "@/components/layout/NotificationBadge";
 import { ApiError } from "@/lib/fetcher";
 import { useNotifications } from "@/hooks/notification/use-notifications";
 import { useAuth } from "@/hooks/auth/use-auth";
@@ -85,14 +86,7 @@ export function NotificationsDropdown({
             className="relative"
           >
             <Bell />
-            {unreadCount > 0 && (
-              <span
-                className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-medium text-white"
-                aria-hidden
-              >
-                {unreadCount > 9 ? "9+" : unreadCount}
-              </span>
-            )}
+            <NotificationBadge className="-right-1 -top-1" />
           </Button>
         )}
       </DropdownMenuTrigger>

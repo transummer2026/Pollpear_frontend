@@ -2,11 +2,13 @@ import { Link, useLocation } from "react-router";
 import { Notification01Icon, Search01Icon } from "@hugeicons/core-free-icons";
 import logo from "@/assets/pwar.jpg";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { NotificationBadge } from "@/components/layout/NotificationBadge";
 import { NotificationsDropdown } from "@/components/layout/NotificationsDropdown";
 import { useSearchDialog } from "@/components/layout/NavbarSearch/search-context";
 import { MobileNavItemBody } from "@/components/layout/MobileNav/MobileNavItem";
 import { mobileNavItemClass } from "@/components/layout/MobileNav/mobile-nav-styles";
 import { MobileCreateMenu } from "@/components/layout/MobileNav/MobileCreateMenu";
+import { useNotifications } from "@/hooks/notification/use-notifications";
 import { useMe } from "@/hooks/user/use-me";
 import { cn } from "@/lib/utils";
 
@@ -18,6 +20,7 @@ export default function MobileBottomNav({ roomId }: MobileBottomNavProps) {
   const { pathname } = useLocation();
   const { open } = useSearchDialog();
   const { data: user } = useMe();
+  const { unreadCount } = useNotifications();
 
   const isFeed = pathname === "/feed";
   const isSearch = pathname === "/search";
@@ -74,10 +77,15 @@ export default function MobileBottomNav({ roomId }: MobileBottomNavProps) {
         >
           <button
             type="button"
-            aria-label="Notifications"
+            aria-label={
+              unreadCount > 0
+                ? `Notifications, ${unreadCount} unread`
+                : "Notifications"
+            }
             className={mobileNavItemClass(false)}
           >
             <MobileNavItemBody icon={Notification01Icon} label="Notifs" />
+            <NotificationBadge className="left-1/2 top-3 translate-x-1" />
           </button>
         </NotificationsDropdown>
 
