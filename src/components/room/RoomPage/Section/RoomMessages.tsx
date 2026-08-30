@@ -9,6 +9,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Bubble, BubbleContent } from "@/components/ui/bubble";
+import {
+  Message,
+  MessageAvatar,
+  MessageContent,
+  MessageFooter,
+  MessageGroup,
+  MessageHeader,
+} from "@/components/ui/message";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -29,6 +39,17 @@ type RoomMessagesProps = {
 };
 
 const NEAR_BOTTOM_PX = 48;
+
+type Run = { authorId: number; items: ChatMessage[] };
+
+const runsOf = (messages: ChatMessage[]) =>
+  messages.reduce<Run[]>((runs, message) => {
+    const current = runs[runs.length - 1];
+    if (current && current.authorId === message.authorId)
+      current.items.push(message);
+    else runs.push({ authorId: message.authorId, items: [message] });
+    return runs;
+  }, []);
 
 const keyOf = (message?: ChatMessage) =>
   message ? (message.tempId ?? message.id) : null;
@@ -133,25 +154,59 @@ export default function RoomMessages({ className }: RoomMessagesProps) {
                   Load older messages
                 </Button>
               )}
-              <ul className="space-y-2">
-                {messages.map((message) => (
-                  <li
-                    key={message.tempId ?? message.id}
-                    className={cn(
-                      "text-sm",
-                      message.tempId && "opacity-60",
-                      message.authorId === me?.id && "text-right",
-                    )}
-                  >
-                    <span className="text-muted-foreground">
-                      {message.author?.username ?? "Deleted user"}
-                      {" · "}
-                      {format(new Date(message.createdAt), "HH:mm")}
-                    </span>
-                    <p className="break-words">{message.content}</p>
-                  </li>
-                ))}
-              </ul>
+              <div className="flex flex-col gap-4">
+                {runsOf(messages).map((run) => {
+                  const mine = run.authorId === me?.id;
+                  const username =
+                    run.items[0].author?.username ?? "Deleted user";
+                  return (
+                    <MessageGroup key={keyOf(run.items[0])}>
+                      {run.items.map((message, index) => (
+                        <Message
+                          key={keyOf(message)}
+                          align={mine ? "end" : "start"}
+                          className={cn(message.tempId && "opacity-60")}
+                        >
+                          {index === run.items.length - 1 ? (
+                            <MessageAvatar>
+                              <Avatar className="size-8">
+                                <AvatarImage
+                                  src={message.author?.avatarUrl}
+                                  alt={`${username} avatar`}
+                                />
+                                <AvatarFallback>
+                                  {username.slice(0, 2).toUpperCase()}
+                                </AvatarFallback>
+                              </Avatar>
+                            </MessageAvatar>
+                          ) : (
+                            <MessageAvatar className="invisible" aria-hidden />
+                          )}
+                          <MessageContent>
+                            {index === 0 && (
+                              <MessageHeader>
+                                {username}
+                                <span className="ml-1.5 font-normal">
+                                  {format(
+                                    new Date(message.createdAt),
+                                    "HH:mm",
+                                  )}
+                                </span>
+                              </MessageHeader>
+                            )}
+                            <Bubble variant={mine ? "default" : "muted"}>
+                              <BubbleContent>{message.content}</BubbleContent>
+                            </Bubble>
+                            {message.tempId && (
+                              <MessageFooter>Sending…</MessageFooter>
+                            )}
+                          </MessageContent>
+                        </Message>
+                      ))}
+                    </MessageGroup>
+                  );
+                })}
+              </div>
               <div ref={bottomRef} />
             </>
           )}
