@@ -1,5 +1,4 @@
 import Layout from "@/layout/Layout";
-import { Link } from "react-router";
 import { ArrowRight, BookOpen } from "lucide-react";
 
 import {
@@ -12,9 +11,9 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import ApiKeySection from "@/components/pages/api/ApiKeySection";
+import { GATEWAY_URL } from "@/lib/fetcher";
 
-//TODO: pointe sur la page de maintenance en attendant la vraie doc d'api
-const DOC_ROUTE = "/maintenance";
+const DOC_ROUTE = `${GATEWAY_URL}/v1/docs`;
 
 export default function Api() {
   return (
@@ -42,10 +41,10 @@ export default function Api() {
             </div>
 
             <Button variant="outline" asChild>
-              <Link to={DOC_ROUTE}>
+              <a href={DOC_ROUTE} target="_blank" rel="noopener noreferrer">
                 Read the API documentation
                 <ArrowRight size={16} />
-              </Link>
+              </a>
             </Button>
           </section>
 
