@@ -44,7 +44,9 @@ export default function PollVoteSingleChoice({
       <h2 className="text-base font-bold">{poll.title}</h2>
 
       {poll.description && (
-        <p className="text-sm text-muted-foreground">{poll.description}</p>
+        <p className="text-sm text-muted-foreground wrap-anywhere">
+          {poll.description}
+        </p>
       )}
 
       <div className="space-y-2">

@@ -87,7 +87,7 @@ export default function HeaderMe() {
             order. From md the grid lifts the buttons back up beside the
             username.
           */}
-          <div className="grid gap-2 md:grid-cols-[1fr_auto]">
+          <div className="grid gap-2 grid-cols-[minmax(0,1fr)] md:grid-cols-[minmax(0,1fr)_auto]">
             {isEditing ? (
               <div className="flex flex-col gap-2 md:col-start-1 md:row-start-1">
                 <Label htmlFor="username">Username</Label>
@@ -115,7 +115,7 @@ export default function HeaderMe() {
                 )}
               </div>
             ) : (
-              <CardDescription className="md:col-start-1 md:row-start-2">
+              <CardDescription className="wrap-anywhere md:col-start-1 md:row-start-2">
                 {user?.bio}
               </CardDescription>
             )}

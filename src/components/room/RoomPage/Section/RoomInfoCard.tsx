@@ -32,8 +32,8 @@ export default function RoomInfoCard({ room }: RoomInfoCardProps) {
   const isClosed = isRoomClosed(room);
 
   return (
-    <Card>
-      <CardHeader>
+    <Card className="ring-0">
+      <CardHeader className="grid-cols-[minmax(0,1fr)]">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <Badge variant={isClosed ? "closed" : "open"}>
@@ -49,8 +49,10 @@ export default function RoomInfoCard({ room }: RoomInfoCardProps) {
           </div>
         </div>
 
-        <CardTitle className="text-lg font-bold">{room.name}</CardTitle>
-        <CardDescription>
+        <CardTitle className="text-lg font-bold wrap-anywhere">
+          {room.name}
+        </CardTitle>
+        <CardDescription className="wrap-anywhere">
           {room.description || "No description yet"}
         </CardDescription>
       </CardHeader>

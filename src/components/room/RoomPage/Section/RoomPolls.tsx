@@ -28,7 +28,7 @@ export default function RoomPolls({ room }: RoomPollsProps) {
   const canAddPoll = !isClosed && isMember;
 
   return (
-    <Card>
+    <Card className="ring-0">
       <CardContent>
         <PollColumns
           polls={pageItems}

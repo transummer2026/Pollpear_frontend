@@ -69,7 +69,7 @@ export default function SliderSection({ roomId }: RoomProps) {
         <ScaleHeader register={register} errors={errors} />
       </CardHeader>
       <Separator />
-      <CardContent className="grid lg:grid-cols-[3fr_auto_2fr] gap-8">
+      <CardContent className="grid lg:grid-cols-[minmax(0,3fr)_auto_minmax(0,2fr)] gap-8">
         <OptionsScale
           control={control}
           register={register}

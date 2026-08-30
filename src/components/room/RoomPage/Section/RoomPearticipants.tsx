@@ -48,7 +48,7 @@ export default function RoomPearticipants({ room }: RoomPearticipantsProps) {
   );
 
   return (
-    <Card>
+    <Card className="ring-0">
       <CardHeader className="text-center">
         <CardTitle className="text-lg">Pearticipants</CardTitle>
         <CardAction className="flex items-center gap-2">

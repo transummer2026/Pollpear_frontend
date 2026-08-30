@@ -24,7 +24,9 @@ export default function PollResultSlider({
       <h2 className="text-base font-bold">{poll.title}</h2>
 
       {poll.description && (
-        <p className="text-sm text-muted-foreground">{poll.description}</p>
+        <p className="text-sm text-muted-foreground wrap-anywhere">
+          {poll.description}
+        </p>
       )}
       <div className="text-center space-y-6 py-4">
         <div className="text-center text-2xl font-bold">{result}%</div>

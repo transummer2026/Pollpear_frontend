@@ -74,7 +74,7 @@ export default function SingleChoiceSection({ roomId }: RoomProps) {
         />
       </CardHeader>
       <Separator />
-      <CardContent className="grid lg:grid-cols-[3fr_auto_2fr] gap-8">
+      <CardContent className="grid lg:grid-cols-[minmax(0,3fr)_auto_minmax(0,2fr)] gap-8">
         <SingleMultiChoiceOptions
           control={control}
           register={register}

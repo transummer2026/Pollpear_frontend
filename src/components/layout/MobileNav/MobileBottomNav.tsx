@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router";
 import { Notification01Icon, Search01Icon } from "@hugeicons/core-free-icons";
-import logo from "@/assets/pwar.jpg";
+import logo from "@/assets/avatars/default-2.svg";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { NotificationBadge } from "@/components/layout/NotificationBadge";
 import { NotificationsDropdown } from "@/components/layout/NotificationsDropdown";
