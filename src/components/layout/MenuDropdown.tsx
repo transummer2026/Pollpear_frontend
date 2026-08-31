@@ -9,9 +9,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { NavbarSearchTrigger } from "@/components/layout/NavbarSearch/NavbarSearchTrigger";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { useLogout } from "@/hooks/auth/use-logout";
 import { useMe } from "@/hooks/user/use-me";
-import { resolveAvatarUrl } from "@/lib/avatar";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
 
@@ -47,13 +47,7 @@ export function MenuDropdown({ variant = "burger" }: MenuDropdownProps) {
         {isAvatar ? (
           <div className="relative cursor-pointer">
             <Avatar size="lg">
-              <AvatarImage
-                src={resolveAvatarUrl(
-                  user?.avatarUrl,
-                  user?.name ?? user?.username,
-                )}
-                alt="my avatar"
-              />
+              <AvatarImage src={user?.avatarUrl} alt="my avatar" />
               <AvatarFallback>
                 {user?.username?.slice(0, 2).toUpperCase()}
               </AvatarFallback>
@@ -75,13 +69,7 @@ export function MenuDropdown({ variant = "burger" }: MenuDropdownProps) {
             <Link to="/me" className="block w-full">
               <DropdownMenuItem className="gap-2 py-2">
                 <Avatar>
-                  <AvatarImage
-                    src={resolveAvatarUrl(
-                      user?.avatarUrl,
-                      user?.name ?? user?.username,
-                    )}
-                    alt="my avatar"
-                  />
+                  <AvatarImage src={user?.avatarUrl} alt="my avatar" />
                   <AvatarFallback>
                     {user?.username?.slice(0, 2).toUpperCase()}
                   </AvatarFallback>
@@ -113,6 +101,10 @@ export function MenuDropdown({ variant = "burger" }: MenuDropdownProps) {
           <DropdownMenuItem>New Poll</DropdownMenuItem>
         </Link>
         <DropdownMenuSeparator />
+        {/* keeps the menu open, so flipping the theme can be seen right away */}
+        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+          <ThemeToggle showLabel className="w-full justify-between" />
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={handleLogout} disabled={isMutating}>
           Log out
         </DropdownMenuItem>

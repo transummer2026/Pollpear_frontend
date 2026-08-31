@@ -73,21 +73,39 @@
   /* poll depth: vote cards pop out (light from top-left), result cards are pressed in */
   --shadow-poll-raised:
     6px 8px 20px -8px oklch(0 0 0 / 0.09), 2px 3px 8px -4px oklch(0 0 0 / 0.06);
-  --shadow-poll-raised-dark:
-    8px 10px 24px -10px oklch(0 0 0 / 0.3), 3px 4px 10px -5px oklch(0 0 0 / 0.2);
   --inset-shadow-poll-sunken:
     inset 5px 7px 12px -7px oklch(0 0 0 / 0.15),
     inset 2px 3px 5px -3px oklch(0 0 0 / 0.08),
     inset -4px -5px 10px -7px oklch(0 0 0 / 0.06);
+
+  /*
+    Dark mode cannot carve depth out of shadow alone: black over a near-black
+    page has almost nowhere left to darken. So each dark shadow is paired with
+    the lit face opposite it, and the light stays where it is in light mode —
+    top-left. A raised card catches it along its top-left edges and throws a
+    deeper shadow down-right; a sunken one shows a dark top-left lip inside,
+    with the far bottom-right wall of the dip picking up the light instead.
+  */
+  --shadow-poll-raised-dark:
+    -3px -4px 14px -8px oklch(1 0 0 / 0.07),
+    8px 10px 24px -10px oklch(0 0 0 / 0.55),
+    3px 4px 10px -5px oklch(0 0 0 / 0.45);
+  --inset-shadow-poll-raised-dark:
+    inset 1px 1px 0 0 oklch(1 0 0 / 0.12),
+    inset 6px 7px 14px -12px oklch(1 0 0 / 0.09);
   --inset-shadow-poll-sunken-dark:
-    inset 5px 7px 12px -7px oklch(0 0 0 / 0.38),
-    inset 2px 3px 5px -3px oklch(0 0 0 / 0.25),
-    inset -4px -5px 10px -7px oklch(0 0 0 / 0.16);
+    inset 1px 1px 0 0 oklch(0 0 0 / 0.55),
+    inset 5px 7px 12px -7px oklch(0 0 0 / 0.6),
+    inset 2px 3px 5px -3px oklch(0 0 0 / 0.45),
+    inset -1px -1px 0 0 oklch(1 0 0 / 0.09),
+    inset -5px -6px 12px -8px oklch(1 0 0 / 0.07);
 }
 
 /** vote card: lifted off the feed, shadow cast to the bottom right */
 @utility poll-card-raised {
   @apply shadow-poll-raised dark:shadow-poll-raised-dark;
+  /* the lit top-left edge, dark mode only — light mode reads fine without it */
+  @apply dark:inset-shadow-poll-raised-dark;
 }
 
 /** result card: recessed into the feed, shadow inside the top left edges */

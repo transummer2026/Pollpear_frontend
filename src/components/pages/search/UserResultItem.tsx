@@ -3,7 +3,6 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { UserIcon } from "@hugeicons/core-free-icons";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Item, ItemMedia, ItemContent, ItemTitle } from "@/components/ui/item";
-import { resolveAvatarUrl } from "@/lib/avatar";
 import type { UserSearchResultDTO } from "@shared/schemas/search.schema";
 
 export function UserResultItem({ user }: { user: UserSearchResultDTO }) {
@@ -12,10 +11,7 @@ export function UserResultItem({ user }: { user: UserSearchResultDTO }) {
       <Link to={`/users/${user.id}`}>
         <ItemMedia variant="image">
           <Avatar>
-            <AvatarImage
-              src={resolveAvatarUrl(user.avatarUrl, user.name ?? user.username)}
-              alt={user.username}
-            />
+            <AvatarImage src={user.avatarUrl} alt={user.username} />
             <AvatarFallback>
               <HugeiconsIcon
                 icon={UserIcon}

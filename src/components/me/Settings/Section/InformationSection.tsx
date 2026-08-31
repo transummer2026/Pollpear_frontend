@@ -14,6 +14,9 @@ import {
 import { useMe, useMeUpdate } from "@/hooks/user/use-me";
 import type { UserDTO } from "@shared/schemas/users.schema";
 import ProfileCardGender from "@/components/me/ProfileCardGender";
+import ProfileCardBirthdate from "@/components/me/ProfileCardBirthdate";
+import FieldMessage from "@/components/FieldMessage";
+import { useFieldHints } from "@/hooks/use-field-hints";
 
 function toDateInput(value: UserDTO["birthdate"] | undefined): string {
   if (!value) return "";
@@ -52,6 +55,8 @@ export default function InformationSection() {
   });
   const { mutate } = useSWRConfig();
 
+  const { withHints, hintsFor } = useFieldHints(UserUpdateSchema, control);
+
   const { trigger, isMutating } = useMeUpdate();
 
   const onSubmit: SubmitHandler<UserUpdateDTO> = async (data) => {
@@ -73,81 +78,76 @@ export default function InformationSection() {
       <CardContent className="text-muted-foreground mt-2">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="p-6 border-b md:border-b-0 md:border-r p-6 space-y-4">
+            <ProfileCardBirthdate errors={errors} control={control} />
             <div>
-              <Input type="date" {...register("birthdate")} />
-              {errors.birthdate && (
-                <p className="text-destructive text-sm mt-1">
-                  {errors.birthdate?.message}
-                </p>
-              )}
-            </div>
-            <div>
-              <Input placeholder="Nationality" {...register("nationality")} />
-              {errors.nationality && (
-                <p className="text-destructive text-sm mt-1">
-                  {errors.nationality?.message}
-                </p>
-              )}
+              <Input
+                placeholder="Nationality"
+                {...withHints(register("nationality"))}
+              />
+              <FieldMessage
+                hints={hintsFor("nationality")}
+                error={errors.nationality?.message}
+              />
             </div>
             <div>
               <Input
                 placeholder="First name (optional)"
-                {...register("name")}
+                {...withHints(register("name"))}
               />
-              {errors.name && (
-                <p className="text-destructive text-sm mt-1">
-                  {errors.name?.message}
-                </p>
-              )}
+              <FieldMessage
+                hints={hintsFor("name")}
+                error={errors.name?.message}
+              />
             </div>
             <div>
               <Input
                 placeholder="Last name (optional)"
-                {...register("surname")}
+                {...withHints(register("surname"))}
               />
-              {errors.surname && (
-                <p className="text-destructive text-sm mt-1">
-                  {errors.surname?.message}
-                </p>
-              )}
+              <FieldMessage
+                hints={hintsFor("surname")}
+                error={errors.surname?.message}
+              />
             </div>
             <div>
-              <Input placeholder="City (optional)" {...register("city")} />
-              {errors.city && (
-                <p className="text-destructive text-sm mt-1">
-                  {errors.city?.message}
-                </p>
-              )}
+              <Input
+                placeholder="City (optional)"
+                {...withHints(register("city"))}
+              />
+              <FieldMessage
+                hints={hintsFor("city")}
+                error={errors.city?.message}
+              />
             </div>
             <div>
-              <Input placeholder="State (optional)" {...register("state")} />
-              {errors.state && (
-                <p className="text-destructive text-sm mt-1">
-                  {errors.state?.message}
-                </p>
-              )}
+              <Input
+                placeholder="State (optional)"
+                {...withHints(register("state"))}
+              />
+              <FieldMessage
+                hints={hintsFor("state")}
+                error={errors.state?.message}
+              />
             </div>
             <div>
               <Input
                 placeholder="Country (optional)"
-                {...register("country")}
+                {...withHints(register("country"))}
               />
-              {errors.country && (
-                <p className="text-destructive text-sm mt-1">
-                  {errors.country?.message}
-                </p>
-              )}
+              <FieldMessage
+                hints={hintsFor("country")}
+                error={errors.country?.message}
+              />
             </div>
             <div>
               <Input
                 placeholder="Company (optional)"
-                {...register("company")}
+                {...withHints(register("company"))}
               />
-              {errors.company && (
-                <p className="text-destructive text-sm mt-1">
-                  {errors.company?.message}
-                </p>
-              )}
+              <FieldMessage
+                hints={hintsFor("company")}
+                error={errors.company?.message}
+              />
             </div>
             <div>
               <ProfileCardGender errors={errors} control={control} />

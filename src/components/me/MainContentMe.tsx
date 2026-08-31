@@ -29,7 +29,13 @@ export default function MainContentMe() {
     PAGE_SIZE,
   );
 
-  if (!polls) return null;
+  /**
+   * Nothing to show and nothing to filter: an author with no poll at all gets
+   * no card. Gated on the whole list rather than the filtered one on purpose —
+   * hiding on `visiblePolls` would take the status filter away with it, and
+   * leave no way back from a filter that happens to match nothing.
+   */
+  if (!polls?.length) return null;
 
   return (
     <Card className="w-full ring-0">

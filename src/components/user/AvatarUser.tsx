@@ -7,7 +7,6 @@ import {
 import { useUser } from "@/hooks/user/use-user";
 import { useAuth } from "@/hooks/auth/use-auth";
 import { useFriends } from "@/hooks/friend/use-friendship";
-import { resolveAvatarUrl } from "@/lib/avatar";
 import { cn } from "@/lib/utils";
 import { statusBadgeClass } from "./FriendsAndRoomsUser/friends";
 
@@ -25,10 +24,7 @@ export default function AvatarUser({ id }: AvatarUserProps) {
   return (
     <div className="relative h-52 w-52">
       <Avatar className="h-52 w-52 rounded-full object-cover border-2">
-        <AvatarImage
-          src={resolveAvatarUrl(user?.avatarUrl, user?.name ?? user?.username)}
-          alt={`${user?.username} avatar`}
-        />
+        <AvatarImage src={user?.avatarUrl} alt={`${user?.username} avatar`} />
         <AvatarFallback>
           {user?.username?.slice(0, 2).toUpperCase()}
         </AvatarFallback>

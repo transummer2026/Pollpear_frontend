@@ -10,15 +10,23 @@ import {
   UserChangePasswordSchema,
 } from "@shared/schemas/auth.schema";
 import { usePasswordChange } from "@/hooks/me/use-password-change";
+import FieldMessage from "@/components/FieldMessage";
+import { useFieldHints } from "@/hooks/use-field-hints";
 
 export default function ChangePasswordCardUser() {
   const {
     register,
     formState: { errors },
     handleSubmit,
+    control,
   } = useForm<UserChangePasswordDTO>({
     resolver: zodResolver(UserChangePasswordSchema),
   });
+
+  const { withHints, hintsFor } = useFieldHints(
+    UserChangePasswordSchema,
+    control,
+  );
 
   const { trigger, isMutating } = usePasswordChange();
 
@@ -44,37 +52,34 @@ export default function ChangePasswordCardUser() {
               <Input
                 type="password"
                 placeholder="Password"
-                {...register("oldPassword")}
+                {...withHints(register("oldPassword"))}
               />
-              {errors.password && (
-                <p className="text-destructive text-sm mt-1">
-                  {errors.oldPassword?.message}
-                </p>
-              )}
+              <FieldMessage
+                hints={hintsFor("oldPassword")}
+                error={errors.oldPassword?.message}
+              />
             </div>
             <div className="m-4">
               <Input
                 type="password"
                 placeholder="New Password"
-                {...register("password")}
+                {...withHints(register("password"))}
               />
-              {errors.password && (
-                <p className="text-destructive text-sm mt-1">
-                  {errors.password?.message}
-                </p>
-              )}
+              <FieldMessage
+                hints={hintsFor("password")}
+                error={errors.password?.message}
+              />
             </div>
             <div className="m-4">
               <Input
                 type="password"
                 placeholder="Confirm Password"
-                {...register("confirmPassword")}
+                {...withHints(register("confirmPassword"))}
               />
-              {errors.confirmPassword && (
-                <p className="text-destructive text-sm mt-1">
-                  {errors.confirmPassword?.message}
-                </p>
-              )}
+              <FieldMessage
+                hints={hintsFor("confirmPassword")}
+                error={errors.confirmPassword?.message}
+              />
             </div>
             <Button type="submit" className="m-4" disabled={isMutating}>
               Change your Password

@@ -3,7 +3,6 @@ import { buttonVariants } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import { useMe } from "@/hooks/user/use-me";
 import { useAvatarChange } from "@/hooks/me/use-avatar-change";
-import { resolveAvatarUrl } from "@/lib/avatar";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
 import { useSWRConfig } from "swr";
@@ -50,10 +49,7 @@ export default function AvatarMe() {
   return (
     <div className="relative h-52 w-52">
       <Avatar className="h-52 w-52 rounded-full object-cover cursor-pointer border-2">
-        <AvatarImage
-          src={resolveAvatarUrl(user?.avatarUrl, user?.name ?? user?.username)}
-          alt="my avatar"
-        />
+        <AvatarImage src={user?.avatarUrl} alt="my avatar" />
         <AvatarFallback>
           {user?.username?.slice(0, 2).toUpperCase()}
         </AvatarFallback>
