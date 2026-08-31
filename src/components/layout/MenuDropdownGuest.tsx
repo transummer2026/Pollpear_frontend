@@ -17,7 +17,7 @@ export default function MenuDropdownGuest() {
       <DropdownMenuContent className="w-40" align="start">
         <DropdownMenuItem>
           {" "}
-          <Link to="/auth/new">Register</Link>{" "}
+          <Link to="/auth/register">Register</Link>{" "}
         </DropdownMenuItem>
         <DropdownMenuItem>
           {" "}
