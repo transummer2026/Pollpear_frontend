@@ -47,8 +47,8 @@ export default function AvatarMe() {
   };
 
   return (
-    <div className="relative h-40 w-40">
-      <Avatar className="h-40 w-40 rounded-full object-cover cursor-pointer border-2">
+    <div className="relative h-52 w-52">
+      <Avatar className="h-52 w-52 rounded-full object-cover cursor-pointer border-2">
         <AvatarImage src={user?.avatarUrl} alt="my avatar" />
         <AvatarFallback>
           {user?.username?.slice(0, 2).toUpperCase()}
@@ -62,7 +62,7 @@ export default function AvatarMe() {
             size: "icon",
             variant: "secondary",
             className:
-              "absolute bottom-1 right-1 h-10 w-10 cursor-pointer rounded-full border-2 shadow-md",
+              "group absolute bottom-2.5 right-2.5 h-10 w-10 cursor-pointer rounded-full border-2 shadow-md",
           })}
         >
           <input
@@ -72,7 +72,7 @@ export default function AvatarMe() {
             disabled={isMutating}
             onChange={onChange}
           />
-          <Pencil className="h-4 w-4" />
+          <Pencil className="h-4 w-4 transition-transform group-hover:rotate-12" />
         </label>
       </form>
     </div>

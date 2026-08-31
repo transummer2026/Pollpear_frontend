@@ -23,6 +23,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { useLogout } from "@/hooks/auth/use-logout";
 import { ApiError } from "@/lib/fetcher";
 
@@ -104,6 +105,7 @@ export default function MobileMenuMe() {
           </nav>
 
           <SheetFooter className="gap-4 p-4">
+            <ThemeToggle showLabel className="w-full justify-between px-1" />
             <Button
               variant="outline"
               className="w-full"
@@ -113,6 +115,7 @@ export default function MobileMenuMe() {
               <HugeiconsIcon icon={Logout01Icon} strokeWidth={2} />
               Log out
             </Button>
+
             <p className="text-center text-xs text-muted-foreground">
               PollPear © {new Date().getFullYear()}
             </p>

@@ -38,7 +38,11 @@ export default function VisibilitySwitch({
           </TooltipProvider>
         </div>
 
-        <Switch checked={isPublic} onCheckedChange={setIsPublic} />
+        <Switch
+          checked={isPublic}
+          onCheckedChange={setIsPublic}
+          className="data-checked:bg-[#325024]"
+        />
       </div>
 
       <p className="text-sm text-muted-foreground">

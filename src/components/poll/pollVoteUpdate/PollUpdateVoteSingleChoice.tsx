@@ -37,10 +37,12 @@ export default function PollUpdateVoteSingleChoice({
     <Card size="sm" className="w-full self-start p-4 space-y-4">
       <PollCardHeader poll={poll} />
 
-      <h2 className="text-sm font-bold">{poll.title}</h2>
+      <h2 className="text-base font-bold">{poll.title}</h2>
 
       {poll.description && (
-        <p className="text-sm text-muted-foreground">{poll.description}</p>
+        <p className="text-sm text-muted-foreground wrap-anywhere">
+          {poll.description}
+        </p>
       )}
 
       <div className="space-y-2">

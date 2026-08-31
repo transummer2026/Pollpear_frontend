@@ -5,21 +5,17 @@ import { toast } from "sonner";
 import { useSWRConfig } from "swr";
 import { useVotePoll } from "@/hooks/poll/use-poll";
 import { pollKeys } from "@/lib/revalidate";
-import type { PollReadDTO } from "@shared/schemas/polls.schema";
+import { type PollVoteProps } from "@/components/poll/pollVote/PollVoteCard";
 import PollHashtags from "@/components/poll/PollHashtags";
 import PollCardHeader from "@/components/poll/PollCardHeader";
 import PollCardFooter from "@/components/poll/PollCardFooter";
 import { getVisibleOptions } from "@/lib/poll";
 
-type PollVoteSingleChoiceProps = {
-  poll: PollReadDTO;
-  roomId?: number;
-};
-
 export default function PollVoteSingleChoice({
   poll,
   roomId,
-}: PollVoteSingleChoiceProps) {
+  onShowResults,
+}: PollVoteProps) {
   const { mutate } = useSWRConfig();
   const { trigger, isMutating } = useVotePoll(poll.id);
 
@@ -43,12 +39,14 @@ export default function PollVoteSingleChoice({
       size="sm"
       className="w-full self-start p-4 space-y-4 poll-card-raised ring-0"
     >
-      <PollCardHeader poll={poll} />
+      <PollCardHeader poll={poll} onToggleResults={onShowResults} />
 
-      <h2 className="text-sm font-bold">{poll.title}</h2>
+      <h2 className="text-base font-bold">{poll.title}</h2>
 
       {poll.description && (
-        <p className="text-sm text-muted-foreground">{poll.description}</p>
+        <p className="text-sm text-muted-foreground wrap-anywhere">
+          {poll.description}
+        </p>
       )}
 
       <div className="space-y-2">

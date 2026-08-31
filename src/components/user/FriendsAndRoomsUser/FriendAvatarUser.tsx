@@ -8,7 +8,6 @@ import {
   statusBadgeClass,
   type Friend,
 } from "@/components/user/FriendsAndRoomsUser/friends";
-
 export default function FriendAvatarUser({ friend }: { friend: Friend }) {
   return (
     <Avatar>

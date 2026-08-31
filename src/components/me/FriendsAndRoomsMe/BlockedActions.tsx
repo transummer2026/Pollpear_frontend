@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
-import { Unlock } from "lucide-react";
+import { LockedIcon, UnlockedIcon } from "@/components/icons";
+import { HoverIcon } from "@/components/icons/HoverIcon";
 import { toast } from "sonner";
 import { useSWRConfig } from "swr";
 import { ApiError } from "@/lib/fetcher";
@@ -26,11 +27,11 @@ export default function BlockedActions({ userId }: { userId: number }) {
   return (
     <Badge
       variant="outline"
-      className="cursor-pointer"
+      className="group cursor-pointer"
       aria-label="Unblock user"
       onClick={handleUnblock}
     >
-      <Unlock />
+      <HoverIcon idle={LockedIcon} hover={UnlockedIcon} />
     </Badge>
   );
 }

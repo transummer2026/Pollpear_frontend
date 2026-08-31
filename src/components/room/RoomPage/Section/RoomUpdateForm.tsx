@@ -102,8 +102,8 @@ export default function RoomUpdateForm({
   };
 
   return (
-    <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-      <div className="grid gap-8 lg:grid-cols-[3fr_auto_2fr]">
+    <form className="min-w-0 space-y-6" onSubmit={handleSubmit(onSubmit)}>
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,3fr)_auto_minmax(0,2fr)]">
         <div className="space-y-6">
           <CardTitle>Infos</CardTitle>
 

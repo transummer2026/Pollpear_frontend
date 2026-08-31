@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { Check, UserPlus } from "lucide-react";
+import { Check } from "lucide-react";
+import { AddIcon } from "@/components/icons";
 import { toast } from "sonner";
 import { useSWRConfig } from "swr";
 import { Button } from "@/components/ui/button";
@@ -58,7 +59,7 @@ export default function RoomAddPearticipantRow({
   };
 
   return (
-    <Item className="flex items-center justify-between gap-2 p-2 border-b border-gray-200">
+    <Item className="flex items-center justify-between gap-2 p-2 border-b border-border/50">
       <Link
         to={`/users/${friend.id}`}
         className="flex min-w-0 flex-1 items-center"
@@ -89,7 +90,7 @@ export default function RoomAddPearticipantRow({
               size="icon-sm"
               aria-label={`Invite ${friend.name}`}
             >
-              <UserPlus className="h-4 w-4" />
+              <AddIcon className="h-4 w-4" />
             </Button>
           </PopoverTrigger>
           <PopoverContent align="end">

@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { NavbarSearchTrigger } from "@/components/layout/NavbarSearch/NavbarSearchTrigger";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { useLogout } from "@/hooks/auth/use-logout";
 import { useMe } from "@/hooks/user/use-me";
 import { toast } from "sonner";
@@ -100,6 +101,10 @@ export function MenuDropdown({ variant = "burger" }: MenuDropdownProps) {
           <DropdownMenuItem>New Poll</DropdownMenuItem>
         </Link>
         <DropdownMenuSeparator />
+        {/* keeps the menu open, so flipping the theme can be seen right away */}
+        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+          <ThemeToggle showLabel className="w-full justify-between" />
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={handleLogout} disabled={isMutating}>
           Log out
         </DropdownMenuItem>

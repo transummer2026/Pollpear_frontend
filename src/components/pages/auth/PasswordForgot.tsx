@@ -1,7 +1,6 @@
 import Layout from "@/layout/Layout";
 import ResetPasswordCard from "@/components/auth/ResetPasswordCard";
 
-//TODO: handle the redirection if guest or user
 export default function PasswordForgot() {
   return (
     <Layout>

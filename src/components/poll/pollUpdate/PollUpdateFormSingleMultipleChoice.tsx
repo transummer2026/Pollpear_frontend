@@ -142,7 +142,7 @@ export default function PollUpdateFormSingleMultipleChoice({
   };
 
   return (
-    <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+    <form className="min-w-0 space-y-6" onSubmit={handleSubmit(onSubmit)}>
       <div className="space-y-4">
         <TitleSetting
           register={register("title")}
@@ -156,7 +156,7 @@ export default function PollUpdateFormSingleMultipleChoice({
 
       <Separator />
 
-      <div className="grid gap-8 lg:grid-cols-[3fr_auto_2fr]">
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,3fr)_auto_minmax(0,2fr)]">
         <SingleMultipleChoiceSection
           control={
             control as unknown as Control<

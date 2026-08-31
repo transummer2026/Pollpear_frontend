@@ -1,6 +1,11 @@
-import { Clock3, User, Vote } from "lucide-react";
+import { User, Vote } from "lucide-react";
+import { ClockIcon } from "@/components/icons";
 import { Link } from "react-router";
-import { differenceInCalendarDays, formatDistanceToNowStrict } from "date-fns";
+import {
+  differenceInCalendarDays,
+  differenceInMinutes,
+  formatDistanceToNowStrict,
+} from "date-fns";
 import type { PollReadDTO } from "@shared/schemas/polls.schema";
 import { isPollClosed } from "@/lib/poll";
 
@@ -16,7 +21,7 @@ export default function PollCardFooter({ poll }: { poll: PollReadDTO }) {
         </div>
 
         <div className="flex items-center gap-2">
-          <Clock3 size={16} />
+          <ClockIcon className="size-4" />
           {formatExpiresIn(poll)}
         </div>
 
@@ -38,13 +43,25 @@ export default function PollCardFooter({ poll }: { poll: PollReadDTO }) {
   );
 }
 
+/**
+ * Sous la journee le jour n'a plus de granularite utile ("Expires in 0 days"),
+ * on descend donc a l'heure puis a la minute.
+ */
 function formatExpiresIn(poll: PollReadDTO) {
   if (isPollClosed(poll)) return "Closed";
 
+  const endsAt = new Date(poll.endsAt);
+  const minutesLeft = differenceInMinutes(endsAt, new Date());
+
+  if (minutesLeft < 1) return "Expires in less than a minute";
+
+  const unit =
+    minutesLeft >= 60 * 24 ? "day" : minutesLeft >= 60 ? "hour" : "minute";
+
   return (
     "Expires " +
-    formatDistanceToNowStrict(new Date(poll.endsAt), {
-      unit: "day",
+    formatDistanceToNowStrict(endsAt, {
+      unit,
       roundingMethod: "floor",
       addSuffix: true,
     })

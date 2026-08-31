@@ -12,22 +12,18 @@ import {
 } from "@shared/schemas/vote.schema";
 import { useVotePoll } from "@/hooks/poll/use-poll";
 import { pollKeys } from "@/lib/revalidate";
-import type { PollReadDTO } from "@shared/schemas/polls.schema";
+import { type PollVoteProps } from "@/components/poll/pollVote/PollVoteCard";
 import PollHashtags from "@/components/poll/PollHashtags";
 import PollCardHeader from "@/components/poll/PollCardHeader";
 import PollCardFooter from "@/components/poll/PollCardFooter";
 import { Check } from "lucide-react";
 import { getVisibleOptions } from "@/lib/poll";
 
-type PollVoteMultipleChoiceProps = {
-  poll: PollReadDTO;
-  roomId?: number;
-};
-
 export default function PollVoteMultipleChoice({
   poll,
   roomId,
-}: PollVoteMultipleChoiceProps) {
+  onShowResults,
+}: PollVoteProps) {
   const { mutate } = useSWRConfig();
   const { trigger, isMutating } = useVotePoll(poll.id);
   const {
@@ -73,12 +69,14 @@ export default function PollVoteMultipleChoice({
       size="sm"
       className="w-full self-start p-4 space-y-4 poll-card-raised ring-0"
     >
-      <PollCardHeader poll={poll} />
+      <PollCardHeader poll={poll} onToggleResults={onShowResults} />
 
-      <h2 className="text-sm font-bold">{poll.title}</h2>
+      <h2 className="text-base font-bold">{poll.title}</h2>
 
       {poll.description && (
-        <p className="text-sm text-muted-foreground">{poll.description}</p>
+        <p className="text-sm text-muted-foreground wrap-anywhere">
+          {poll.description}
+        </p>
       )}
 
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
@@ -95,6 +93,7 @@ export default function PollVoteMultipleChoice({
                 variant={selected ? "default" : "outline"}
                 className={cn(
                   "w-full justify-between h-12",
+                  selected && "bg-[#6F8459] text-white hover:bg-[#6F8459]/90",
                   !selected && "hover:bg-muted",
                 )}
                 aria-pressed={selected}
@@ -115,7 +114,11 @@ export default function PollVoteMultipleChoice({
           </p>
         )}
 
-        <Button type="submit" className="w-full" disabled={isMutating}>
+        <Button
+          type="submit"
+          className="w-full bg-[#3A4336] text-white hover:bg-[#3A4336]/80"
+          disabled={isMutating}
+        >
           Submit vote
         </Button>
       </form>

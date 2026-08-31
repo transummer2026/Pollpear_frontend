@@ -5,11 +5,14 @@ import { type PollReadDTO } from "@shared/schemas/polls.schema";
 export type PollResultProps = {
   poll: PollReadDTO;
   onUpdateVote: () => void;
+  /** only set while previewing the results of a poll the user has not voted on */
+  onBackToVote?: () => void;
 };
 
 export default function PollResultCard({
   poll,
   onUpdateVote,
+  onBackToVote,
 }: PollResultProps) {
   switch (poll.type) {
     case "single_choice":
@@ -18,11 +21,18 @@ export default function PollResultCard({
         <PollResultSingleMultipleChoice
           poll={poll}
           onUpdateVote={onUpdateVote}
+          onBackToVote={onBackToVote}
         />
       );
 
     case "slider":
-      return <PollResultSlider poll={poll} onUpdateVote={onUpdateVote} />;
+      return (
+        <PollResultSlider
+          poll={poll}
+          onUpdateVote={onUpdateVote}
+          onBackToVote={onBackToVote}
+        />
+      );
 
     default:
       return null;

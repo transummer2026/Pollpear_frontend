@@ -21,7 +21,9 @@ export default function PollUpdateDialog({
 }: PollUpdateDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90svh] overflow-y-auto sm:max-w-2xl">
+      {/* minmax(0,…): the description textarea is field-sizing-content, without
+          a floored column a long line widens the track instead of wrapping */}
+      <DialogContent className="max-h-[90svh] grid-cols-[minmax(0,1fr)] overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>Edit poll</DialogTitle>
         </DialogHeader>

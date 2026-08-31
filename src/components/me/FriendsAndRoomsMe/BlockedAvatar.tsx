@@ -1,6 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { BlockedUser } from "@/components/me/FriendsAndRoomsMe/blocks";
-
 export default function BlockedAvatar({ user }: { user: BlockedUser }) {
   return (
     <Avatar>

@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router";
-import AdminPage from "@/pages/SettingsPage";
 import FeedPage from "@/pages/FeedPage";
 import NewPollPage from "@/pages/NewPollPage";
 import NewRoomPage from "@/pages/NewRoomPage";
@@ -57,7 +56,6 @@ export default function AppRoutes() {
         <Route path="/polls/new" element={<NewPollPage />} />
         <Route path="/me" element={<MePage />} />
         <Route path="/feed" element={<FeedPage />} />
-        <Route path="/admin" element={<AdminPage />} />
         <Route path="/settings/api" element={<ApiPage />} />
         <Route path="/settings/:section?" element={<SettingsPage />} />
         <Route path="/users/:id" element={<UserPage />} />

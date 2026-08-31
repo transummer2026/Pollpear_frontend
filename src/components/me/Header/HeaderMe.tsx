@@ -12,8 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router";
 import { Pencil } from "lucide-react";
-import HeaderUserHashtags from "./HeaderMeHashtags";
-import HeaderUserScores from "./HeaderMeScores";
+import HeaderUserScores from "@/components/user/HeaderUserScores";
 import { useMeUpdate } from "@/hooks/user/use-me";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
@@ -38,10 +37,6 @@ function toFormValues(user: UserDTO): UserUpdateInput {
 
 export default function HeaderMe() {
   const { data: user } = useMe();
-
-  const hashtags = {
-    hashtags: ["#polls", "#crocs", "#Valais", "#vibeconding", "#claude"],
-  };
 
   const [isEditing, setIsEditing] = useState(false);
   function startEditing() {
@@ -76,15 +71,20 @@ export default function HeaderMe() {
 
   return (
     <Card
-      className={`lg:min-h-40 lg:[--card-spacing:--spacing(4)] ${
-        isEditing ? "" : "lg:max-h-50"
+      className={`ring-0 lg:min-h-40 lg:[--card-spacing:--spacing(4)] ${
+        isEditing ? "" : "lg:max-h-64"
       }`}
     >
       <CardHeader className="space-y-2">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
+          {/*
+            Stacks as username / description / buttons on mobile, the DOM
+            order. From md the grid lifts the buttons back up beside the
+            username.
+          */}
+          <div className="grid gap-2 grid-cols-[minmax(0,1fr)] md:grid-cols-[minmax(0,1fr)_auto]">
             {isEditing ? (
-              <div className="flex flex-1 flex-col gap-2">
+              <div className="flex flex-col gap-2 md:col-start-1 md:row-start-1">
                 <Label htmlFor="username">Username</Label>
                 <Input id="username" {...register("username")} />
                 {errors.username && (
@@ -94,11 +94,28 @@ export default function HeaderMe() {
                 )}
               </div>
             ) : (
-              <CardTitle className="text-lg font-bold">
+              <CardTitle className="min-w-0 truncate text-2xl font-bold md:col-start-1 md:row-start-1">
                 {user?.username}
               </CardTitle>
             )}
-            <div className="flex gap-2">
+
+            {isEditing ? (
+              <div className="flex flex-col gap-2 md:col-start-1 md:row-start-2">
+                <Label htmlFor="bio">Bio</Label>
+                <Textarea id="bio" {...register("bio")} />
+                {errors.bio && (
+                  <p className="text-destructive text-sm mt-1">
+                    {errors.bio?.message}
+                  </p>
+                )}
+              </div>
+            ) : (
+              <CardDescription className="wrap-anywhere md:col-start-1 md:row-start-2">
+                {user?.bio}
+              </CardDescription>
+            )}
+
+            <div className="flex gap-2 md:col-start-2 md:row-start-1 md:justify-self-end">
               <Button asChild type="button" variant="outline">
                 <Link to="/settings">Settings</Link>
               </Button>
@@ -125,37 +142,20 @@ export default function HeaderMe() {
                   size="icon"
                   variant="secondary"
                   aria-label="Edit Profile"
-                  className="rounded-full border-2 shadow-md"
+                  title="Edit profile"
+                  className="group rounded-full border-2 shadow-md"
                   onClick={startEditing}
                 >
-                  <Pencil className="h-4 w-4" />
+                  <Pencil className="h-4 w-4 transition-transform group-hover:rotate-12" />
                 </Button>
               )}
             </div>
           </div>
-          {isEditing ? (
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="bio">Bio</Label>
-              <Textarea id="bio" {...register("bio")} />
-              {errors.bio && (
-                <p className="text-destructive text-sm mt-1">
-                  {errors.bio?.message}
-                </p>
-              )}
-            </div>
-          ) : (
-            <CardDescription>{user?.bio}</CardDescription>
-          )}
         </form>
       </CardHeader>
       <Separator />
-      <CardContent className="grid grid-cols-1 gap-4 lg:grid-cols-5 lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
-        <div className="lg:col-span-4 md:col-span-2">
-          <HeaderUserScores score={user?.score} />
-        </div>
-        <div className="space-y-3 lg:col-span-1">
-          <HeaderUserHashtags hashtags={hashtags.hashtags} />
-        </div>
+      <CardContent className="lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
+        <HeaderUserScores id={user?.id} />
       </CardContent>
     </Card>
   );

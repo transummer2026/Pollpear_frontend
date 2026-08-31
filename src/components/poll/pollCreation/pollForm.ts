@@ -19,15 +19,6 @@ export type SliderFormValues = Extract<
   endsAt: Date;
 };
 
-// Free field poll type on hold: the team decided not to implement it for now
-// (no consensus on how "options" should map to a free-text answer), and the
-// shared PollCreateSchema has no "free_field" branch. Commented out
-// rather than deleted so it's easy to pick back up.
-// export type FreeFormValues = Extract<
-//   PollCreationInput,
-//   { type: "free_field" }
-// > & { endsAt: Date };
-
 export const daysFromNow = (days: number) =>
   new Date(Date.now() + days * MS_PER_DAY);
 export const daysUntil = (date: Date) =>
@@ -73,19 +64,3 @@ export const scaleDefaultValues: DefaultValues<SliderFormValues> = {
   ],
   hashtags: [],
 };
-
-// Free field poll type on hold
-// /**
-//  * A free field poll carries no option at all: the question is the title and
-//  * each voter writes their own answer.
-//  */
-// export const freeFormDefaultValues: DefaultValues<FreeFormValues> = {
-//   title: "",
-//   description: "",
-//   type: "free_field",
-//   endsAt: daysFromNow(INITIAL_DAYS),
-//   allowChangeVote: true,
-//   isAnonymous: false,
-//   options: [],
-//   hashtags: [],
-// };

@@ -34,7 +34,11 @@ export default function AllowVoteChangeSwitch({
         </Tooltip>
       </div>
 
-      <Switch checked={allowChangeVote} onCheckedChange={setAllowChangeVote} />
+      <Switch
+        checked={allowChangeVote}
+        onCheckedChange={setAllowChangeVote}
+        className="data-checked:bg-[#325024]"
+      />
     </div>
   );
 }

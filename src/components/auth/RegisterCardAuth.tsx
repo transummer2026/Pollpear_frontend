@@ -4,8 +4,14 @@ import {
   type FieldErrors,
   type Control,
 } from "react-hook-form";
-import { type RegisterInput } from "@shared/schemas/auth.schema";
+import {
+  RegisterSchema,
+  type RegisterInput,
+} from "@shared/schemas/auth.schema";
 import ProfileCardGender from "@/components/me/ProfileCardGender";
+import ProfileCardBirthdate from "@/components/me/ProfileCardBirthdate";
+import FieldMessage from "@/components/FieldMessage";
+import { useFieldHints } from "@/hooks/use-field-hints";
 
 export default function RegisterCardAuth({
   register,
@@ -16,63 +22,61 @@ export default function RegisterCardAuth({
   errors: FieldErrors<RegisterInput>;
   control: Control<RegisterInput>;
 }) {
+  const { withHints, hintsFor } = useFieldHints(RegisterSchema, control);
+
   return (
     <div className="p-6 border-b md:border-b-0 md:border-r p-6 space-y-4">
       <div>
-        <Input type="text" placeholder="Username" {...register("username")} />
-        {errors.username && (
-          <p className="text-destructive text-sm mt-1">
-            {errors.username.message}
-          </p>
-        )}
+        <Input
+          type="text"
+          placeholder="Username"
+          {...withHints(register("username"))}
+        />
+        <FieldMessage
+          hints={hintsFor("username")}
+          error={errors.username?.message}
+        />
       </div>
       <div>
-        <Input type="email" placeholder="Email" {...register("email")} />
-        {errors.email && (
-          <p className="text-destructive text-sm mt-1">
-            {errors.email?.message}
-          </p>
-        )}
+        <Input
+          type="email"
+          placeholder="Email"
+          {...withHints(register("email"))}
+        />
+        <FieldMessage hints={hintsFor("email")} error={errors.email?.message} />
       </div>
       <div>
         <Input
           type="password"
           placeholder="Password"
-          {...register("password")}
+          {...withHints(register("password"))}
         />
-        {errors.password && (
-          <p className="text-destructive text-sm mt-1">
-            {errors.password?.message}
-          </p>
-        )}
+        <FieldMessage
+          hints={hintsFor("password")}
+          error={errors.password?.message}
+        />
       </div>
       <div>
         <Input
           type="password"
           placeholder="Confirm Password"
-          {...register("confirmPassword")}
+          {...withHints(register("confirmPassword"))}
         />
-        {errors.confirmPassword && (
-          <p className="text-destructive text-sm mt-1">
-            {errors.confirmPassword?.message}
-          </p>
-        )}
+        <FieldMessage
+          hints={hintsFor("confirmPassword")}
+          error={errors.confirmPassword?.message}
+        />
       </div>
+      <ProfileCardBirthdate errors={errors} control={control} />
       <div>
-        <Input type="date" {...register("birthdate")} />
-        {errors.birthdate && (
-          <p className="text-destructive text-sm mt-1">
-            {errors.birthdate?.message}
-          </p>
-        )}
-      </div>
-      <div>
-        <Input placeholder="Nationality" {...register("nationality")} />
-        {errors.nationality && (
-          <p className="text-destructive text-sm mt-1">
-            {errors.nationality?.message}
-          </p>
-        )}
+        <Input
+          placeholder="Nationality"
+          {...withHints(register("nationality"))}
+        />
+        <FieldMessage
+          hints={hintsFor("nationality")}
+          error={errors.nationality?.message}
+        />
       </div>
       <div>
         <ProfileCardGender errors={errors} control={control} />

@@ -5,7 +5,8 @@ import type {
   UseFormGetValues,
   FieldErrors,
 } from "react-hook-form";
-import { Trash2, Plus } from "lucide-react";
+import { AddIcon, OpenTrashIcon, TrashIcon } from "@/components/icons";
+import { HoverIcon } from "@/components/icons/HoverIcon";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -72,10 +73,14 @@ export default function SingleMultipleChoiceSection({
               type="button"
               variant="ghost"
               size="icon"
-              className="mt-7"
+              className="group mt-7"
               onClick={() => removeChoice(index)}
             >
-              <Trash2 size={16} />
+              <HoverIcon
+                idle={TrashIcon}
+                hover={OpenTrashIcon}
+                className="size-4"
+              />
             </Button>
           )}
         </div>
@@ -87,7 +92,7 @@ export default function SingleMultipleChoiceSection({
         disabled={optionFields.length >= 5}
         onClick={addChoice}
       >
-        <Plus size={16} className="mr-2" />
+        <AddIcon className="mr-2 size-4" />
         Add option
       </Button>
       {errors.options && (

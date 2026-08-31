@@ -48,7 +48,11 @@ export default function DeadlineSetting({
           </TooltipProvider>
         </div>
 
-        <Switch checked={hasDeadline} onCheckedChange={setHasDeadline} />
+        <Switch
+          checked={hasDeadline}
+          onCheckedChange={setHasDeadline}
+          className="data-checked:bg-[#325024]"
+        />
       </div>
 
       {hasDeadline && (

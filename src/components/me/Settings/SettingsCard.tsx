@@ -1,35 +1,33 @@
-import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
+import { User, LifeBuoy, KeyRound } from "lucide-react";
 import {
-  Bell,
-  User,
-  Lock,
-  RefreshCw,
-  LifeBuoy,
-  KeyRound,
-  Trash2,
-  Ban,
-} from "lucide-react";
+  BlockedIcon,
+  LockedIcon,
+  OpenTrashIcon,
+  TrashIcon,
+  UnlockedIcon,
+} from "@/components/icons";
+import { HoverIcon } from "@/components/icons/HoverIcon";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import LanguageSection from "@/components/me/Settings/Section/LanguageSection";
 
 import PasswordSection from "@/components/me/Settings/Section/PasswordSection";
-import SyncSection from "@/components/me/Settings/Section/SyncSection";
 import InformationSection from "@/components/me/Settings/Section/InformationSection";
-import NotificationSection from "@/components/me/Settings/Section/NotificationsSection";
 import DarkModeSection from "@/components/me/Settings/Section/DarkModeSection";
 import DeleteAccountSection from "@/components/me/Settings/Section/DeleteAccountSection";
 import BlocksSection from "@/components/me/Settings/Section/BlocksSection";
 
+/**
+ * The nav icons carry a size- class so Button leaves them at their own size.
+ * The drawn icons sit smaller inside their viewBox than lucide's, so they need
+ * a bigger box to look the same weight.
+ */
+const ICON_SIZE = "size-5";
+const CUSTOM_ICON_SIZE = "size-6";
+
 const sections = [
-  {
-    id: "notifications",
-    label: "Notifications",
-    icon: Bell,
-  },
   {
     id: "information",
     label: "Informations",
@@ -38,22 +36,22 @@ const sections = [
   {
     id: "password",
     label: "Password",
-    icon: Lock,
-  },
-  {
-    id: "sync",
-    label: "Sync Profile",
-    icon: RefreshCw,
+    icon: LockedIcon,
+    hoverIcon: UnlockedIcon,
+    custom: true,
   },
   {
     id: "blocks",
     label: "Blocked users",
-    icon: Ban,
+    icon: BlockedIcon,
+    custom: true,
   },
   {
     id: "danger",
     label: "Delete account",
-    icon: Trash2,
+    icon: TrashIcon,
+    hoverIcon: OpenTrashIcon,
+    custom: true,
   },
 ];
 
@@ -62,11 +60,10 @@ export default function SettingsCard() {
   const navigate = useNavigate();
   const activeSection = sections.some((s) => s.id === section)
     ? (section as string)
-    : "notifications";
-  const [language, setLanguage] = useState("en");
+    : "information";
 
   return (
-    <Card className="max-w-5xl mx-auto mt-4">
+    <Card className="max-w-5xl mx-auto mt-4 ring-0">
       <CardHeader>
         <CardTitle>Settings</CardTitle>
       </CardHeader>
@@ -78,15 +75,24 @@ export default function SettingsCard() {
           <div className="border-r p-4 space-y-2">
             {sections.map((s) => {
               const Icon = s.icon;
+              const iconSize = s.custom ? CUSTOM_ICON_SIZE : ICON_SIZE;
 
               return (
                 <Button
                   key={s.id}
                   variant={activeSection === s.id ? "secondary" : "ghost"}
-                  className="w-full justify-start gap-2"
+                  className="group w-full justify-start gap-2"
                   onClick={() => navigate(`/settings/${s.id}`)}
                 >
-                  <Icon size={18} />
+                  {s.hoverIcon ? (
+                    <HoverIcon
+                      idle={Icon}
+                      hover={s.hoverIcon}
+                      className={iconSize}
+                    />
+                  ) : (
+                    <Icon className={iconSize} />
+                  )}
                   {s.label}
                 </Button>
               );
@@ -95,15 +101,13 @@ export default function SettingsCard() {
             <Separator className="my-4" />
             <DarkModeSection />
             <Separator className="my-4" />
-            <LanguageSection value={language} onChange={setLanguage} />
-            <Separator className="my-4" />
             <Button
               variant="ghost"
               className="w-full justify-start gap-2"
               asChild
             >
               <a href="/contact">
-                <LifeBuoy size={18} />
+                <LifeBuoy className={ICON_SIZE} />
                 Support
               </a>
             </Button>
@@ -113,20 +117,16 @@ export default function SettingsCard() {
               asChild
             >
               <Link to="/settings/api">
-                <KeyRound size={18} />
+                <KeyRound className={ICON_SIZE} />
                 API
               </Link>
             </Button>
           </div>
 
           <div className="p-6">
-            {activeSection === "notifications" && <NotificationSection />}
-
             {activeSection === "information" && <InformationSection />}
 
             {activeSection === "password" && <PasswordSection />}
-
-            {activeSection === "sync" && <SyncSection />}
 
             {activeSection === "blocks" && <BlocksSection />}
 

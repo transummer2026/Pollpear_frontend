@@ -17,7 +17,7 @@ export default function RoomSection() {
   if (!rooms?.length) return null;
 
   return (
-    <Card>
+    <Card className="ring-0">
       <CardHeader className="text-center">
         <CardTitle className="text-lg">Rooms</CardTitle>
       </CardHeader>

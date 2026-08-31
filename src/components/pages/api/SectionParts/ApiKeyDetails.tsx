@@ -1,4 +1,5 @@
-import { RefreshCw, Trash } from "lucide-react";
+import { RefreshCw } from "lucide-react";
+import { TrashIcon } from "@/components/icons";
 
 import type { ApiKeyDTO } from "@shared/schemas/api-key.schema";
 import { formatDate } from "@/components/pages/api/apiKey";
@@ -41,7 +42,7 @@ export default function ApiKeyDetails({
         />
         <ConfirmedAction
           variant="destructive"
-          icon={<Trash size={16} />}
+          icon={<TrashIcon className="size-4" />}
           label="Delete key"
           copy={{
             title: "Delete your API key?",

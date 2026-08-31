@@ -57,24 +57,55 @@
   --color-poll-scale-vote: #f8fcf9;
   --color-poll-scale-result: #e7f4ea;
 
+  /* result bars: shared track, same fill for all three types for now — the
+     tokens stay split so one type can diverge without touching the others */
+  --color-poll-bar-track: #f3f7ed;
+  --color-poll-bar-single: #6b8f3d;
+  --color-poll-bar-multi: #6b8f3d;
+  --color-poll-bar-slider: #6b8f3d;
+
+  /* status labels: solid fills, foregrounds picked to clear WCAG AA at 12px */
+  --color-status-open: #325024;
+  --color-status-open-foreground: #ffffff; /* 9.1:1 */
+  --color-status-closed: #ffe0e0;
+  --color-status-closed-foreground: #f67373; /* 2.2:1 */
+
   /* poll depth: vote cards pop out (light from top-left), result cards are pressed in */
   --shadow-poll-raised:
     6px 8px 20px -8px oklch(0 0 0 / 0.09), 2px 3px 8px -4px oklch(0 0 0 / 0.06);
-  --shadow-poll-raised-dark:
-    8px 10px 24px -10px oklch(0 0 0 / 0.3), 3px 4px 10px -5px oklch(0 0 0 / 0.2);
   --inset-shadow-poll-sunken:
     inset 5px 7px 12px -7px oklch(0 0 0 / 0.15),
     inset 2px 3px 5px -3px oklch(0 0 0 / 0.08),
     inset -4px -5px 10px -7px oklch(0 0 0 / 0.06);
+
+  /*
+    Dark mode cannot carve depth out of shadow alone: black over a near-black
+    page has almost nowhere left to darken. So each dark shadow is paired with
+    the lit face opposite it, and the light stays where it is in light mode —
+    top-left. A raised card catches it along its top-left edges and throws a
+    deeper shadow down-right; a sunken one shows a dark top-left lip inside,
+    with the far bottom-right wall of the dip picking up the light instead.
+  */
+  --shadow-poll-raised-dark:
+    -3px -4px 14px -8px oklch(1 0 0 / 0.07),
+    8px 10px 24px -10px oklch(0 0 0 / 0.55),
+    3px 4px 10px -5px oklch(0 0 0 / 0.45);
+  --inset-shadow-poll-raised-dark:
+    inset 1px 1px 0 0 oklch(1 0 0 / 0.12),
+    inset 6px 7px 14px -12px oklch(1 0 0 / 0.09);
   --inset-shadow-poll-sunken-dark:
-    inset 5px 7px 12px -7px oklch(0 0 0 / 0.38),
-    inset 2px 3px 5px -3px oklch(0 0 0 / 0.25),
-    inset -4px -5px 10px -7px oklch(0 0 0 / 0.16);
+    inset 1px 1px 0 0 oklch(0 0 0 / 0.55),
+    inset 5px 7px 12px -7px oklch(0 0 0 / 0.6),
+    inset 2px 3px 5px -3px oklch(0 0 0 / 0.45),
+    inset -1px -1px 0 0 oklch(1 0 0 / 0.09),
+    inset -5px -6px 12px -8px oklch(1 0 0 / 0.07);
 }
 
 /** vote card: lifted off the feed, shadow cast to the bottom right */
 @utility poll-card-raised {
   @apply shadow-poll-raised dark:shadow-poll-raised-dark;
+  /* the lit top-left edge, dark mode only — light mode reads fine without it */
+  @apply dark:inset-shadow-poll-raised-dark;
 }
 
 /** result card: recessed into the feed, shadow inside the top left edges */
@@ -82,8 +113,39 @@
   @apply inset-shadow-poll-sunken dark:inset-shadow-poll-sunken-dark;
 }
 
+/**
+ * result bars: tint the filled portion, track on --color-poll-bar-track.
+ * Applied to the Progress/Slider root, reaching the inner parts by data-slot so
+ * the shadcn primitives in ui/ stay untouched and regenerable.
+ *
+ * The Progress root IS its own track, so those two utilities only handle the
+ * indicator — pair them with `bg-poll-bar-track` at the call site, which lets
+ * twMerge drop the primitive's `bg-muted` instead of relying on rule order.
+ */
+@utility poll-bar-single {
+  & [data-slot="progress-indicator"] {
+    @apply bg-poll-bar-single;
+  }
+}
+
+@utility poll-bar-multi {
+  & [data-slot="progress-indicator"] {
+    @apply bg-poll-bar-multi;
+  }
+}
+
+@utility poll-bar-slider {
+  & [data-slot="slider-track"] {
+    @apply bg-poll-bar-track;
+  }
+
+  & [data-slot="slider-range"] {
+    @apply bg-poll-bar-slider;
+  }
+}
+
 :root {
-  --background: oklch(1 0 0);
+  --background: #FFFFFF;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -149,6 +211,19 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+}
+
+/*
+  Dark-only overrides of the @theme tokens above: those values were picked for
+  a white page and lose their contrast on a dark surface. Overriding the
+  variable rather than the utility keeps every consumer in sync — the closed
+  badge is shared by polls and rooms, the bar track by all three result types.
+*/
+.dark {
+  --color-status-closed: #885053;
+  --color-status-closed-foreground: #ffe0e0;
+
+  --color-poll-bar-track: #3a4336;
 }
 
 @layer base {

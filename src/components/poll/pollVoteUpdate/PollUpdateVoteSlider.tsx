@@ -54,10 +54,12 @@ export default function PollUpdateVoteSlider({
     <Card size="sm" className="w-full self-start p-4 space-y-4">
       <PollCardHeader poll={poll} />
 
-      <h2 className="text-sm font-bold">{poll.title}</h2>
+      <h2 className="text-base font-bold">{poll.title}</h2>
 
       {poll.description && (
-        <p className="text-sm text-muted-foreground">{poll.description}</p>
+        <p className="text-sm text-muted-foreground wrap-anywhere">
+          {poll.description}
+        </p>
       )}
 
       <div className="space-y-6 py-4">
@@ -71,6 +73,7 @@ export default function PollUpdateVoteSlider({
             step={SCALE_STEP}
             disabled={isMutating}
             onValueChange={(values) => setValue(values[0])}
+            className="poll-bar-slider"
           />
 
           <div className="flex justify-between gap-4 text-xs text-muted-foreground">
@@ -84,7 +87,7 @@ export default function PollUpdateVoteSlider({
         <Button
           type="button"
           size="sm"
-          className="flex-1"
+          className="flex-1 bg-[#3A4336] text-white hover:bg-[#3A4336]/80"
           disabled={isMutating || !sliderOption}
           onClick={handleVote}
         >

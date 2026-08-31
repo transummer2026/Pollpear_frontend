@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { UserPlus } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { AddIcon } from "@/components/icons";
 import type { RoomReadDTO } from "@shared/schemas/rooms.schema";
 import RoomAddPearticipantDialog from "@/components/room/RoomPage/Section/RoomAddPearticipantCard";
 import { useIsRoomMember } from "@/hooks/room/use-pearticipants";
@@ -28,14 +28,17 @@ export default function RoomAddPearticipantButton({
 
   return (
     <>
-      <Badge
+      <Button
+        type="button"
+        size="icon"
         variant="secondary"
         aria-label="Add pearticipant"
-        className="group rounded-full border-2 shadow-md cursor-pointer"
+        title="Add pearticipant"
+        className="group cursor-pointer rounded-full shadow-md"
         onClick={() => setOpen(true)}
       >
-        <UserPlus className="h-4 w-4 transition-transform group-hover:scale-110" />
-      </Badge>
+        <AddIcon className="transition-transform group-hover:scale-110" />
+      </Button>
       <RoomAddPearticipantDialog
         room={room}
         open={open}

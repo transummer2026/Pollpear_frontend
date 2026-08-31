@@ -1,11 +1,11 @@
 import { Badge } from "@/components/ui/badge";
-import { BRAND } from "@/components/home/Section/brand";
 
+/** same badge as PollHashtags, so the landing demos read as real poll cards */
 export default function DemoHashtags({ hashtags }: { hashtags: string[] }) {
   return (
     <div className="flex flex-wrap gap-2">
       {hashtags.map((hashtag) => (
-        <Badge key={hashtag} variant="outline" className={BRAND.hashtagBadge}>
+        <Badge key={hashtag} variant="outline">
           #{hashtag}
         </Badge>
       ))}

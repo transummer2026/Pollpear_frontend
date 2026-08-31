@@ -1,5 +1,7 @@
 import { Badge } from "@/components/ui/badge";
-import { Pencil, Trash } from "lucide-react";
+import { Pencil } from "lucide-react";
+import { OpenTrashIcon, TrashIcon } from "@/components/icons";
+import { HoverIcon } from "@/components/icons/HoverIcon";
 import type { PollReadDTO } from "@shared/schemas/polls.schema";
 import { useMe } from "@/hooks/user/use-me";
 import { useState } from "react";
@@ -47,10 +49,10 @@ export default function PollUpdateButtons({ poll }: { poll: PollReadDTO }) {
           <Badge
             variant="destructive"
             aria-label="Delete poll"
-            className="cursor-pointer"
+            className="group cursor-pointer"
             onClick={() => handleDelete()}
           >
-            <Trash />
+            <HoverIcon idle={TrashIcon} hover={OpenTrashIcon} />
           </Badge>
         </div>
       )}
