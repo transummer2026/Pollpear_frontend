@@ -12,8 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router";
 import { Pencil } from "lucide-react";
-import HeaderUserHashtags from "./HeaderMeHashtags";
-import HeaderUserScores from "./HeaderMeScores";
+import HeaderUserScores from "@/components/user/HeaderUserScores";
 import { useMeUpdate } from "@/hooks/user/use-me";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
@@ -38,10 +37,6 @@ function toFormValues(user: UserDTO): UserUpdateInput {
 
 export default function HeaderMe() {
   const { data: user } = useMe();
-
-  const hashtags = {
-    hashtags: ["#polls", "#crocs", "#Valais", "#vibeconding", "#claude"],
-  };
 
   const [isEditing, setIsEditing] = useState(false);
   function startEditing() {
@@ -159,13 +154,8 @@ export default function HeaderMe() {
         </form>
       </CardHeader>
       <Separator />
-      <CardContent className="grid grid-cols-1 gap-4 lg:grid-cols-5 lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
-        <div className="lg:col-span-4 md:col-span-2">
-          <HeaderUserScores score={user?.score} />
-        </div>
-        <div className="space-y-3 lg:col-span-1">
-          <HeaderUserHashtags hashtags={hashtags.hashtags} />
-        </div>
+      <CardContent className="lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
+        <HeaderUserScores id={user?.id} />
       </CardContent>
     </Card>
   );

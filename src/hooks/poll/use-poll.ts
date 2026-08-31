@@ -19,13 +19,6 @@ export type PollResultsDTO = {
   options: (PollReadDTO["options"][number] & { votes: number })[];
 };
 
-export function usePoll(pollId?: number) {
-  return useSWR<PollReadDTO, ApiError>(
-    pollId ? `/polls/${pollId}` : null,
-    fetcher,
-  );
-}
-
 export function usePolls() {
   return useSWR<PollReadDTO[], ApiError>("/polls", fetcher);
 }

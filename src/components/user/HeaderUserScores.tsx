@@ -1,34 +1,35 @@
 import { ItemGroup } from "@/components/ui/item";
 import HeaderUserScore from "@/components/user/HeaderUserScore";
-import { useUser } from "@/hooks/user/use-user";
+import { useUserScores } from "@/hooks/user/use-user-scores";
 
 type HeaderUserScoresProps = {
-  id: number;
+  /** Optional: the profile owner isn't known until `/me` (or `/users/:id`)
+   * has answered, and the tiles render at 0 in the meantime. */
+  id?: number;
 };
 
 export default function HeaderUserScores({ id }: HeaderUserScoresProps) {
-  const { data: user } = useUser(id);
+  const { score, pearsPals, activeRooms, pollsCreated } = useUserScores(id);
 
-  //TODO: brancher PearsPals / Active Rooms / Polls Created sur les vraies donnees du user
   const stats = [
     {
       label: "Score",
-      value: user?.score ?? undefined,
+      value: score,
       className: "bg-[#6F8459] text-white",
     },
     {
       label: "PearsPals",
-      value: undefined,
+      value: pearsPals,
       className: "bg-[#D4E7CB] text-black",
     },
     {
       label: "Active Rooms",
-      value: undefined,
+      value: activeRooms,
       className: "bg-[#885053] text-white",
     },
     {
       label: "Polls Created",
-      value: undefined,
+      value: pollsCreated,
       className: "bg-[#325024] text-white",
     },
   ];

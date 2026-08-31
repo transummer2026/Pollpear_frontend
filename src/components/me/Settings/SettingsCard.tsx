@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { User, LifeBuoy, KeyRound } from "lucide-react";
 import {
@@ -13,7 +12,6 @@ import { HoverIcon } from "@/components/icons/HoverIcon";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import LanguageSection from "@/components/me/Settings/Section/LanguageSection";
 
 import PasswordSection from "@/components/me/Settings/Section/PasswordSection";
 import InformationSection from "@/components/me/Settings/Section/InformationSection";
@@ -63,7 +61,6 @@ export default function SettingsCard() {
   const activeSection = sections.some((s) => s.id === section)
     ? (section as string)
     : "information";
-  const [language, setLanguage] = useState("en");
 
   return (
     <Card className="max-w-5xl mx-auto mt-4 ring-0">
@@ -103,8 +100,6 @@ export default function SettingsCard() {
 
             <Separator className="my-4" />
             <DarkModeSection />
-            <Separator className="my-4" />
-            <LanguageSection value={language} onChange={setLanguage} />
             <Separator className="my-4" />
             <Button
               variant="ghost"
