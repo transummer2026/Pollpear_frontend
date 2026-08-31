@@ -37,6 +37,7 @@ export const defaultValues: DefaultValues<PollFormValues> = {
   title: "",
   description: "",
   type: "single_choice",
+  visibility: "public",
   endsAt: daysFromNow(INITIAL_DAYS),
   allowChangeVote: true,
   isAnonymous: false,

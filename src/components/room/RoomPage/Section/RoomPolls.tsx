@@ -1,6 +1,7 @@
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { PaginationControls } from "@/components/ui/pagination-controls";
 import PollColumns from "@/components/poll/PollColumns";
+import { useIsRoomMember } from "@/hooks/room/use-pearticipants";
 import { usePagination } from "@/hooks/use-pagination";
 import { isRoomClosed } from "@/lib/room";
 import type { RoomReadDTO } from "@shared/schemas/rooms.schema";
@@ -18,8 +19,13 @@ export default function RoomPolls({ room }: RoomPollsProps) {
     PAGE_SIZE,
   );
 
+  const isMember = useIsRoomMember(room);
+
   const isEmpty = room.polls.length === 0;
   const isClosed = isRoomClosed(room);
+  // Only members add polls — the backend enforces it, so a non-member (a
+  // pending invitee reading a public room) shouldn't even see the card.
+  const canAddPoll = !isClosed && isMember;
 
   return (
     <Card>
@@ -28,7 +34,7 @@ export default function RoomPolls({ room }: RoomPollsProps) {
           polls={pageItems}
           roomId={room.id}
           leadingCard={
-            isClosed ? undefined : <RoomAddPollCard roomId={room.id} />
+            canAddPoll ? <RoomAddPollCard roomId={room.id} /> : undefined
           }
         />
         {isEmpty && (

@@ -21,5 +21,5 @@ export const defaultValues: DefaultValues<RoomCreationInput> = {
   name: "",
   description: "",
   endsAt: null,
-  visibility: "private",
+  visibility: "public",
 };

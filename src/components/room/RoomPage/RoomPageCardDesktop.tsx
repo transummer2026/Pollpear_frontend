@@ -1,4 +1,5 @@
 import RoomInfoCard from "@/components/room/RoomPage/Section/RoomInfoCard";
+import RoomInvitationBanner from "@/components/room/RoomPage/Section/RoomInvitationBanner";
 import RoomPearticipants from "@/components/room/RoomPage/Section/RoomPearticipants";
 import RoomPolls from "@/components/room/RoomPage/Section/RoomPolls";
 import RoomMessages from "@/components/room/RoomPage/Section/RoomMessages";
@@ -26,7 +27,16 @@ export default function RoomPageCardDesktop({ id }: RoomProps) {
   if (!id || !room) {
     return (
       <Layout>
-        <div className="p-4 text-center">Room not found</div>
+        <div className="mx-auto max-w-2xl p-4">
+          {id ? (
+            <RoomInvitationBanner
+              roomId={id}
+              fallback={<p className="text-center">Room not found</p>}
+            />
+          ) : (
+            <p className="text-center">Room not found</p>
+          )}
+        </div>
       </Layout>
     );
   }
@@ -34,6 +44,9 @@ export default function RoomPageCardDesktop({ id }: RoomProps) {
   return (
     <Layout>
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-start gap-4 p-4 lg:grid-cols-4">
+        <div className="lg:col-span-4 empty:hidden">
+          <RoomInvitationBanner roomId={room.id} />
+        </div>
         <div className="lg:col-span-4">
           <RoomInfoCard room={room} />
         </div>
