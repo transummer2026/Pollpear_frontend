@@ -48,6 +48,9 @@ export default defineConfig({
   },
   test: {
     passWithNoTests: true,
+    // `e2e/` is a gitignored, local-only Playwright harness: its specs import
+    // @playwright/test, so vitest must not try to run them when it is present.
+    exclude: ["**/node_modules/**", "**/dist/**", "e2e/**"],
     coverage: {
       provider: "v8",
       reporter: ["lcov"],

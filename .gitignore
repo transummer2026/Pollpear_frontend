@@ -296,3 +296,11 @@ tmbootpicker.efi
 *.sln
 *.sw?
 public/config.json
+
+# Playwright — local-only end-to-end harness, not part of the repo
+/e2e/
+/playwright.config.ts
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

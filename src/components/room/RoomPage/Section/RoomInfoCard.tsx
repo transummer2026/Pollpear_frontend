@@ -13,6 +13,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import RoomJoinButton from "@/components/room/RoomPage/Section/RoomJoinButton";
+import RoomLeaveButton from "@/components/room/RoomPage/Section/RoomLeaveButton";
 import RoomOwnerButtons from "@/components/room/RoomPage/Section/RoomOwnerButtons";
 import {
   formatRoomDate,
@@ -40,7 +42,11 @@ export default function RoomInfoCard({ room }: RoomInfoCardProps) {
             <Badge variant="outline">{room.visibility}</Badge>
           </div>
 
-          <RoomOwnerButtons room={room} />
+          <div className="flex items-center gap-2">
+            <RoomJoinButton room={room} />
+            <RoomLeaveButton room={room} />
+            <RoomOwnerButtons room={room} />
+          </div>
         </div>
 
         <CardTitle className="text-lg font-bold">{room.name}</CardTitle>

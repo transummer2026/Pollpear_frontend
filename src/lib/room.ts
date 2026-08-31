@@ -16,6 +16,24 @@ export function isRoomOwnedBy(room: RoomReadDTO, userId?: number): boolean {
   return room.createdById === userId;
 }
 
+/**
+ * Mirrors the backend "invite" rule (casl/permissions/room.ts): a public room
+ * lets any pearticipant bring someone in, a private one stays the owner's
+ * alone, and a closed room takes nobody. `isPearticipant` has to be handed in
+ * because the room payload leaves the viewer out of `roomMembers` — callers
+ * read it off the viewer's own accepted invitation.
+ */
+export function canInviteToRoom(
+  room: RoomReadDTO,
+  userId: number | undefined,
+  isPearticipant: boolean,
+): boolean {
+  if (isRoomClosed(room)) return false;
+  if (isRoomOwnedBy(room, userId)) return true;
+
+  return room.visibility === "public" && isPearticipant;
+}
+
 export function formatRoomDate(date?: Date | string | null): string {
   if (!date) return "—";
 

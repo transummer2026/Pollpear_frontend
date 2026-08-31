@@ -1,6 +1,7 @@
 import FriendPanelDesktop from "@/components/me/FriendsAndRoomsMe/FriendPanelDesktop";
 import FriendPanelMobile from "@/components/me/FriendsAndRoomsMe/FriendPanelMobile";
 import RoomSection from "@/components/me/FriendsAndRoomsMe/RoomSection";
+import RoomInvitationSection from "@/components/me/FriendsAndRoomsMe/RoomInvitationSection";
 import {
   sortByStatus,
   toFriend,
@@ -23,6 +24,7 @@ export default function FriendPannelUser() {
       <div className="w-full lg:hidden">
         <FriendPanelMobile friends={sortedFriends} invitations={invitations} />
       </div>
+      <RoomInvitationSection />
       <RoomSection />
     </div>
   );
