@@ -35,6 +35,7 @@ type RoomUpdateFormProps = {
   onUpdated?: () => void;
 };
 
+/** Fills the form from the room; a room with no deadline comes back as null. */
 function toFormValues(room: RoomReadDTO): RoomCreationInput {
   return {
     name: room.name,
@@ -44,6 +45,7 @@ function toFormValues(room: RoomReadDTO): RoomCreationInput {
   };
 }
 
+/** See the poll update form: a dirty flag mirrors its field's shape. */
 function hasChanged(dirty: unknown): boolean {
   if (Array.isArray(dirty)) return dirty.some(hasChanged);
   if (typeof dirty === "object" && dirty !== null)
@@ -51,6 +53,11 @@ function hasChanged(dirty: unknown): boolean {
   return Boolean(dirty);
 }
 
+/**
+ * Edits a room's own fields. Like the poll form, only what was touched is sent:
+ * the update schema is partial, and re-sending an unchanged deadline would fail
+ * its "not in the past" check on a room that has been open for a while.
+ */
 export default function RoomUpdateForm({
   room,
   onCancel,

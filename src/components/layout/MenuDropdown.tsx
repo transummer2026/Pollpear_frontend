@@ -16,10 +16,20 @@ import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
 
 type MenuDropdownProps = {
-  /** "avatar" pour le desktop (photo de profil), "burger" pour le mobile */
+  /**
+   * Which trigger to hang the menu off: the profile picture on desktop,
+   * a burger icon on mobile. The entries differ slightly too — the burger
+   * carries the search and the profile link, which the desktop navbar already
+   * shows on its own.
+   */
   variant?: "burger" | "avatar";
 };
 
+/**
+ * The account menu, and the only way out of the session. Logging out navigates
+ * with `replace` so the back button cannot return to a page that now has no
+ * data behind it.
+ */
 export function MenuDropdown({ variant = "burger" }: MenuDropdownProps) {
   const { trigger, isMutating } = useLogout();
   const { data: user } = useMe();

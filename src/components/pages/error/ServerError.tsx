@@ -17,6 +17,10 @@ type ServerErrorProps = {
   description?: string;
 };
 
+/**
+ * Where a 5xx lands, and what the error boundary renders when a component
+ * throws — in both cases the app is at fault, not the visitor.
+ */
 export default function ServerError({
   title = "Something went wrong",
   description = "An unexpected error occurred on our end. Please try again later.",

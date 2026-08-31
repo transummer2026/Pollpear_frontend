@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { SLIDER_DEMO } from "@/components/home/Section/demos";
 
+/** A slider poll at rest: the average answer, on a slider nobody can move. */
 export default function DemoSliderPoll() {
   return (
     <Card

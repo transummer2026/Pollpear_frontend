@@ -12,6 +12,7 @@ type SingleMultiChoiceHeaderProps = {
   errors: FieldErrors<PollFormValues>;
 };
 
+/** Title, type and description of a choice poll — the shared top of both forms. */
 export default function SingleMultiChoiceHeader({
   control,
   register,

@@ -10,6 +10,12 @@ type ScaleChoiceSectionProps = {
   errors: FieldErrors<SliderFormValues>;
 };
 
+/**
+ * The scale of a slider poll: two end labels, and a disabled slider that only
+ * shows what the result will look like. The option's `text` is hidden here —
+ * it carries a fixed placeholder (see SLIDER_OPTION_TEXT), since a scale has
+ * nothing to name.
+ */
 export default function SliderChoiceSection({
   register,
   errors,

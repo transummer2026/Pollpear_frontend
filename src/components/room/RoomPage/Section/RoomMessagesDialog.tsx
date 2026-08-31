@@ -6,6 +6,7 @@ type RoomMessagesDialogProps = {
   onOpenChange: (open: boolean) => void;
 };
 
+/** The same chat panel as on desktop, in the sheet mobile opens it from. */
 export default function RoomMessagesDialog({
   open,
   onOpenChange,

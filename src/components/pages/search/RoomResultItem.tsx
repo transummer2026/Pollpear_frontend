@@ -4,6 +4,7 @@ import { Door01Icon } from "@hugeicons/core-free-icons";
 import { Item, ItemMedia, ItemContent, ItemTitle } from "@/components/ui/item";
 import type { RoomSearchResultDTO } from "@shared/schemas/search.schema";
 
+/** One room in the search results. */
 export function RoomResultItem({ room }: { room: RoomSearchResultDTO }) {
   return (
     <Item asChild variant="outline">

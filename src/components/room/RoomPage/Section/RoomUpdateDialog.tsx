@@ -13,6 +13,7 @@ type RoomUpdateDialogProps = {
   onOpenChange: (open: boolean) => void;
 };
 
+/** Edit dialog for a room; the form is mounted only while it is open. */
 export default function RoomUpdateDialog({
   room,
   open,

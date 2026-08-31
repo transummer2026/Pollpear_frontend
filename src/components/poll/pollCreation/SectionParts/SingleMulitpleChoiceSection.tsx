@@ -21,6 +21,15 @@ type SingleMultipleChoiceSectionProps = {
   errors: FieldErrors<PollFormValues>;
 };
 
+/**
+ * The two-to-five options of a choice poll. `order` is what the backend sorts
+ * on, so removing one renumbers the rest through `replace` — leaving a gap
+ * would work, but the orders would drift further apart at every edit.
+ *
+ * The bounds are enforced twice on purpose: the buttons disappear at the
+ * limits, and the handlers refuse anyway, since a field array can also be
+ * changed from elsewhere.
+ */
 export default function SingleMultipleChoiceSection({
   control,
   register,

@@ -9,6 +9,11 @@ export type PollResultProps = {
   onBackToVote?: () => void;
 };
 
+/**
+ * Picks the result layout for the poll's type. A slider has one number to show
+ * where a choice poll has a bar per option, so they share nothing but their
+ * frame — the switch is here so no caller has to know which is which.
+ */
 export default function PollResultCard({
   poll,
   onUpdateVote,

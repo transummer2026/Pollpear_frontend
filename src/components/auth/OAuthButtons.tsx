@@ -1,6 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { GATEWAY_URL } from "@/lib/fetcher";
 
+/**
+ * The three OAuth providers. Plain links, not fetches: the flow is a full-page
+ * redirect to the gateway, which bounces to the provider and back — an XHR
+ * would be blocked by CORS and would lose the redirect anyway.
+ */
 export default function OAuthButtons() {
   return (
     <div className="p-4 flex justify-between">

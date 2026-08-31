@@ -30,6 +30,15 @@ const pollTypes = [
   },
 ];
 
+/**
+ * Poll creation, one tab per poll type. The two forms have little in common
+ * beyond their header, so each owns its own section rather than one form
+ * branching on a type field.
+ *
+ * `?roomId=` is how "new poll" from inside a room carries its context over.
+ * It comes from the URL, so it is only trusted once it looks like a real id —
+ * the backend checks membership anyway, but a NaN would be sent as-is.
+ */
 export default function PollCreatorCard() {
   const [searchParams] = useSearchParams();
   const roomIdParam = Number(searchParams.get("roomId"));

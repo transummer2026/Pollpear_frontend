@@ -18,6 +18,11 @@ type ApiKeyDialogProps = {
   onClose: () => void;
 };
 
+/**
+ * Shows a freshly issued key, once. The clipboard API needs a user gesture and
+ * a secure context, so the copy can fail for reasons the user can do nothing
+ * about — hence the fallback of selecting it by hand.
+ */
 export default function ApiKeyDialog({ apiKey, onClose }: ApiKeyDialogProps) {
   const [copied, setCopied] = useState(false);
 

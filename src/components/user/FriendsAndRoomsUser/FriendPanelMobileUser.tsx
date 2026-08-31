@@ -12,6 +12,7 @@ type FriendPanelMobileUserProps = {
   id: number;
 };
 
+/** The same list on mobile: a row of avatars that opens the full list in a sheet. */
 export default function FriendPanelMobileUser({
   id,
 }: FriendPanelMobileUserProps) {

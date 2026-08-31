@@ -19,6 +19,10 @@ import PollCardFooter from "@/components/poll/PollCardFooter";
 import { Check } from "lucide-react";
 import { getVisibleOptions } from "@/lib/poll";
 
+/**
+ * Re-vote on a multiple-choice poll. The selection replaces the previous one
+ * wholesale — the options submitted are the vote, not a delta on it.
+ */
 export default function PollUpdateVoteMultipleChoice({
   poll,
   onDone,

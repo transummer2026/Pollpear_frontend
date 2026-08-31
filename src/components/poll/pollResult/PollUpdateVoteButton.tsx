@@ -2,7 +2,11 @@ import { Button } from "@/components/ui/button";
 import { isPollClosed } from "@/lib/poll";
 import { type PollResultProps } from "@/components/poll/pollResult/PollResultCard";
 
-/** the button only raises the intent, PollCard owns the edit mode */
+/**
+ * Offered only when changing one's mind is actually possible: the viewer has
+ * voted, the author allowed it, and the poll is still open. The button only
+ * raises the intent — PollCard owns the edit mode.
+ */
 export default function PollUpdateVoteButton({
   poll,
   onUpdateVote,

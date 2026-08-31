@@ -17,6 +17,7 @@ type ForbiddenProps = {
   description?: string;
 };
 
+/** Where a 403 lands: the visitor is signed in, but this is not theirs to see. */
 export default function Forbidden({
   title = "Access denied",
   description = "You don't have permission to view this page.",

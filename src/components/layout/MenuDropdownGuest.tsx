@@ -7,6 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+/** The mobile menu for a visitor with no session: sign up, or log in. */
 export default function MenuDropdownGuest() {
   return (
     <DropdownMenu>

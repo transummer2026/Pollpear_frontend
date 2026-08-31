@@ -13,6 +13,11 @@ import ProfileCardBirthdate from "@/components/me/ProfileCardBirthdate";
 import FieldMessage from "@/components/FieldMessage";
 import { useFieldHints } from "@/hooks/use-field-hints";
 
+/**
+ * The required half of the signup form. Its fields show their requirements as
+ * they are typed, read from the shared schema — a password rejected after
+ * submission is a poor way to learn what it needed.
+ */
 export default function RegisterCardAuth({
   register,
   errors,

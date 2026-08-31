@@ -14,8 +14,14 @@ import {
 import { useFriends } from "@/hooks/friend/use-friendship";
 import { useMe } from "@/hooks/user/use-me";
 
+// Past five the sidebar would run longer than the feed beside it; the rest go
+// behind the dialog.
 const SHOWN = 5;
 
+/**
+ * Friends who are online right now, in the feed sidebar — the socket keeps the
+ * list fresh, so this is a live count rather than a snapshot.
+ */
 export default function FriendsSectionFeed() {
   const { data: me } = useMe();
   const { data } = useFriends(me?.id);

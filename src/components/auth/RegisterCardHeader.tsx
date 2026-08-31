@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import OAuthButtons from "./OAuthButtons";
 import { Link } from "react-router";
 
+/** Signup header: the OAuth shortcuts, and the way back to the login page. */
 export default function RegisterCardHeader() {
   return (
     <CardHeader className="text-center px-4">

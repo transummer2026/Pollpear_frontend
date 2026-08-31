@@ -8,6 +8,7 @@ type HeaderUserScoresProps = {
   id?: number;
 };
 
+/** The four stat tiles of a profile header. Values come from useUserScores. */
 export default function HeaderUserScores({ id }: HeaderUserScoresProps) {
   const { score, pearsPals, activeRooms, pollsCreated } = useUserScores(id);
 

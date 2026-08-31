@@ -6,6 +6,14 @@ import { useAuth } from "@/hooks/auth/use-auth";
 
 const KEY = "/me/notifications";
 
+/**
+ * The notification inbox and the two actions the dropdown offers. The list is
+ * only fetched for a signed-in user, and both actions patch the cache instead
+ * of refetching: the backend has already answered, and a list that flickers
+ * back to its old state before settling looks broken.
+ *
+ * Live arrivals are handled elsewhere, by useNotificationFeed on the same key.
+ */
 export function useNotifications() {
   const { isAuthenticated } = useAuth();
   const { mutate } = useSWRConfig();

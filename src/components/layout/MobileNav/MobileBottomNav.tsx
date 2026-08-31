@@ -12,6 +12,13 @@ import { useNotifications } from "@/hooks/notification/use-notifications";
 import { useMe } from "@/hooks/user/use-me";
 import { cn } from "@/lib/utils";
 
+/**
+ * The mobile navigation bar, fixed to the bottom of every page. Five slots:
+ * feed, search, create, notifications, profile — the same destinations the
+ * desktop navbar spreads across its width.
+ *
+ * The safe-area padding keeps the row clear of the home indicator on iOS.
+ */
 export default function MobileBottomNav() {
   const { pathname } = useLocation();
   const { open } = useSearchDialog();

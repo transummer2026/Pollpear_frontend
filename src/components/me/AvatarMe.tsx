@@ -13,6 +13,14 @@ import {
   type UploadImageMeta,
 } from "@shared/schemas/uploads.schema";
 
+/**
+ * The signed-in user's avatar, and the way to replace it. The file is checked
+ * against the shared upload schema before it leaves — the backend rejects it
+ * anyway, but a 12 MB round trip to be told so is a poor way to find out.
+ *
+ * The input is cleared as soon as the file is read, so picking the same file
+ * twice in a row still fires a change event.
+ */
 export default function AvatarMe() {
   const { data: user } = useMe();
 

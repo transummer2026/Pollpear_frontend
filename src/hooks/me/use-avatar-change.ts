@@ -3,11 +3,12 @@ import useSWRMutation from "swr/mutation";
 import type { UserDTO } from "@shared/schemas/users.schema";
 
 /**
+ * Replaces the signed-in user's avatar and answers with the updated user.
  *
- * @note: useSWRMutation <what we get, errors, trigger, what we send>
- *   We send the raw File as multipart/form-data. The field name "file"
- *   must match the backend's FileInterceptor('file'). The backend re-validates
- *   mimetype/size and processes the image, so no client-side meta is needed.
+ * The raw File goes out as multipart/form-data under the field name "file",
+ * which has to match the backend's FileInterceptor('file'). Mimetype and size
+ * are re-checked there, and the image is resized server-side, so nothing but
+ * the file itself is worth sending.
  */
 export function useAvatarChange() {
   return useSWRMutation<UserDTO, ApiError, string, File>(

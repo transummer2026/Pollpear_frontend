@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import DemoHashtags from "@/components/home/Section/DemoHashtags";
 import { MULTIPLE_CHOICE_DEMO } from "@/components/home/Section/demos";
 
+/** A closed multiple-choice poll, shown as results — its shares add up past 100%. */
 export default function DemoMultipleChoicePoll() {
   const totalVotes = MULTIPLE_CHOICE_DEMO.options.reduce(
     (total, option) => total + option.votes,

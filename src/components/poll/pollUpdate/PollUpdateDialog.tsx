@@ -14,6 +14,11 @@ type PollUpdateDialogProps = {
   onOpenChange: (open: boolean) => void;
 };
 
+/**
+ * Edit dialog, one form per poll type. The form is only mounted while the
+ * dialog is open, so each opening starts from the poll as it now stands rather
+ * than from the values left behind by the previous edit.
+ */
 export default function PollUpdateDialog({
   poll,
   open,

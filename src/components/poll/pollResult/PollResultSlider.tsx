@@ -7,6 +7,12 @@ import PollCardFooter from "@/components/poll/PollCardFooter";
 import { getSliderLabels } from "@/lib/poll";
 import { Slider } from "@/components/ui/slider";
 
+/**
+ * Result of a slider poll: the average answer, on the same scale the voters
+ * used. The backend returns it as a 0–1 ratio while votes are cast from 0 to
+ * 100, hence the conversion. The slider is disabled — it is a reading, not an
+ * input.
+ */
 export default function PollResultSlider({
   poll,
   onUpdateVote,

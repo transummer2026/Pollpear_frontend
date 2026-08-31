@@ -10,6 +10,7 @@ type PollResultProps = {
   barClassName?: string;
 };
 
+/** One option's share of the vote, as a labelled bar. */
 export default function PollResult({
   answer,
   totalVotes,

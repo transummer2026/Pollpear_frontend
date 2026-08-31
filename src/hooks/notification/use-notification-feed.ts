@@ -7,6 +7,15 @@ import { getSocket } from "@/lib/socket";
 
 const KEY = "/me/notifications";
 
+/**
+ * Real-time half of the inbox: pushes arrivals into the `/me/notifications`
+ * cache and takes back the ones the server retracts, so the badge and the
+ * dropdown move without polling. Mounted once, next to useSocketConnection.
+ *
+ * Each event also invalidates whatever the notification implies has changed —
+ * a friendship, a room membership — since the notice is the only hint the
+ * frontend gets that another user acted.
+ */
 export function useNotificationFeed() {
   const { data: me, isAuthenticated } = useAuth();
   const { mutate } = useSWRConfig();

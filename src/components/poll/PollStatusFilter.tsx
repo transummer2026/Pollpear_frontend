@@ -18,6 +18,7 @@ type PollStatusFilterProps = {
   onChange: (value: PollFilter) => void;
 };
 
+/** Open/closed filter over a poll list. Labels live here, values in lib/poll. */
 export default function PollStatusFilter({
   value,
   onChange,

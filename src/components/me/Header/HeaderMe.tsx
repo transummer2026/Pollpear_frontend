@@ -28,6 +28,7 @@ import {
   type UserUpdateInput,
 } from "@shared/schemas/users.schema";
 
+/** Only the two fields this header edits; the rest of the profile lives in settings. */
 function toFormValues(user: UserDTO): UserUpdateInput {
   return {
     username: user.username ?? "",
@@ -35,6 +36,11 @@ function toFormValues(user: UserDTO): UserUpdateInput {
   };
 }
 
+/**
+ * One's own profile header, which doubles as the form for the two fields shown
+ * there. Editing in place rather than in a dialog: the username and bio are
+ * what the header displays, so the edit reads as a correction of it.
+ */
 export default function HeaderMe() {
   const { data: user } = useMe();
 

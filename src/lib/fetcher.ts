@@ -1,3 +1,8 @@
+// Runtime configuration, fetched before the module finishes evaluating so
+// every consumer sees a resolved gateway URL. Kept out of the bundle on
+// purpose: the same build is deployed to every environment, only the file
+// served next to it changes. In dev there is none, hence the localhost
+// fallback below.
 const config = await fetch("/config.json")
   .then((r) => (r.ok ? r.json() : null))
   .catch(() => null);
@@ -11,8 +16,10 @@ const GATEWAY_URL: string = config?.gateway_url ?? "http://localhost:8080/api";
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 /**
- * @note:
- *  super(message) // we pass the message to the Error class constructor, to create the instance of the Error class with the message
+ * Thrown for every non-2xx response. Carries the status and the parsed body
+ * alongside the message so callers can branch on the exact failure — a 403 on
+ * a private profile, a 409 on an already-sent friend request — instead of
+ * matching on text.
  */
 class ApiError extends Error {
   status: number;
@@ -26,7 +33,9 @@ class ApiError extends Error {
 }
 
 /**
- * Extracts an error message from the response body, or returns a default message based on the HTTP status code.
+ * Best-effort human-readable message for a failed response. NestJS answers
+ * with a plain string, or an array of them when class-validator rejects a
+ * body; anything else falls back to the bare status.
  */
 const extractErrorMessage = (status: number, body: unknown): string => {
   const message = (body as { message?: unknown } | null)?.message;
@@ -50,19 +59,24 @@ const isFeedResource = (resource: string) =>
 
 let onUnhandledApiError: ((status: number) => void) | null = null;
 
+/**
+ * Registers the app-wide reaction to an unhandled API failure. Set once by
+ * ApiErrorRedirect, which turns the status into a navigation; passing `null`
+ * clears it on unmount.
+ */
+
 const setApiErrorHandler = (handler: ((status: number) => void) | null) => {
   onUnhandledApiError = handler;
 };
 
 /**
- * we work with swr and use the classic fetch (instead of other packages/frameworks like axios etc. )
- * This is a minimal fetcher for now to make api calls
- * fetch sends http calls to the url (a bit like a curl) with the options we want.
+ * Single entry point to the gateway, and the function SWR is configured with.
+ * Always sends the session cookie, resolves a 204 to `null` (SWR needs a
+ * value, not `undefined`, to consider the key loaded) and throws an
+ * {@link ApiError} on anything else that is not 2xx.
  *
- * @note:
- *  const body = await res.json().catch(() => null); if we don't receive json, we return null.
- *  if (!res.ok) if response is not 2XX status code, we throw an ApiError.
- *  const res = await fetch(`${API_URL}${resource}`, options) // fetch the data with the back
+ * Failing GETs that no component is expected to handle inline also reach the
+ * global handler, which redirects the whole page — see the guards below.
  */
 const fetcher = async <T>(
   resource: string,
@@ -98,7 +112,10 @@ const fetcher = async <T>(
 };
 
 /**
- * Function to send JSON data to the server
+ * Shared implementation of the body-carrying verbs. The Content-Type header is
+ * only set when there actually is a body: announcing JSON on an empty request
+ * leaves the backend parsing nothing, and its validation pipe then rejects the
+ * call.
  */
 const sendJson = <T>(
   method: HttpMethod,
@@ -118,9 +135,9 @@ const postJson = <T>(resource: string, data?: unknown): Promise<T> => {
 };
 
 /**
- * Sends multipart/form-data (file uploads).
- * @note: no Content-Type header on purpose -> the browser sets
- *   "multipart/form-data; boundary=..." itself. Setting it manually breaks the upload.
+ * Uploads a file as multipart/form-data. No Content-Type header on purpose:
+ * the browser has to set it itself to append the "boundary=..." parameter, and
+ * writing it by hand leaves the backend unable to split the parts.
  */
 const postForm = <T>(resource: string, form: FormData): Promise<T> => {
   return fetcher<T>(resource, {

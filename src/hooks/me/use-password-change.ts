@@ -4,8 +4,8 @@ import type { UserDTO } from "@shared/schemas/users.schema";
 import type { UserChangePasswordDTO } from "@shared/schemas/auth.schema";
 
 /**
- *
- * @note: useSWRMutation <what we get, errors, trigger, what we send>
+ * Changes the signed-in user's password. Their current one is part of the body:
+ * holding the session is not enough to replace it.
  */
 export function usePasswordChange() {
   return useSWRMutation<UserDTO, ApiError, string, UserChangePasswordDTO>(

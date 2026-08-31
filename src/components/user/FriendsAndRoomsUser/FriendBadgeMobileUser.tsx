@@ -5,6 +5,7 @@ import {
   type Friend,
 } from "@/components/user/FriendsAndRoomsUser/friends";
 
+/** Three avatars and a count, the mobile stand-in for the friends list. */
 export default function FriendBadgeMobileUser({
   friends,
 }: {

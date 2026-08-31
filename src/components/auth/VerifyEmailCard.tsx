@@ -11,6 +11,11 @@ import { Spinner } from "@/components/ui/spinner";
 import { Link, Navigate, useSearchParams } from "react-router";
 import { useVerifyEmail } from "@/hooks/auth/use-verify-email";
 
+/**
+ * Where a verification link lands. The token in the URL is the whole input, so
+ * the call fires on mount and this only renders its three outcomes: verifying,
+ * verified, or a link that is no longer good.
+ */
 export default function VerifyEmailCard() {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token") ?? "";

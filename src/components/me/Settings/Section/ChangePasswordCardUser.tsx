@@ -13,6 +13,11 @@ import { usePasswordChange } from "@/hooks/me/use-password-change";
 import FieldMessage from "@/components/FieldMessage";
 import { useFieldHints } from "@/hooks/use-field-hints";
 
+/**
+ * Password change for a signed-in user, current password included — the session
+ * alone does not authorise it. The requirements are shown live as the new one
+ * is typed, read straight from the shared schema (see useFieldHints).
+ */
 export default function ChangePasswordCardUser() {
   const {
     register,

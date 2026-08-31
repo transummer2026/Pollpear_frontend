@@ -6,6 +6,11 @@ import { formatDate } from "@/components/pages/api/apiKey";
 import ApiKeyName from "@/components/pages/api/SectionParts/ApiKeyName";
 import ConfirmedAction from "@/components/pages/api/SectionParts/ConfirmedAction";
 
+/**
+ * What is known about an existing key — never the key itself. Both actions
+ * break whatever is calling the API right now, so both go through a
+ * confirmation that says so.
+ */
 export default function ApiKeyDetails({
   apiKey,
   busy,

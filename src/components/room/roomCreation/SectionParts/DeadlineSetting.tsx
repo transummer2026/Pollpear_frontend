@@ -20,6 +20,10 @@ type DeadlineSettingProps = {
   setDays: (days: number) => void;
 };
 
+/**
+ * Optional closing date, expressed in days. Off means the room stays open until
+ * its owner closes it — a room without a deadline never closes on its own.
+ */
 export default function DeadlineSetting({
   hasDeadline,
   setHasDeadline,

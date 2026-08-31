@@ -13,6 +13,11 @@ type FriendPanelMobileProps = {
   invitations: Friend[];
 };
 
+/**
+ * The mobile counterpart: friends, requests and rooms as collapsible rows in a
+ * single card. Rooms are folded in here, where desktop gives them a card of
+ * their own — screen space being the whole difference.
+ */
 export default function FriendPanelMobile({
   friends,
   invitations,

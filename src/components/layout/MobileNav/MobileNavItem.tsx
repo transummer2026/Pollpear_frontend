@@ -15,6 +15,10 @@ type MobileNavItemBodyProps = {
  * Inner content of a bottom-bar tab: active indicator and icon. The label is
  * kept for screen readers only — the bar shows icons alone.
  */
+/**
+ * The inside of one bottom-nav tab: the active bar, the icon, and a label kept
+ * for screen readers only — five visible labels would not fit the width.
+ */
 export function MobileNavItemBody({
   label,
   active,

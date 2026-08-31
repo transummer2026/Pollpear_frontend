@@ -6,8 +6,9 @@ import type { ButtonVariant, ConfirmCopy } from "@/components/pages/api/apiKey";
 import ConfirmBody from "@/components/pages/api/SectionParts/ConfirmBody";
 
 /**
- * Every action here either revokes a working key or replaces it, so none of
- * them fires on a single click
+ * A button that asks before it acts. Every action on this page either revokes a
+ * working key or replaces it, and both break whatever is calling the API right
+ * now — so none of them fires on a single click.
  */
 export default function ConfirmedAction({
   icon,

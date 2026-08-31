@@ -32,6 +32,12 @@ const loaded = () =>
     hasMore: true,
   });
 
+/**
+ * The cases worth pinning down are the ones a live chat produces on its own:
+ * an optimistic message sorting last without a real id, the socket echo and the
+ * HTTP ack racing each other, and cursors that must never point at a message
+ * the server has not seen.
+ */
 describe("chatReducer", () => {
   describe("history", () => {
     it("loads the newest page and sets both cursors", () => {

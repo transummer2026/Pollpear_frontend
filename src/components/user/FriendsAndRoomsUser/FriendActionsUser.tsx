@@ -13,11 +13,17 @@ import {
 } from "@/hooks/friend/use-friendship";
 import type { FriendshipDTO } from "@shared/schemas/friendship.schema";
 
+/** `undefined` → fetch the friendship; a value (or `null`) → use it as-is. */
 type KnownFriendship = {
   status: FriendshipDTO["status"];
   requesterId: number;
 } | null;
 
+/**
+ * The same friendship actions as FriendshipButton, sized for a list row. It
+ * takes an optional known friendship because the lists already carry one:
+ * fetching per row would fire one request per friend on screen.
+ */
 export default function FriendActionsUser({
   friendId,
   friendship: known,

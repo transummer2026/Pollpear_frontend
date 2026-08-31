@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { cn } from "@/lib/utils";
 
+/** Site footer. Hidden on mobile, where the bottom nav takes its place. */
 export default function Footer({ className }: { className?: string }) {
   return (
     <footer className={cn("border-t mt-10 py-6 px-6", className)}>

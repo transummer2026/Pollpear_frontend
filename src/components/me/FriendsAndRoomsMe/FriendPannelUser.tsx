@@ -9,6 +9,11 @@ import {
 import { useAuth } from "@/hooks/auth/use-auth";
 import { useFriendRequests, useFriends } from "@/hooks/friend/use-friendship";
 
+/**
+ * The whole right-hand column of one's own profile: friends, friend requests,
+ * room invitations and rooms. The friend data is fetched once here and handed
+ * down, so the desktop and mobile panels never fetch it twice.
+ */
 export default function FriendPannelUser() {
   const { data: me } = useAuth();
   const { data } = useFriends(me?.id);

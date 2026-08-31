@@ -12,6 +12,12 @@ import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
 import { useSWRConfig } from "swr";
 
+/**
+ * Edit and delete, shown to the author alone and only while the poll is still
+ * pending — reshaping a poll people have already answered would rewrite their
+ * votes. Renders nothing at all for anyone else, so it can sit in every card
+ * header unconditionally.
+ */
 export default function PollUpdateButtons({ poll }: { poll: PollReadDTO }) {
   const { data: me } = useMe();
   const { mutate } = useSWRConfig();

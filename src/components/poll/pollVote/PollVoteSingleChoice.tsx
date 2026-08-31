@@ -11,6 +11,13 @@ import PollCardHeader from "@/components/poll/PollCardHeader";
 import PollCardFooter from "@/components/poll/PollCardFooter";
 import { getVisibleOptions } from "@/lib/poll";
 
+/**
+ * Single-choice ballot: picking an option is the vote, there is nothing to
+ * confirm. Once it lands, every mounted poll list is revalidated through
+ * `pollKeys` — the same poll can be on screen several times over — and the room
+ * as well when the card is inside one, since it carries its own copy of the
+ * polls.
+ */
 export default function PollVoteSingleChoice({
   poll,
   roomId,

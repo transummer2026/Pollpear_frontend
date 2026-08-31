@@ -17,6 +17,10 @@ type MaintenanceProps = {
   description?: string;
 };
 
+/**
+ * Placeholder for a page that is planned but not built. Wording is overridable
+ * so each route can say what is coming.
+ */
 export default function Maintenance({
   title = "Under maintenance",
   description = "This page is not available yet. It is being worked on and will land in a future release.",

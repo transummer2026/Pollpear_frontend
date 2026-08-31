@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { useMe } from "@/hooks/user/use-me";
 
+/** The viewer's own card at the top of the feed sidebar, linking to their profile. */
 export default function ProfileCardFeed() {
   const { data: user } = useMe();
 

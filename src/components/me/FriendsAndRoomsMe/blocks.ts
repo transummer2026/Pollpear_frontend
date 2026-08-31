@@ -1,5 +1,6 @@
 import type { BlockListItemDTO } from "@shared/schemas/block.schema";
 
+/** A blocked account as the settings list shows one, flattened from the API row. */
 export type BlockedUser = {
   id: number;
   name: string;

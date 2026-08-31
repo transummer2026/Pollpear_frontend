@@ -21,6 +21,11 @@ type FriendPanelDesktopUserProps = {
   id: number;
 };
 
+/**
+ * Someone else's friends, paginated, with a dialog for the full list. No
+ * requests section here — a pending request is between the viewer and them, not
+ * something to show on a third party's profile.
+ */
 export default function FriendPanelDesktopUser({
   id,
 }: FriendPanelDesktopUserProps) {

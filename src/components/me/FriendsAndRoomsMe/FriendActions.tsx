@@ -7,6 +7,11 @@ import { ApiError } from "@/lib/fetcher";
 import { useAuth } from "@/hooks/auth/use-auth";
 import { useRemoveFriendship } from "@/hooks/friend/use-friendship";
 
+/**
+ * Unfriend, from one's own friends list — the only action offered there, since
+ * everyone in it is already accepted. The friendship row is soft-deleted, so a
+ * later request revives the same one rather than creating a second.
+ */
 export default function FriendActions({ friendId }: { friendId: number }) {
   const { data: me } = useAuth();
   const { trigger: removeFriendship, isMutating } =

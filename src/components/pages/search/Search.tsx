@@ -24,6 +24,8 @@ import {
   type SearchSort,
 } from "@shared/schemas/search.schema";
 
+// "all" shows a preview of each kind side by side; narrowing to one gives it
+// the full page and real pagination.
 const MIN_QUERY_LENGTH = 2;
 const PREVIEW_LIMIT = 5;
 const PAGE_SIZE = 10;
@@ -39,6 +41,8 @@ const SORT_LABELS: Record<SearchSort, string> = {
   alphabetical: "Alphabetical",
 };
 
+// The URL is the source of truth here, and anyone can type into it: both
+// params are narrowed back to what the shared schema allows before use.
 function isSearchScope(value: string | null): value is SearchScope {
   return (
     value === "all" ||
@@ -50,6 +54,14 @@ function isSearchSort(value: string | null): value is SearchSort {
   return (SEARCH_SORT_OPTIONS as readonly string[]).includes(value ?? "");
 }
 
+/**
+ * The full search page. Its whole state — query, scope, sort, page — lives in
+ * the URL, so a search can be shared, bookmarked and walked back through with
+ * the browser's own buttons.
+ *
+ * Params are replaced rather than pushed: typing would otherwise leave one
+ * history entry per keystroke to escape from.
+ */
 export default function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
 

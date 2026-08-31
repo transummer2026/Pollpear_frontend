@@ -8,6 +8,7 @@ type FeatureCardProps = {
   children: ReactNode;
 };
 
+/** One selling point of the landing page: an icon, a title, a sentence. */
 export default function FeatureCard({
   icon,
   title,

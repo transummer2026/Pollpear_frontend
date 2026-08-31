@@ -18,6 +18,10 @@ import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
 import { useResendVerification } from "@/hooks/auth/use-resend-verification";
 
+/**
+ * Sends a fresh verification mail. Same deliberately vague confirmation as the
+ * password reset: the answer must not reveal whether the address is registered.
+ */
 export default function ResendVerificationCard() {
   const {
     register,

@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import FriendAvatar from "@/components/me/FriendsAndRoomsMe/FriendAvatar";
 import type { Friend } from "@/components/me/FriendsAndRoomsMe/friends";
 
+/** A friend in the feed sidebar: avatar, name, and a link to their profile. */
 export default function FriendBadgeFeed({ friend }: { friend: Friend }) {
   return (
     <Link

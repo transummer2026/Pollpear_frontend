@@ -17,6 +17,12 @@ import ProfileCardGender from "@/components/me/ProfileCardGender";
 import { useOAuthPending } from "@/hooks/auth/use-oauth-pending";
 import { useNavigate, useSearchParams } from "react-router";
 
+/**
+ * Prefills what the provider gave us and blanks the rest — an OAuth profile
+ * carries a name at best, never a birthdate or a nationality. Gender starts
+ * genuinely unset so the select shows its placeholder rather than a value the
+ * user never chose; the cast is what lets `undefined` through a required field.
+ */
 function toFormValues(pending: OauthPendingDTO): OauthRegisterInput {
   return {
     username: pending.username ?? "",
@@ -32,6 +38,12 @@ function toFormValues(pending: OauthPendingDTO): OauthRegisterInput {
   };
 }
 
+/**
+ * Last step of an OAuth signup: the account is not created until this form is
+ * submitted, since a provider gives us less than the app requires. The pending
+ * signup lives server-side behind the `?signup=` token, so a lost or expired
+ * token means starting over — hence the dead-end card rather than an error.
+ */
 export default function InformationSection() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();

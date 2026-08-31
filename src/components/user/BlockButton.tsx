@@ -15,6 +15,11 @@ type BlockButtonProps = {
   userId: number;
 };
 
+/**
+ * Block or unblock, from someone else's profile. Blocking severs whatever tied
+ * the two accounts — the friendship goes with it — so the viewer's own lists
+ * are revalidated alongside the block itself.
+ */
 export default function BlockButton({ userId }: BlockButtonProps) {
   const { data: me } = useAuth();
   const { data: blockStatus } = useBlockStatus(userId);

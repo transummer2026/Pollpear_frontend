@@ -10,6 +10,13 @@ type ErrorBoundaryState = {
   hasError: boolean;
 };
 
+/**
+ * Last line of defence around the whole app: a component that throws while
+ * rendering takes React's tree down with it, leaving a blank page. Catching it
+ * here swaps in the error page instead.
+ *
+ * Class component on purpose — error boundaries have no hook equivalent.
+ */
 export default class ErrorBoundary extends Component<
   ErrorBoundaryProps,
   ErrorBoundaryState

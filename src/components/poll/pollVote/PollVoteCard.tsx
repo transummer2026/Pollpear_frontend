@@ -10,6 +10,7 @@ export type PollVoteProps = {
   onShowResults?: () => void;
 };
 
+/** Picks the ballot matching the poll's type; the layouts have nothing in common. */
 export default function PollVoteCard({
   poll,
   roomId,

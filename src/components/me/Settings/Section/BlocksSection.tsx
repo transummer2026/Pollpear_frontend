@@ -7,6 +7,7 @@ import { usePagination } from "@/hooks/use-pagination";
 
 const PAGE_SIZE = 8;
 
+/** Everyone the viewer has blocked, with a way to lift each block. */
 export default function BlocksSection() {
   const { data: me } = useAuth();
   const { data } = useBlockedUsers(me?.id);

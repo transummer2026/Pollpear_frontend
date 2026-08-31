@@ -11,6 +11,11 @@ type UserProps = {
   id?: number;
 };
 
+/**
+ * Someone else's profile. A private one answers 403 rather than 404, but both
+ * come down to the same thing for the visitor — there is nothing here to see —
+ * so both land on the not-found page.
+ */
 export default function User({ id }: UserProps) {
   const { data: user, error, isLoading } = useUser(id);
 

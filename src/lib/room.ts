@@ -1,8 +1,15 @@
 import { differenceInCalendarDays } from "date-fns";
 import type { RoomReadDTO } from "@shared/schemas/rooms.schema";
 
+// Past a week out, an absolute date reads better than "in 23 days".
 const RELATIVE_DAYS_THRESHOLD = 7;
 
+/**
+ * A room counts as closed once its status says so or its deadline passed — same
+ * rule as a poll, and for the same reason: the status is only flipped when
+ * something acts on the room, so the date has to be checked too. A room without
+ * a deadline stays open until someone closes it.
+ */
 export function isRoomClosed(room: RoomReadDTO): boolean {
   return (
     room.status === "closed" ||
@@ -10,6 +17,7 @@ export function isRoomClosed(room: RoomReadDTO): boolean {
   );
 }
 
+/** Whether `userId` created the room. A signed-out viewer (no id) owns none. */
 export function isRoomOwnedBy(room: RoomReadDTO, userId?: number): boolean {
   if (userId === undefined) return false;
 
@@ -34,6 +42,7 @@ export function canInviteToRoom(
   return room.visibility === "public" && isPearticipant;
 }
 
+/** An absolute date for the room cards, or an em dash when there is none. */
 export function formatRoomDate(date?: Date | string | null): string {
   if (!date) return "—";
 
@@ -44,6 +53,7 @@ export function formatRoomDate(date?: Date | string | null): string {
   });
 }
 
+/** Whether a deadline is close enough to be worth counting down to. */
 export function isRoomDeadlineNear(date?: Date | string | null): boolean {
   if (!date) return false;
 
@@ -52,6 +62,10 @@ export function isRoomDeadlineNear(date?: Date | string | null): boolean {
   return days >= 0 && days < RELATIVE_DAYS_THRESHOLD;
 }
 
+/**
+ * The deadline as a reader wants it: a countdown while it is near, a plain date
+ * once it is far off or already behind us.
+ */
 export function formatRoomDeadline(date?: Date | string | null): string {
   if (!date) return "No deadline";
   if (!isRoomDeadlineNear(date)) return formatRoomDate(date);
