@@ -16,16 +16,12 @@ import {
 import { MobileNavItemBody } from "@/components/layout/MobileNav/MobileNavItem";
 import { mobileNavItemClass } from "@/components/layout/MobileNav/mobile-nav-styles";
 
-type MobileCreateMenuProps = {
-  roomId?: number;
-};
-
 /**
  * The "Create" tab. The navigation menu content is anchored to the bottom of
  * the trigger (`bottom-full`) instead of shadcn's default `top-full`, which
  * would render it off-screen below the bar.
  */
-export function MobileCreateMenu({ roomId }: MobileCreateMenuProps) {
+export function MobileCreateMenu() {
   return (
     <NavigationMenu
       viewport={false}
@@ -46,9 +42,7 @@ export function MobileCreateMenu({ roomId }: MobileCreateMenuProps) {
             <ul className="flex flex-col gap-1">
               <li>
                 <NavigationMenuLink asChild>
-                  <Link
-                    to={roomId ? `/polls/new?roomId=${roomId}` : "/polls/new"}
-                  >
+                  <Link to="/polls/new">
                     <HugeiconsIcon icon={ChartBarLineIcon} strokeWidth={2} />
                     New Poll
                   </Link>
