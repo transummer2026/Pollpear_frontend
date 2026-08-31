@@ -18,6 +18,14 @@ type FriendshipButtonProps = {
   userId: number;
 };
 
+/**
+ * The single friendship control on a profile, showing whichever of add, accept,
+ * decline or remove applies to the current state. Hidden outright for someone
+ * the viewer has blocked: the answer there is to unblock first.
+ *
+ * A friendship touches both accounts, so every action revalidates both sides'
+ * lists — the other user's, and the viewer's own.
+ */
 export default function FriendshipButton({ userId }: FriendshipButtonProps) {
   const { data: me } = useAuth();
   const { data: friendship } = useFriendshipWithUser(userId);

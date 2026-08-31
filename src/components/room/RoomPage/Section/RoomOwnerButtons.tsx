@@ -21,12 +21,23 @@ import RoomCloseDeleteConfirm, {
   type RoomConfirmAction,
 } from "@/components/room/RoomPage/Section/RoomCloseDeleteConfirm";
 
+// Closing a room is setting its deadline to now, but the shared schema rejects
+// a date in the past — and by the time the request is handled, "now" is. A few
+// seconds ahead clears both the validation and the round trip.
 const CLOSE_MARGIN_MS = 5_000;
 
 type RoomOwnerButtonsProps = {
   room: RoomReadDTO;
 };
 
+/**
+ * Edit, close and delete, for the owner alone. Closing keeps the room readable
+ * and only stops what happens inside it; deleting takes it away, which is why
+ * both go through a confirmation and only deletion navigates away.
+ *
+ * Deleting drops the room's own cache entry without revalidating it — the
+ * request would just 404 — while every list that may have held it is refreshed.
+ */
 export default function RoomOwnerButtons({ room }: RoomOwnerButtonsProps) {
   const { data: me } = useMe();
   const navigate = useNavigate();

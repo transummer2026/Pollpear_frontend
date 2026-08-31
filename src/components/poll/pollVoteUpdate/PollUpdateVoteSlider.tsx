@@ -21,6 +21,7 @@ import {
 const SCALE_START = 50;
 const SCALE_STEP = 5;
 
+/** Re-vote on a slider poll: the handle starts back at the middle, not on the previous answer. */
 export default function PollUpdateVoteSlider({
   poll,
   onDone,

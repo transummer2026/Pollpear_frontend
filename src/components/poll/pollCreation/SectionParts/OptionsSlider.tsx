@@ -30,6 +30,12 @@ type ScaleOptionsProps = {
   errors: FieldErrors<SliderFormValues>;
 };
 
+/**
+ * Right-hand column of the slider form: everything that is not the scale
+ * itself. Identical to its choice-poll counterpart apart from the left
+ * section, hence the casts on HashtagsSelection — hashtags are the same field
+ * in both unions, but the form types are two distinct branches of it.
+ */
 export default function OptionsSlider({
   control,
   register,

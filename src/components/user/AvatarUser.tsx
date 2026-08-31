@@ -14,6 +14,11 @@ type AvatarUserProps = {
   id: number;
 };
 
+/**
+ * Profile picture on someone else's page. The presence dot only appears for a
+ * friend: `isOnline` is carried by the friends list alone, and only that list
+ * is kept live by the socket.
+ */
 export default function AvatarUser({ id }: AvatarUserProps) {
   const { data: user } = useUser(id);
   const { data: me } = useAuth();

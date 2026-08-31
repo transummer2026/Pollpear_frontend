@@ -55,6 +55,11 @@ const sections = [
   },
 ];
 
+/**
+ * Settings, as a section list driven by the `:section?` route param rather than
+ * local state — so a section can be linked to, and the back button walks
+ * through them.
+ */
 export default function SettingsCard() {
   const { section } = useParams<{ section?: string }>();
   const navigate = useNavigate();

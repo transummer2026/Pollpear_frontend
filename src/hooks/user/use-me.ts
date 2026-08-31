@@ -5,10 +5,16 @@ import type { SWRConfiguration } from "swr";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
+/**
+ * The signed-in user. `/me` is the key every session-aware view shares, so
+ * writing to it (see useMeUpdate) repaints the avatar in the navbar, the
+ * settings form and the profile at once.
+ */
 export function useMe(options: SWRConfiguration<UserDTO, ApiError> = {}) {
   return useSWR<UserDTO, ApiError>("/me", fetcher, { ...options });
 }
 
+/** Saves a partial change to one's own profile and answers with the whole user. */
 export function useMeUpdate() {
   return useSWRMutation<UserDTO, ApiError, string, UserUpdateDTO>(
     "/me",
@@ -16,6 +22,10 @@ export function useMeUpdate() {
   );
 }
 
+/**
+ * Deletes one's own account for good. The password travels in the body — the
+ * session alone does not authorise something this final.
+ */
 export function useMeDelete() {
   return useSWRMutation<void, ApiError, string, UserDeleteDTO>(
     "/me",

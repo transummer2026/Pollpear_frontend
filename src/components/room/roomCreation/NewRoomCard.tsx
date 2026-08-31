@@ -33,6 +33,10 @@ import {
 import { useNavigate } from "react-router";
 import { useSWRConfig } from "swr";
 
+/**
+ * Room creation form. A room is little more than a name, a visibility and an
+ * optional deadline — who is in it is decided afterwards, from the room page.
+ */
 export default function NewRoomCard() {
   const { mutate } = useSWRConfig();
   const { trigger, isMutating } = useRoomCreate();

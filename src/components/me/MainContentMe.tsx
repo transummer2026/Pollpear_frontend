@@ -13,8 +13,11 @@ import { usePagination } from "@/hooks/use-pagination";
 import { PaginationControls } from "@/components/ui/pagination-controls";
 
 const PAGE_SIZE = 12;
+// A shared empty list: a fresh [] on every render would give useMemo and the
+// pagination a new reference each time, and both would recompute for nothing.
 const NO_POLLS: never[] = [];
 
+/** The signed-in user's own polls, filterable by status and paginated. */
 export default function MainContentMe() {
   const { data: polls } = usePolls();
   const [filter, setFilter] = useState<PollFilter>("all");

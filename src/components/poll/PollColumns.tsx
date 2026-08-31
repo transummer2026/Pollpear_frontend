@@ -3,6 +3,7 @@ import PollCard from "@/components/poll/PollCard";
 import { useColumnCount } from "@/hooks/use-column-count";
 import type { PollReadDTO } from "@shared/schemas/polls.schema";
 
+// Note: the columns are filled in order, not balanced by height — see below.
 type PollColumnsProps = {
   polls: PollReadDTO[];
   roomId?: number;

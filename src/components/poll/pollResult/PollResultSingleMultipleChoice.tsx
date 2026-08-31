@@ -7,6 +7,11 @@ import PollCardHeader from "@/components/poll/PollCardHeader";
 import PollUpdateVoteButton from "@/components/poll/pollResult/PollUpdateVoteButton";
 import PollCardFooter from "@/components/poll/PollCardFooter";
 
+/**
+ * Results of a choice poll, one bar per option. Multiple-choice bars are
+ * coloured differently on purpose: their percentages are shares of the voters,
+ * so they add up past 100 and should not read like a single-choice split.
+ */
 export default function PollResultSingleMultipleChoice({
   poll,
   onUpdateVote,

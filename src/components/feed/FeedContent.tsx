@@ -24,6 +24,15 @@ type FeedTab = {
   count?: number;
 };
 
+/**
+ * The two faces of the home feed: what the recommender suggests, and what the
+ * user has already voted on. Only the second is paginated — the ranked feed is
+ * a fixed, short list, while the voted one grows for the life of the account.
+ *
+ * A failing feed is rendered inline with a retry rather than bubbling up: the
+ * recommender is a separate service, and its being down leaves the rest of the
+ * page perfectly usable (see the /feed exception in fetcher).
+ */
 export default function FeedContent() {
   const {
     data: feedPolls,

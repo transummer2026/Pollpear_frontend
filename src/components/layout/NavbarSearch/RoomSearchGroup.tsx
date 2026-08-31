@@ -8,6 +8,7 @@ type RoomSearchGroupProps = {
   onSelect: (roomId: number) => void;
 };
 
+/** The rooms section of the search dialog; hidden when there is no match. */
 export function RoomSearchGroup({ rooms, onSelect }: RoomSearchGroupProps) {
   if (rooms.length === 0) return null;
 

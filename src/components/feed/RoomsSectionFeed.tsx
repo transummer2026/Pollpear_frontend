@@ -4,6 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useRoomsFeed } from "@/hooks/room/use-room";
 import { isRoomClosed } from "@/lib/room";
 
+/**
+ * Rooms worth walking into from the feed. `/rooms/feed` returns more than the
+ * user's own — every public room too — and the closed ones are filtered out
+ * here, since a closed room has nothing left to take part in.
+ */
 export default function RoomsSectionFeed() {
   const { data } = useRoomsFeed();
 

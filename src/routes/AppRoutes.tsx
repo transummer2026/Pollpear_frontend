@@ -27,6 +27,14 @@ import NotFoundPage from "@/pages/NotFoundPage";
 import ForbiddenPage from "@/pages/ForbiddenPage";
 import ServerErrorPage from "@/pages/ServerErrorPage";
 
+/**
+ * Every route of the app, in three groups: open to anyone, signed-out only
+ * (GuestRoute), and signed-in only (ProtectedRoute). The guards are layout
+ * routes, so a route's group is the whole statement of who may reach it.
+ *
+ * Verify-email and change-password stay public on purpose: both are reached
+ * from a mailed link, by someone who has no session and may never have had one.
+ */
 export default function AppRoutes() {
   return (
     <Routes>

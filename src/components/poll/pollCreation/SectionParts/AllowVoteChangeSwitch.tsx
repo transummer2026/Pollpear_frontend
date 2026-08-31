@@ -12,6 +12,11 @@ type AllowChangeVoteSwitchProps = {
   setAllowChangeVote: (checked: boolean) => void;
 };
 
+/**
+ * Whether a voter may change their answer after seeing the results. Off means
+ * the first vote is final — the setting is read at vote time, so flipping it
+ * later applies to everyone at once.
+ */
 export default function AllowVoteChangeSwitch({
   allowChangeVote,
   setAllowChangeVote,

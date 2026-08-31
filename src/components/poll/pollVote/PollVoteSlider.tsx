@@ -18,9 +18,15 @@ import {
   getVisibleOptions,
 } from "@/lib/poll";
 
+// Starts in the middle, so the handle's position never suggests an answer, and
+// moves in steps of 5: the exact percentage is noise on an opinion scale.
 const SCALE_START = 50;
 const SCALE_STEP = 5;
 
+/**
+ * Slider ballot. The answer travels in `freeField` as a string, the option
+ * itself being the scale rather than a choice — a slider poll has exactly one.
+ */
 export default function PollVoteSlider({
   poll,
   roomId,

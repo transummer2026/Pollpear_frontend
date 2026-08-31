@@ -13,6 +13,11 @@ import { Navigate, useNavigate, useSearchParams } from "react-router";
 import { toast } from "sonner";
 import { useForm, type SubmitHandler } from "react-hook-form";
 
+/**
+ * Sets a new password from a reset link. The token stands in for the session
+ * the visitor does not have, so without one there is nothing to do here but
+ * send them back to ask for a new link.
+ */
 export default function ChangePasswordCardGuest() {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token") ?? "";

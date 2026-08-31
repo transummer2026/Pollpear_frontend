@@ -18,6 +18,7 @@ import ProfileCardBirthdate from "@/components/me/ProfileCardBirthdate";
 import FieldMessage from "@/components/FieldMessage";
 import { useFieldHints } from "@/hooks/use-field-hints";
 
+/** A birthdate as the date input wants it, "YYYY-MM-DD", or "" when unset. */
 function toDateInput(value: UserDTO["birthdate"] | undefined): string {
   if (!value) return "";
   const date = new Date(value);
@@ -25,6 +26,8 @@ function toDateInput(value: UserDTO["birthdate"] | undefined): string {
   return date.toISOString().slice(0, 10);
 }
 
+// Every optional field falls back to "": React would otherwise switch the
+// input from uncontrolled to controlled the moment the user is loaded.
 function toFormValues(user: UserDTO): UserUpdateInput {
   return {
     birthdate: toDateInput(user.birthdate),
@@ -39,6 +42,12 @@ function toFormValues(user: UserDTO): UserUpdateInput {
   };
 }
 
+/**
+ * The profile form. `values` rather than `defaultValues`, so the form fills
+ * itself once `/me` answers instead of staying empty, and `keepDirtyValues`
+ * keeps whatever is already being typed from being overwritten by a
+ * revalidation.
+ */
 export default function InformationSection() {
   const { data: user } = useMe();
 

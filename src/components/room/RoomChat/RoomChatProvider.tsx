@@ -16,7 +16,12 @@ import {
 } from "@/hooks/room/chat-reducer";
 import { RoomChatContext } from "@/components/room/RoomChat/room-chat-context";
 
+// Past this the send is called failed and the optimistic message is taken back.
+// The server may still have stored it; chatReducer handles the late ack.
 const SEND_TIMEOUT_MS = 5000;
+// A cap on the catch-up walk, so a tab left open all weekend does not page
+// through a whole room's history one request at a time. Past it, the chat is
+// reloaded from scratch instead.
 const CATCHUP_MAX_PAGES = 20;
 
 type RoomChatProviderProps = {
@@ -24,6 +29,21 @@ type RoomChatProviderProps = {
   children: ReactNode;
 };
 
+/**
+ * Owns one room's chat: the message list, the socket subscription and the send
+ * path. A provider rather than a hook because the composer, the message list
+ * and the header all read the same state, and mounting the hook in each would
+ * open one subscription per consumer.
+ *
+ * Three effects, deliberately separate: the first page is fetched over HTTP,
+ * while the socket only carries what happens from now on. `reloadKey` is how
+ * the socket effect asks for that first fetch again, without either effect
+ * depending on the other.
+ *
+ * `newestIdRef` mirrors the newest id for the reconnect handler: it is
+ * registered once with the socket, and reading the state directly would pin it
+ * to whatever was on screen when the room was opened.
+ */
 export function RoomChatProvider({ roomId, children }: RoomChatProviderProps) {
   const { data: me, isAuthenticated } = useAuth();
   const [state, dispatch] = useReducer(chatReducer, initialChatState);
@@ -74,6 +94,8 @@ export function RoomChatProvider({ roomId, children }: RoomChatProviderProps) {
       dispatch({ type: "incoming", message });
     };
 
+    // Reconnecting means an unknown number of missed messages: page forward
+    // from the newest one held until the server runs out.
     const catchUp = async (from: number) => {
       let cursor = from;
       for (let page = 0; page < CATCHUP_MAX_PAGES; page++) {
@@ -138,6 +160,9 @@ export function RoomChatProvider({ roomId, children }: RoomChatProviderProps) {
       const trimmed = content.trim();
       if (!roomId || !me || trimmed.length === 0) return Promise.resolve(false);
 
+      // The message is shown before the server has taken it. `tempId` is what
+      // links the copy on screen to the confirmation coming back, and the
+      // negative id keeps it out of the way of any real one.
       const seq = ++draftSeqRef.current;
       const tempId = `temp-${seq}`;
       const optimistic: ChatMessage = {

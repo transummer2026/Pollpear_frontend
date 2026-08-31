@@ -15,6 +15,10 @@ import { GATEWAY_URL } from "@/lib/fetcher";
 
 const DOC_ROUTE = `${GATEWAY_URL}/v1/docs`;
 
+/**
+ * The API page: the documentation, and the key needed to call it. The docs are
+ * served by the gateway itself, next to the versioned public routes.
+ */
 export default function Api() {
   return (
     <Layout>

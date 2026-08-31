@@ -3,6 +3,10 @@ import RoomsSectionFeed from "./RoomsSectionFeed";
 import FriendsSectionFeed from "./FriendsSectionFeed";
 import FeedContent from "./FeedContent";
 
+/**
+ * The feed page: polls on the left, a sidebar of shortcuts on the right. The
+ * sidebar sticks while the feed scrolls, and drops under it below lg.
+ */
 export default function FeedCard() {
   return (
     <div className="min-h-screen bg-background">

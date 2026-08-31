@@ -9,6 +9,7 @@ import {
 import type { PollReadDTO } from "@shared/schemas/polls.schema";
 import { isPollClosed } from "@/lib/poll";
 
+/** The metadata line under every poll: age, deadline, author and turnout. */
 export default function PollCardFooter({ poll }: { poll: PollReadDTO }) {
   const author = poll.createdBy;
   const totalVotes = poll.voterCount;
@@ -44,8 +45,10 @@ export default function PollCardFooter({ poll }: { poll: PollReadDTO }) {
 }
 
 /**
- * Sous la journee le jour n'a plus de granularite utile ("Expires in 0 days"),
- * on descend donc a l'heure puis a la minute.
+ * Time left, in the largest unit that still says something: below a day,
+ * "expires in 0 days" carries no information, so it steps down to hours and
+ * then minutes. Rounded down, so the countdown never promises more than is
+ * left.
  */
 function formatExpiresIn(poll: PollReadDTO) {
   if (isPollClosed(poll)) return "Closed";
@@ -68,6 +71,7 @@ function formatExpiresIn(poll: PollReadDTO) {
   );
 }
 
+/** Age of a poll, capped: past five days the exact number stops mattering. */
 function formatCreatedAt(createdAt: Date | string) {
   const days = differenceInCalendarDays(new Date(), new Date(createdAt));
 

@@ -11,6 +11,12 @@ type RoomProps = {
   id?: number;
 };
 
+/**
+ * Desktop room layout. "Not found" is not necessarily a missing room: a private
+ * room answers 403 to someone who is not in it, and that someone may well be
+ * holding an invitation — hence the banner, which turns the dead end into an
+ * accept/decline.
+ */
 export default function RoomPageCardDesktop({ id }: RoomProps) {
   const { data: room, isLoading } = useRoom(id);
 

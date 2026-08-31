@@ -16,6 +16,11 @@ import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
 
+/**
+ * Full signup form, split in two columns: what the account needs on the left,
+ * what is optional on the right. No session is opened on success — the user is
+ * sent to the login page, with a verification mail on the way.
+ */
 export default function RegisterCard() {
   const {
     register,

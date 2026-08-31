@@ -5,6 +5,14 @@ type NotificationBadgeProps = {
   className?: string;
 };
 
+/**
+ * The unread count, as a dot over whatever it is placed on — positioned
+ * absolutely, so the caller owns the offsets. Renders nothing at zero, and
+ * caps at "9+": past that the exact number changes nothing.
+ *
+ * `aria-hidden` because the count is already in the trigger's label; screen
+ * readers should hear it once.
+ */
 export function NotificationBadge({ className }: NotificationBadgeProps) {
   const { unreadCount } = useNotifications();
 

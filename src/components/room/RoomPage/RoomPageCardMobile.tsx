@@ -14,6 +14,11 @@ type RoomProps = {
   id?: number;
 };
 
+/**
+ * Mobile room layout. Same sections in a single column, except the chat, which
+ * moves into a dialog behind a floating button — a permanent panel would eat
+ * the screen the polls need.
+ */
 export default function RoomPageCardMobile({ id }: RoomProps) {
   const { data: room, isLoading } = useRoom(id);
   const [messagesOpen, setMessagesOpen] = useState(false);

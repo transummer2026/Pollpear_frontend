@@ -4,6 +4,11 @@ import { CommandShortcut } from "@/components/ui/command";
 import { useSearchDialog } from "@/components/layout/NavbarSearch/search-context";
 import { cn } from "@/lib/utils";
 
+/**
+ * Opens the search dialog. Looks like an input but is a button: the field the
+ * user types in lives in the dialog, and duplicating it here would mean
+ * keeping two of them in step.
+ */
 export function NavbarSearchTrigger({ className }: { className?: string }) {
   const { open } = useSearchDialog();
 

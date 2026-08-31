@@ -12,6 +12,7 @@ type HeaderUserScoreProps = {
   className?: string;
 };
 
+/** One stat tile. An undefined value reads as 0 — the stats are still loading. */
 export default function HeaderUserScore({
   value,
   label,

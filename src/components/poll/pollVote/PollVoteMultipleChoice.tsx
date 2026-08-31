@@ -19,6 +19,11 @@ import PollCardFooter from "@/components/poll/PollCardFooter";
 import { Check } from "lucide-react";
 import { getVisibleOptions } from "@/lib/poll";
 
+/**
+ * Multiple-choice ballot. Selecting is not voting here — the options pile up in
+ * the form until the vote is submitted, which is also what the shared schema
+ * validates against (at least one option).
+ */
 export default function PollVoteMultipleChoice({
   poll,
   roomId,

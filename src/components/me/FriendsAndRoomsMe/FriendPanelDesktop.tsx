@@ -20,6 +20,11 @@ type FriendPanelDesktopProps = {
   invitations: Friend[];
 };
 
+/**
+ * Friends and pending requests, each paginated on its own so answering an
+ * invitation does not shift the friends list under the cursor. The whole card
+ * disappears when there is neither.
+ */
 export default function FriendPanelDesktop({
   friends,
   invitations,

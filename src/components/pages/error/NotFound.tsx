@@ -17,12 +17,18 @@ type NotFoundProps = {
   description?: string;
 };
 
+/**
+ * The 404 page, and the fallback for anything the router does not match. Its
+ * wording can be overridden, so a page that knows what is missing can say so.
+ */
 export default function NotFound({
   title = "Page not found",
   description = "The page you're looking for doesn't exist or has been moved.",
 }: NotFoundProps) {
   const navigate = useNavigate();
 
+  // No hardcoded destination: the page is reachable from anywhere. Step back
+  // through history, and fall back home when it was opened directly.
   function goBack() {
     if (window.history.length > 1) {
       void navigate(-1);

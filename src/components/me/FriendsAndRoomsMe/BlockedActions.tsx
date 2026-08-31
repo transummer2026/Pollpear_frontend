@@ -7,6 +7,10 @@ import { ApiError } from "@/lib/fetcher";
 import { useAuth } from "@/hooks/auth/use-auth";
 import { useUnblockUser } from "@/hooks/friend/use-block";
 
+/**
+ * Unblock, from the settings list. Only the author of a block can lift it,
+ * which is why this lives on one's own page and nowhere else.
+ */
 export default function BlockedActions({ userId }: { userId: number }) {
   const { data: me } = useAuth();
   const { trigger: unblockUser, isMutating } = useUnblockUser(userId);

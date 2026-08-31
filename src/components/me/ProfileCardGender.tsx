@@ -26,6 +26,11 @@ const GENDER_LABELS: Record<GenderDTO, string> = {
   prefer_not_to_say: "I'd rather not say",
 };
 
+/**
+ * Gender select, generic over the form holding it — it is shared by the OAuth
+ * signup and the settings profile form, which have little else in common.
+ * Labels live here; the values come from the shared schema.
+ */
 export default function ProfileCardGender<T extends FieldValues & GenderField>({
   errors,
   control,

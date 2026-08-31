@@ -34,6 +34,14 @@ const HERO_ACTION = {
 
 const SLIDE = "md:transition-[translate] md:duration-[650ms] md:ease-in-out";
 
+/**
+ * The login page: one form, and a coloured panel that slides across to offer
+ * the other way in. Both halves stay mounted and only translate, so the
+ * transition costs nothing and the login form keeps whatever was typed.
+ *
+ * Below md there is no panel to slide — the two halves stack, and the colour
+ * moves onto the toggle instead.
+ */
 export default function AuthSlider() {
   const [activeView, setActiveView] = useState<AuthView>("login");
 

@@ -13,6 +13,11 @@ type VisibilitySwitchProps = {
   setIsPublic: (checked: boolean) => void;
 };
 
+/**
+ * Public or invite-only. It decides more than who can read the room: in a
+ * public one any member may bring someone in, while a private one stays the
+ * owner's to populate (see canInviteToRoom).
+ */
 export default function VisibilitySwitch({
   isPublic,
   setIsPublic,

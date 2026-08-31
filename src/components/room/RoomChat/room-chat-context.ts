@@ -12,6 +12,11 @@ type RoomChatContextValue = {
 
 export const RoomChatContext = createContext<RoomChatContextValue | null>(null);
 
+/**
+ * Reads the room chat. Throws outside a provider rather than handing back a
+ * null context: every consumer would otherwise have to narrow it, when the real
+ * answer is that the component was mounted in the wrong place.
+ */
 export function useRoomChat() {
   const context = useContext(RoomChatContext);
   if (!context) {

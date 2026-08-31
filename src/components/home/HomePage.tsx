@@ -5,6 +5,11 @@ import PollTypesSection from "@/components/home/Section/PollTypesSection";
 import PublicSideSection from "@/components/home/Section/PublicSideSection";
 import RoomsSection from "@/components/home/Section/RoomsSection";
 
+/**
+ * The landing page a signed-out visitor gets. Section order is the pitch
+ * itself: what the app is, what a poll looks like, where polls live, how to
+ * start — so it reads top to bottom.
+ */
 export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col">

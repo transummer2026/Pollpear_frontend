@@ -5,6 +5,10 @@ type LogoButtonProps = {
   to?: string;
 };
 
+/**
+ * The logo, and the way home. Where home is depends on the visitor — the feed
+ * once signed in, the landing page otherwise — hence the prop.
+ */
 export function LogoButton({ to = "/" }: LogoButtonProps) {
   return (
     <Link to={to}>

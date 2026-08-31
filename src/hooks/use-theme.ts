@@ -14,6 +14,12 @@ function wantsDark(theme: UserTheme | undefined, systemDark: boolean): boolean {
   return false;
 }
 
+/**
+ * Paints the app in the user's stored theme, and keeps it there. Mounted once
+ * at the root: it toggles the `dark` class on <html>, which is what every
+ * Tailwind `dark:` utility keys off. Falls back to light while `/me` is
+ * unknown — a signed-out visitor has no stored preference.
+ */
 export function useApplyUserTheme() {
   const { data: user } = useMe({ shouldRetryOnError: false });
   const theme = user?.userTheme;

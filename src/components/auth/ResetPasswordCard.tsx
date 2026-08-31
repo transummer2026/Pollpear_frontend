@@ -19,6 +19,10 @@ import { toast } from "sonner";
 import { ApiError } from "@/lib/fetcher";
 import { usePasswordForgot } from "@/hooks/auth/use-password-forgot";
 
+/**
+ * Asks for the reset link. The confirmation is deliberately vague — "if this
+ * email exists" — so the page cannot be used to find out who has an account.
+ */
 export default function ResetPasswordCard() {
   const {
     register,

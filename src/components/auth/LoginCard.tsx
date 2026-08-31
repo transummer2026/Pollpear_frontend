@@ -11,7 +11,14 @@ import { ApiError } from "@/lib/fetcher";
 import { useSWRConfig } from "swr";
 import OAuthButtons from "./OAuthButtons";
 
-/** the login half of AuthSlider: no Card of its own, it fills the slider panel */
+/**
+ * The login half of AuthSlider — no Card of its own, it fills the slider panel.
+ *
+ * The user returned by the login seeds the `/me` cache directly, so the guarded
+ * routes see the session without waiting for a refetch. An unverified account
+ * is the one failure worth handling on its own: the way out is a new
+ * verification mail, not a retry.
+ */
 export default function LoginCard() {
   const {
     register,

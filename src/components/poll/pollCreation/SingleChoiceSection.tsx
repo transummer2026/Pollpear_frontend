@@ -21,6 +21,14 @@ type RoomProps = {
   roomId?: number;
 };
 
+/**
+ * The choice-poll creation form, single and multiple alike — the two differ
+ * only by the `type` field, which the header lets the author flip.
+ *
+ * `roomId` rides along as a hidden field when the poll is being created from
+ * inside a room, and decides where the author lands afterwards: back to the
+ * room, or to their own profile.
+ */
 export default function SingleChoiceSection({ roomId }: RoomProps) {
   const { mutate } = useSWRConfig();
   const { trigger, isMutating } = usePollCreate();

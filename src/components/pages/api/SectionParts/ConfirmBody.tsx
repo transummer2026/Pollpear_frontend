@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import type { ConfirmCopy } from "@/components/pages/api/apiKey";
 
+/** The inside of a confirmation dialog, shared by the page's destructive actions. */
 export default function ConfirmBody({
   copy,
   label,

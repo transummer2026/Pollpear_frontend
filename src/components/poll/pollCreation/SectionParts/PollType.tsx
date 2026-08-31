@@ -11,6 +11,11 @@ type PollTypeProps = {
   ) => void;
 };
 
+/**
+ * Single or multiple answers. Slider is deliberately absent: it is a tab of its
+ * own on the creation page, with a different form behind it — hence the
+ * narrowed type.
+ */
 export default function PollType({ type, setType }: PollTypeProps) {
   return (
     <div className="space-y-2 col-span-2">

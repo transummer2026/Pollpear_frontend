@@ -30,6 +30,12 @@ const SCOPE_LABELS: Record<SearchScope, string> = {
  */
 const ALL_SCOPE_GROUP_LIMIT = 3;
 
+/**
+ * Holds the search dialog and exposes the one thing its callers need — a way to
+ * open it. Wrapping the app rather than living in the navbar, because several
+ * triggers reach for the same dialog (the navbar button, the mobile menu, and
+ * ⌘K/Ctrl+K anywhere) and they must not each own a copy.
+ */
 export function NavbarSearchProvider({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const [scope, setScope] = useState<SearchScope>("all");
@@ -84,6 +90,9 @@ export function NavbarSearchProvider({ children }: { children: ReactNode }) {
         title="Search"
         description="Search for users or rooms"
       >
+        {/* Filtering is the backend's job here: cmdk would otherwise narrow
+            the already-matched results against the raw input and hide rows
+            that matched on something other than their label. */}
         <Command shouldFilter={false}>
           <CommandInput
             value={text}

@@ -11,6 +11,11 @@ import PollCardHeader from "@/components/poll/PollCardHeader";
 import PollCardFooter from "@/components/poll/PollCardFooter";
 import { getVisibleOptions } from "@/lib/poll";
 
+/**
+ * Re-vote on a single-choice poll. The ballot starts blank rather than on the
+ * previous answer: the payload replaces the vote outright, so what was picked
+ * before has no bearing on what is sent.
+ */
 export default function PollUpdateVoteSingleChoice({
   poll,
   onDone,

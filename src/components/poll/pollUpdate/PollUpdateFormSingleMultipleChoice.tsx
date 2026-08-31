@@ -47,6 +47,12 @@ type ChoicePollUpdateDTO = Extract<
   { type: "single_choice" | "multiple_choice" }
 >;
 
+/**
+ * Fills the form from the poll as stored. The deadline makes a round trip
+ * through days: the input edits a whole number of days, and re-deriving the
+ * date from it keeps a form that was opened and closed untouched from counting
+ * as changed.
+ */
 function toFormValues(poll: PollReadDTO): PollFormValues {
   const options: OptionFormValue[] = getVisibleOptions(poll).map((option) => ({
     id: option.id,
@@ -68,6 +74,11 @@ function toFormValues(poll: PollReadDTO): PollFormValues {
   };
 }
 
+/**
+ * Whether a react-hook-form dirty flag holds anything true. The flag mirrors
+ * the field's shape, so an array of options comes back as an array of objects
+ * of booleans — a plain truthiness test would call every one of them changed.
+ */
 function hasChanged(dirty: unknown): boolean {
   if (Array.isArray(dirty)) return dirty.some(hasChanged);
   if (typeof dirty === "object" && dirty !== null)
@@ -75,6 +86,12 @@ function hasChanged(dirty: unknown): boolean {
   return Boolean(dirty);
 }
 
+/**
+ * Edits a poll that has not opened yet. Only the fields the author actually
+ * touched are sent: the update schema takes a partial poll, and submitting
+ * everything would rewrite rows — the options especially — that nothing asked
+ * to change. When nothing was touched, the dialog just closes.
+ */
 export default function PollUpdateFormSingleMultipleChoice({
   poll,
   onCancel,

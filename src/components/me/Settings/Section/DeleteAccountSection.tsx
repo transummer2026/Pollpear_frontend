@@ -26,6 +26,14 @@ import {
   UserDeleteSchema,
 } from "@shared/schemas/auth.schema";
 
+/**
+ * Account deletion, behind a confirmation that asks for both the password and a
+ * typed phrase — the shared schema checks the phrase, so the wording is the
+ * same one the backend expects.
+ *
+ * On success the `/me` cache is emptied before navigating: leaving the old user
+ * in it would let the guarded routes believe the session is still alive.
+ */
 export default function DeleteAccountSection() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();

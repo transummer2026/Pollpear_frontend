@@ -3,8 +3,8 @@ import { ApiError, postJson } from "@/lib/fetcher";
 import useSWRMutation from "swr/mutation";
 
 /**
- *
- * @note: useSWRMutation <what we get, errors, trigger, what we send>
+ * Sets the new password for the account behind a reset token. The token is
+ * carried in the body, not a session — the user is signed out at this point.
  */
 export function usePasswordReset() {
   return useSWRMutation<void, ApiError, string, PasswordResetDTO>(

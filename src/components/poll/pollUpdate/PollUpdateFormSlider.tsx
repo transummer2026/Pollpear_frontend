@@ -44,11 +44,15 @@ type PollUpdateFormSliderProps = {
 type OptionFormValue = SliderFormValues["options"][number] & { id?: number };
 type SliderPollUpdateDTO = Extract<PollUpdateDTO, { type: "slider" }>;
 
+// The shared schema makes every field optional for a partial update, which
+// also lets an empty title through. The form always submits its title, so it
+// is checked here rather than server-side, where it would come back as a toast.
 const PollSliderUpdateSchema = PollUpdateSchema.refine(
   (data) => data.title === undefined || data.title.trim().length > 0,
   { message: "Title required", path: ["title"] },
 );
 
+/** Fills the slider form from the poll, deadline included (see the choice form). */
 function toFormValues(poll: PollReadDTO): SliderFormValues {
   const options: OptionFormValue[] = getVisibleOptions(poll).map((option) => ({
     id: option.id,
@@ -72,6 +76,11 @@ function toFormValues(poll: PollReadDTO): SliderFormValues {
   };
 }
 
+/**
+ * Whether a react-hook-form dirty flag holds anything true. The flag mirrors
+ * the field's shape, so an array of options comes back as an array of objects
+ * of booleans — a plain truthiness test would call every one of them changed.
+ */
 function hasChanged(dirty: unknown): boolean {
   if (Array.isArray(dirty)) return dirty.some(hasChanged);
   if (typeof dirty === "object" && dirty !== null)

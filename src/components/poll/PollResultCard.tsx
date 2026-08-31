@@ -10,6 +10,11 @@ type PollResultCardProps = {
   votedOptionId?: number | null;
 };
 
+/**
+ * Compact results, for reading a poll outside its own card — the voted list on
+ * a profile, where the viewer's own answer is worth pointing out. The full card
+ * is pollResult/PollResultCard.
+ */
 export default function PollResultCard({
   pollId,
   title,

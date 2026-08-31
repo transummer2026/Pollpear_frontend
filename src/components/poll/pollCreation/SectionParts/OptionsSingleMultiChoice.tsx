@@ -31,6 +31,11 @@ type SingleMultiChoiceOptionsProps = {
   errors: FieldErrors<PollFormValues>;
 };
 
+/**
+ * Right-hand column of the choice form: the options themselves, then the
+ * settings that apply to any poll. Each switch goes through a Controller —
+ * they are controlled components with no DOM input to register.
+ */
 export default function SingleMultiChoiceOptions({
   control,
   register,

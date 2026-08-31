@@ -5,6 +5,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Item, ItemMedia, ItemContent, ItemTitle } from "@/components/ui/item";
 import type { UserSearchResultDTO } from "@shared/schemas/search.schema";
 
+/** One user in the search results; the real name only shows when there is one. */
 export function UserResultItem({ user }: { user: UserSearchResultDTO }) {
   return (
     <Item asChild variant="outline">

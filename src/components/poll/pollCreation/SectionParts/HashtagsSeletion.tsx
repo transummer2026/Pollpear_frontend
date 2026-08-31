@@ -10,6 +10,14 @@ type HashtagsSelectionProps = {
   setValue: UseFormSetValue<PollFormValues>;
 };
 
+/**
+ * Free-form hashtags, five at most. The input keeps a leading "#" for looks but
+ * it is stripped before storing, along with any whitespace, so "#my tag" and
+ * "mytag" cannot end up as two different tags on the same poll.
+ *
+ * Tags live in the form state rather than in local state: they are part of the
+ * submitted poll, and setValue keeps react-hook-form the single source of truth.
+ */
 export default function HashtagsSelection({
   watch,
   setValue,

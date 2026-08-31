@@ -4,6 +4,7 @@ import { LogoButton } from "@/components/layout/LogoButton";
 import { Link, useLocation } from "react-router";
 import MenuDropdownGuest from "@/components/layout/MenuDropdownGuest";
 
+/** Navbar for a signed-out visitor: the logo, and the two ways in. */
 export default function NavbarGuest() {
   const { pathname } = useLocation();
   /* the login page already offers both, the navbar would just repeat itself */

@@ -15,6 +15,11 @@ import { Label } from "@/components/ui/label";
 import { reportError } from "@/components/pages/api/apiKey";
 import FieldError from "@/components/pages/api/SectionParts/FieldError";
 
+/**
+ * Renames a key in place. `values` keeps the field in step with the server's
+ * answer, and `keepDirtyValues` stops a revalidation from wiping what is being
+ * typed; cancelling resets to the stored name rather than to whatever was left.
+ */
 export default function ApiKeyName({
   apiKey,
   busy,

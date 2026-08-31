@@ -56,6 +56,12 @@ function fromDay(value: unknown) {
 const isRejected = (date: Date) =>
   !BirthdateFormat.safeParse(toDay(date)).success;
 
+/**
+ * Birthdate picker, generic over the form holding it — signup, OAuth completion
+ * and settings all use it. A calendar rather than a date input: the browser's
+ * own is inconsistent across platforms, and a birthdate means paging back
+ * decades, which the native control does badly.
+ */
 export default function ProfileCardBirthdate<
   T extends FieldValues & BirthdateField,
 >({ errors, control }: { errors: FieldErrors<T>; control: Control<T> }) {

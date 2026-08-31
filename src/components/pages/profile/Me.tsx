@@ -4,6 +4,11 @@ import MainContentMe from "@/components/me/MainContentMe";
 import FriendPannelMe from "@/components/me/FriendsAndRoomsMe/FriendPannelUser";
 import Layout from "@/layout/Layout";
 
+/**
+ * One's own profile. The two layouts are written out separately rather than
+ * reordered with CSS: the pieces do not merely move between desktop and
+ * mobile, they come in a different order.
+ */
 export default function Me() {
   return (
     <Layout>

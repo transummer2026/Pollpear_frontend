@@ -7,6 +7,11 @@ import { Card } from "@/components/ui/card";
 import DemoHashtags from "@/components/home/Section/DemoHashtags";
 import { SINGLE_CHOICE_DEMO } from "@/components/home/Section/demos";
 
+/**
+ * The one demo on the landing page that answers back: voting flips it to its
+ * results, counting the visitor's own click in. No account and no request
+ * involved — the point is to show the loop, not to record anything.
+ */
 export default function DemoSingleChoicePoll() {
   const [votedOptionId, setVotedOptionId] = useState<number | null>(null);
 

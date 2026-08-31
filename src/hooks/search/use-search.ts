@@ -8,6 +8,8 @@ import type {
   SearchResultsDTO,
 } from "@shared/schemas/search.schema";
 
+// A single letter matches most of the database: not worth a round trip, and
+// the result list would be useless anyway.
 const MIN_QUERY_LENGTH = 2;
 const DEBOUNCE_MS = 300;
 
@@ -18,6 +20,15 @@ type UseSearchOptions = {
   sortBy?: SearchSort;
 };
 
+/**
+ * Search over users, rooms or polls, wired for a live input: `text` follows
+ * every keystroke so the field stays responsive, while the request waits for
+ * the typing to pause and only leaves once the query is long enough (the key is
+ * `null` below that, so nothing is sent).
+ *
+ * `keepPreviousData` holds the previous results on screen while the next ones
+ * load — without it the list blanks out at every keystroke.
+ */
 export function useSearch(
   scope: SearchScope,
   { initialQuery = "", page, limit, sortBy }: UseSearchOptions = {},

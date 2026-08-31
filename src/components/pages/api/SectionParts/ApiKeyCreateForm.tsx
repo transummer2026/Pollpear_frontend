@@ -15,6 +15,11 @@ import type { ConfirmCopy } from "@/components/pages/api/apiKey";
 import ConfirmBody from "@/components/pages/api/SectionParts/ConfirmBody";
 import FieldError from "@/components/pages/api/SectionParts/FieldError";
 
+/**
+ * The form that issues a key. It doubles as the regenerate form, which is why
+ * the confirmation is optional: creating a first key needs none, replacing a
+ * working one does.
+ */
 export default function ApiKeyCreateForm({
   busy,
   label,

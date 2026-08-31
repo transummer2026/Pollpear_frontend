@@ -2,6 +2,7 @@ import { Input } from "@/components/ui/input";
 import { type UseFormRegister, type FieldErrors } from "react-hook-form";
 import { type RegisterInput } from "@shared/schemas/auth.schema";
 
+/** The optional half of the signup form: profile details, all skippable. */
 export default function RegisterCardInfos({
   register,
   errors,

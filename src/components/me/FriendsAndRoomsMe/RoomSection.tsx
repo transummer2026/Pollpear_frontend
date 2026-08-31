@@ -7,6 +7,7 @@ import { usePagination } from "@/hooks/use-pagination";
 const PAGE_SIZE = 4;
 const NO_ROOMS: never[] = [];
 
+/** The rooms the viewer belongs to. Hidden entirely when they are in none. */
 export default function RoomSection() {
   const { data: rooms } = useRooms();
   const { page, setPage, pageCount, pageItems } = usePagination(

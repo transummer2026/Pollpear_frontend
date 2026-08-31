@@ -20,6 +20,12 @@ type RoomPearticipantBadgeProps = {
   kickFromRoomId?: number;
 };
 
+/**
+ * One member of a room. The room payload only carries user ids, so the profile
+ * is fetched here — through the shared `/users/:id` key, which every badge for
+ * the same person reuses. The presence dot only shows for friends: that is the
+ * only list carrying an online flag, and the only one the socket keeps fresh.
+ */
 export default function RoomPearticipantBadge({
   userId,
   isOwner = false,

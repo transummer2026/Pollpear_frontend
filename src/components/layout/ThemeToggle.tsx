@@ -9,6 +9,11 @@ type ThemeToggleProps = {
   showLabel?: boolean;
 };
 
+/**
+ * The theme switch, wherever it appears. The preference is stored on the user,
+ * so the toggle is disabled while the change is in flight — the state it shows
+ * is the server's, not a local guess.
+ */
 export function ThemeToggle({
   className,
   showLabel = false,

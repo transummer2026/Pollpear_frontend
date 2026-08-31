@@ -13,6 +13,7 @@ type AnonymousSwitchProps = {
   setAnonymous: (checked: boolean) => void;
 };
 
+/** Hides the author's name from everyone but them, once the poll is out. */
 export default function AnonymousSwitch({
   anonymous,
   setAnonymous,

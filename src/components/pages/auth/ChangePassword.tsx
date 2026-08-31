@@ -3,6 +3,11 @@ import ChangePasswordCardUser from "@/components/me/Settings/Section/ChangePassw
 import { useAuth } from "@/hooks/auth/use-auth";
 import Layout from "@/layout/Layout";
 
+/**
+ * One route, two flows: a signed-in user changes their password with the
+ * current one, a visitor arriving from a reset link does it with the token in
+ * the URL. That is why the route stays public — the second case has no session.
+ */
 export default function ChangePassword() {
   const { isAuthenticated } = useAuth();
 

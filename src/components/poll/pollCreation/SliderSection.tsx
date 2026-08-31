@@ -21,6 +21,10 @@ type RoomProps = {
   roomId?: number;
 };
 
+/**
+ * The slider-poll creation form. Same shape and same submit path as the choice
+ * one, over a single option carrying the scale's two end labels.
+ */
 export default function SliderSection({ roomId }: RoomProps) {
   const { mutate } = useSWRConfig();
   const { trigger, isMutating } = usePollCreate();

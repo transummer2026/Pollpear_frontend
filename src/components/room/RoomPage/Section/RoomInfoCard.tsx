@@ -28,6 +28,11 @@ type RoomInfoCardProps = {
   room: RoomReadDTO;
 };
 
+/**
+ * The room's header: what it is, and what the viewer may do with it. The three
+ * action buttons each decide on their own whether they apply — owner, member or
+ * outsider — so this only has to lay them out.
+ */
 export default function RoomInfoCard({ room }: RoomInfoCardProps) {
   const isClosed = isRoomClosed(room);
 

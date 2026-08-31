@@ -6,6 +6,7 @@ import { getSocket } from "@/lib/socket";
 
 type FriendPresenceEvent = { userId: number };
 
+/** Rewrites one friend's online flag, leaving the rest of the list identical. */
 function patchPresence(
   friends: FriendListItemDTO[] | undefined,
   userId: number,
@@ -18,6 +19,15 @@ function patchPresence(
   );
 }
 
+/**
+ * Keeps the online dots live. The server pushes a presence event per friend
+ * rather than a new list, so the cached list is patched in place with
+ * `revalidate: false`: refetching everyone's profile on every connect and
+ * disconnect would be a lot of traffic for one boolean.
+ *
+ * Mounted once — the friends list is a single SWR key, and every view showing
+ * a dot reads from it.
+ */
 export function useFriendPresence() {
   const { data: me, isAuthenticated } = useAuth();
   const { mutate } = useSWRConfig();

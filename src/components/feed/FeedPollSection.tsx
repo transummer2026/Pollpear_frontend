@@ -6,6 +6,7 @@ type FeedPollSectionProps = {
   emptyLabel: string;
 };
 
+/** A list of polls, or a line explaining why there is none to show. */
 export default function FeedPollSection({
   polls,
   emptyLabel,

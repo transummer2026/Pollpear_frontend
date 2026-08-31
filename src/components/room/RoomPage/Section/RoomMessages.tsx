@@ -38,8 +38,12 @@ type RoomMessagesProps = {
   className?: string;
 };
 
+// Close enough to the bottom to count as "following the conversation": a new
+// message scrolls into view, whereas someone reading further up is left alone.
 const NEAR_BOTTOM_PX = 48;
 
+// Consecutive messages from one author, shown as a block: name on top, avatar
+// on the last one only.
 type Run = { authorId: number; items: ChatMessage[] };
 
 const runsOf = (messages: ChatMessage[]) =>
@@ -51,9 +55,24 @@ const runsOf = (messages: ChatMessage[]) =>
     return runs;
   }, []);
 
+// An optimistic message has no real id yet, so its tempId is its React key —
+// keeping the same one once it settles avoids remounting the bubble.
 const keyOf = (message?: ChatMessage) =>
   message ? (message.tempId ?? message.id) : null;
 
+/**
+ * The chat panel: message list, "load older" and composer. All of the state
+ * behind it lives in RoomChatProvider — this only handles scrolling, which the
+ * DOM alone can get wrong in two ways.
+ *
+ * Sticking to the bottom, first: a new message should follow the reader down,
+ * unless they have scrolled up to read, hence `stickyRef`.
+ *
+ * Prepending older messages, second: the browser keeps `scrollTop` where it
+ * was, so the viewport jumps as content grows above it. `anchorRef` records the
+ * distance to the bottom before the fetch and restores it afterwards, which
+ * keeps the same message under the reader's eyes.
+ */
 export default function RoomMessages({ className }: RoomMessagesProps) {
   const { data: me } = useAuth();
   const { messages, hasMore, isLoading, isSending, loadOlder, send } =
@@ -112,6 +131,8 @@ export default function RoomMessages({ className }: RoomMessagesProps) {
     });
   };
 
+  // The input is cleared straight away so typing feels instant; a send that
+  // fails puts the text back, unless something has already been typed since.
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const pending = draft;
@@ -187,10 +208,7 @@ export default function RoomMessages({ className }: RoomMessagesProps) {
                               <MessageHeader>
                                 {username}
                                 <span className="ml-1.5 font-normal">
-                                  {format(
-                                    new Date(message.createdAt),
-                                    "HH:mm",
-                                  )}
+                                  {format(new Date(message.createdAt), "HH:mm")}
                                 </span>
                               </MessageHeader>
                             )}

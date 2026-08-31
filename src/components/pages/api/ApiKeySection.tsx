@@ -13,6 +13,11 @@ import ApiKeyCreateForm from "@/components/pages/api/SectionParts/ApiKeyCreateFo
 import ApiKeyDetails from "@/components/pages/api/SectionParts/ApiKeyDetails";
 import ApiKeyDialog from "@/components/pages/api/SectionParts/ApiKeyDialog";
 
+/**
+ * Issuing, regenerating and revoking the user's API key. The key returned by a
+ * creation is held in state only long enough to be shown once — it is stored
+ * hashed, so this is the only moment it can ever be read.
+ */
 export default function ApiKeySection() {
   const { data: apiKey, isLoading, error } = useApiKey();
   const { trigger, isMutating } = useApiKeyCreate();

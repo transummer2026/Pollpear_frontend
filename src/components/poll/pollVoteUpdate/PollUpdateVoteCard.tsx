@@ -8,6 +8,11 @@ export type PollUpdateVoteProps = {
   onDone: () => void;
 };
 
+/**
+ * Same ballots as pollVote, wired to PATCH instead of POST, plus a way out
+ * without voting. Kept apart from the vote cards because the two differ in
+ * their verb and their exits, not in their markup.
+ */
 export default function PollUpdateVoteCard({
   poll,
   onDone,

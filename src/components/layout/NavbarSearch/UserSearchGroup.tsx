@@ -9,6 +9,10 @@ type UserSearchGroupProps = {
   onSelect: (userId: number) => void;
 };
 
+/**
+ * The users section of the search dialog. Renders nothing when empty, so the
+ * heading never stands over an empty list.
+ */
 export function UserSearchGroup({ users, onSelect }: UserSearchGroupProps) {
   if (users.length === 0) return null;
 

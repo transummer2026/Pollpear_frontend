@@ -11,6 +11,13 @@ type PollCardProps = {
   roomId?: number;
 };
 
+/**
+ * Decides which face of a poll to show. A card is one of three things — a
+ * ballot, a result, or a vote being changed — and which one it is depends on
+ * the viewer, not on the poll alone: having voted or the deadline having passed
+ * both settle it, and only the author may look at the results of a poll that is
+ * still open.
+ */
 export default function PollCard({ poll, roomId }: PollCardProps) {
   const { data: me } = useMe();
   const [isEditingVote, setIsEditingVote] = useState(false);

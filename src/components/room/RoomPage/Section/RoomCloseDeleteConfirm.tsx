@@ -13,6 +13,8 @@ import {
 
 export type RoomConfirmAction = "close" | "delete";
 
+// Both dialogs share a shape and differ only in wording, so the copy is a table
+// rather than two components.
 const COPY: Record<
   RoomConfirmAction,
   { title: string; question: string; consequence: string; confirm: string }
@@ -40,6 +42,11 @@ type RoomCloseDeleteConfirmProps = {
   canClose?: boolean;
 };
 
+/**
+ * Confirmation before closing or deleting a room. Which one it asks about is
+ * carried by `action`, `null` meaning the dialog is shut — one piece of state
+ * instead of an open flag plus a mode that could disagree with it.
+ */
 export default function RoomCloseDeleteConfirm({
   action,
   onActionChange,
