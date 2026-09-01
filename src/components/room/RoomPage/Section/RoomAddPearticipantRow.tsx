@@ -71,7 +71,7 @@ export default function RoomAddPearticipantRow({
       </Link>
 
       {isInvited ? (
-        <span className="flex items-center gap-1 pr-2 text-xs text-muted-foreground">
+        <span className="flex items-center gap-1 pr-2 text-sm text-muted-foreground">
           <Check className="h-3 w-3" />
           Invited
         </span>
@@ -97,11 +97,11 @@ export default function RoomAddPearticipantRow({
             <div className="space-y-1">
               <label
                 htmlFor={`invite-message-${friend.id}`}
-                className="text-sm font-medium"
+                className="text-base font-medium"
               >
                 Invite {friend.name}
               </label>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-sm text-muted-foreground">
                 Add a note (optional)
               </p>
             </div>
@@ -111,10 +111,10 @@ export default function RoomAddPearticipantRow({
               onChange={(e) => setMessage(e.target.value.slice(0, MESSAGE_MAX))}
               maxLength={MESSAGE_MAX}
               placeholder={`Come join us, ${friend.name}!`}
-              className="min-h-20 text-sm"
+              className="min-h-20 text-base"
             />
             <div className="flex items-center justify-between">
-              <span className="text-xs text-muted-foreground">
+              <span className="text-sm text-muted-foreground">
                 {message.length}/{MESSAGE_MAX}
               </span>
               <Button

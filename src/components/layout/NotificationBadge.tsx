@@ -22,7 +22,7 @@ export function NotificationBadge({ className }: NotificationBadgeProps) {
     <span
       aria-hidden
       className={cn(
-        "absolute flex h-4 min-w-4 items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-medium text-white",
+        "absolute flex h-5 min-w-5 items-center justify-center rounded-full bg-red-600 px-1 text-sm font-medium text-white",
         className,
       )}
     >

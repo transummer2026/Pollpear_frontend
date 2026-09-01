@@ -70,7 +70,7 @@ export default function RoomsSection() {
                 <h3 className={`text-sm font-bold`}>
                   Sarah &amp; Tom — Wedding
                 </h3>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-sm text-muted-foreground">
                   Private room · 14 members · closes in 6 days
                 </p>
               </div>
@@ -106,7 +106,7 @@ export default function RoomsSection() {
 
             <div className="space-y-3">
               <p
-                className={`text-xs uppercase tracking-wide font-semibold ${BRAND.wineText}`}
+                className={`text-sm uppercase tracking-wide font-semibold ${BRAND.wineText}`}
               >
                 Room messages
               </p>
@@ -123,7 +123,7 @@ export default function RoomsSection() {
               ))}
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Users size={14} className="text-[#F67373]" />
               Family, friends and the caterer — nobody else can see this.
             </div>

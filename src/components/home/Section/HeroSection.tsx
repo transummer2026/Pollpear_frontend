@@ -32,7 +32,7 @@ export default function HeroSection() {
           </Button>
         </div>
 
-        <p className="text-xs text-muted-foreground">
+        <p className="text-sm text-muted-foreground">
           Free to use — a poll takes about thirty seconds to set up.
         </p>
       </div>

@@ -29,7 +29,7 @@ export default function RoomsSectionFeed() {
 
       <CardContent className="space-y-1">
         {rooms.length === 0 ? (
-          <p className="text-xs text-muted-foreground">No active room yet.</p>
+          <p className="text-sm text-muted-foreground">No active room yet.</p>
         ) : (
           rooms.map((room) => (
             <Link
@@ -50,7 +50,7 @@ export default function RoomsSectionFeed() {
               <div className="min-w-0 flex-1">
                 <p className="text-sm truncate">{room.name}</p>
 
-                <p className="text-xs text-muted-foreground">
+                <p className="text-sm text-muted-foreground">
                   {room.roomMembers.length} members
                 </p>
               </div>

@@ -50,7 +50,7 @@ export default function VisibilitySwitch({
         />
       </div>
 
-      <p className="text-sm text-muted-foreground">
+      <p className="text-base text-muted-foreground">
         {isPublic ? "Visible by everyone" : "Invite only"}
       </p>
     </div>

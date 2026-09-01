@@ -11,16 +11,17 @@ export default function NavbarGuest() {
   const isAuthPage = pathname === "/auth/login";
 
   return (
-    <Menubar className="flex h-16 items-center px-6 border-x-0 border-t-0">
+    <Menubar className="flex h-20 items-center px-6 border-x-0 border-t-0">
       <LogoButton />
       {!isAuthPage && (
         <div className="ml-auto hidden md:flex items-center flex-1">
           <div className="ml-auto flex items-center gap-4">
-            <Button asChild variant="ghost">
+            <Button asChild variant="ghost" size="lg">
               <Link to="/auth/login">Log in</Link>
             </Button>
             <Button
               asChild
+              size="lg"
               className="bg-[#325024] text-white hover:bg-[#325024]/80"
             >
               <Link to="/auth/register">Sign up</Link>

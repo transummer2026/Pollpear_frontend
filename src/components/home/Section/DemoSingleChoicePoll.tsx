@@ -30,7 +30,7 @@ export default function DemoSingleChoicePoll() {
       >
         <div className="flex items-center justify-between gap-2">
           <Badge variant="open">Open</Badge>
-          <span className="text-xs text-muted-foreground">Single choice</span>
+          <span className="text-sm text-muted-foreground">Single choice</span>
         </div>
 
         <h3 className="text-sm font-bold">{SINGLE_CHOICE_DEMO.title}</h3>
@@ -55,7 +55,7 @@ export default function DemoSingleChoicePoll() {
 
         <DemoHashtags hashtags={SINGLE_CHOICE_DEMO.hashtags} />
 
-        <p className="text-xs text-muted-foreground">
+        <p className="text-sm text-muted-foreground">
           Try it — this one is a demo, nothing is saved.
         </p>
       </Card>
@@ -68,7 +68,7 @@ export default function DemoSingleChoicePoll() {
     >
       <div className="flex items-center justify-between gap-2">
         <Badge variant="open">Open</Badge>
-        <span className="text-xs text-muted-foreground">Single choice</span>
+        <span className="text-sm text-muted-foreground">Single choice</span>
       </div>
 
       <h3 className="text-sm font-bold">{SINGLE_CHOICE_DEMO.title}</h3>

@@ -47,7 +47,7 @@ export default function PathCard({
         {steps.map((step, index) => (
           <li key={step} className="flex items-start gap-3">
             <span
-              className={`mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border text-xs font-medium ${
+              className={`mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border text-sm font-medium ${
                 isWarm
                   ? "border-[#885053] text-[#885053] dark:border-[#F67373] dark:text-[#F67373]"
                   : "border-[#6F8459] text-[#325024] dark:text-[#D4E7CB]"

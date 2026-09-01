@@ -15,7 +15,7 @@ export default function PollCardFooter({ poll }: { poll: PollReadDTO }) {
   const totalVotes = poll.voterCount;
 
   return (
-    <div className="border-t pt-4 text-sm text-muted-foreground">
+    <div className="border-t pt-4 text-base text-muted-foreground">
       <div className="flex flex-wrap gap-x-6 gap-y-3">
         <div className="flex items-center gap-2">
           Created {formatCreatedAt(poll.createdAt)}

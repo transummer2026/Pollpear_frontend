@@ -19,7 +19,7 @@ export default function DemoMultipleChoicePoll() {
     >
       <div className="flex items-center justify-between gap-2">
         <Badge variant="closed">Closed</Badge>
-        <span className="text-xs text-muted-foreground">Multiple choice</span>
+        <span className="text-sm text-muted-foreground">Multiple choice</span>
       </div>
 
       <h3 className="text-sm font-bold">{MULTIPLE_CHOICE_DEMO.title}</h3>

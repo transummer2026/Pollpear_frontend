@@ -106,7 +106,7 @@ export default function MobileBottomNav() {
               )}
             >
               <AvatarImage src={user?.avatarUrl} alt="" />
-              <AvatarFallback className="text-[10px]">
+              <AvatarFallback className="text-sm">
                 {user?.username?.slice(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>

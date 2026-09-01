@@ -89,7 +89,7 @@ export default function HashtagsSelection({
             key={tag.name}
             type="button"
             onClick={() => removeHashtag(tag.name)}
-            className="rounded-full bg-muted px-3 py-1 text-sm"
+            className="rounded-full bg-muted px-3 py-1 text-base"
           >
             #{tag.name}
           </button>

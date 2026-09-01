@@ -24,7 +24,7 @@ export default function PollResultCard({
 
   return (
     <Card size="sm" className="mx-auto p-4 space-y-3 poll-card-sunken ring-0">
-      <h2 className="text-sm font-bold">{title}</h2>
+      <h2 className="text-base font-bold">{title}</h2>
 
       {error && (
         <p className="text-sm text-destructive">
@@ -61,7 +61,7 @@ export default function PollResultCard({
             ))}
           </div>
 
-          <CardContent className="border-t pt-4 flex items-center gap-2 text-sm text-muted-foreground">
+          <CardContent className="border-t pt-4 flex items-center gap-2 text-base text-muted-foreground">
             <Vote size={16} />
             {results.totalVotes} votes
           </CardContent>

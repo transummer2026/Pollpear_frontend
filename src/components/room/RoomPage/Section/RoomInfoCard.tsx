@@ -62,7 +62,7 @@ export default function RoomInfoCard({ room }: RoomInfoCardProps) {
         </CardDescription>
       </CardHeader>
       <Separator />
-      <CardContent className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm lg:grid-cols-4">
+      <CardContent className="grid grid-cols-2 gap-x-6 gap-y-1 text-base lg:grid-cols-4">
         <div className="flex items-baseline gap-2">
           <span className="text-muted-foreground">Created by</span>
           {room.createdBy ? (

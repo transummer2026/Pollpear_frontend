@@ -32,7 +32,7 @@ export default function RoomAddPollCard({
         <span className="flex size-36 items-center justify-center rounded-full border border-border bg-input/30 text-muted-foreground transition-colors group-hover:bg-input/50 group-hover:text-foreground">
           <Plus className="size-16" strokeWidth={2.5} />
         </span>
-        <span className="text-sm font-medium text-muted-foreground">
+        <span className="text-base font-medium text-muted-foreground">
           New poll
         </span>
       </Card>

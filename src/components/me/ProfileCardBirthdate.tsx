@@ -82,7 +82,7 @@ export default function ProfileCardBirthdate<
                   type="button"
                   variant="outline"
                   className={cn(
-                    "h-9 w-full justify-start rounded-4xl border-input bg-input/30 px-3 py-1 font-normal md:text-sm",
+                    "h-9 w-full justify-start rounded-4xl border-input bg-input/30 px-3 py-1 font-normal",
                     !selected && "text-muted-foreground",
                   )}
                 >

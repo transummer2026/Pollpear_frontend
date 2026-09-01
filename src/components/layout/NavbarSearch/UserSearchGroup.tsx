@@ -24,13 +24,13 @@ export function UserSearchGroup({ users, onSelect }: UserSearchGroupProps) {
           value={`user-${user.id}`}
           onSelect={() => onSelect(user.id)}
         >
-          <Avatar size="sm">
+          <Avatar>
             <AvatarImage src={user.avatarUrl} alt={user.username} />
             <AvatarFallback>
               <HugeiconsIcon
                 icon={UserIcon}
                 strokeWidth={2}
-                className="size-3"
+                className="size-4"
               />
             </AvatarFallback>
           </Avatar>
