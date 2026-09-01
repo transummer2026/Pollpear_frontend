@@ -52,17 +52,21 @@ const SITE_LINKS: MenuLink[] = [
  */
 export default function MobileMenuMe() {
   const [open, setOpen] = useState(false);
-  const { trigger, isMutating } = useLogout();
+  const { logout, isMutating } = useLogout();
   const navigate = useNavigate();
 
+  // Same rule as the desktop menu: the sheet closes and the visitor leaves
+  // whatever the call returned, because a failure still means the session is
+  // gone. See MenuDropdown for why.
   const handleLogout = async () => {
     try {
-      await trigger();
-      setOpen(false);
-      navigate("/auth/login", { replace: true });
+      await logout();
     } catch (e) {
       if (e instanceof ApiError) toast.error(e.message);
       else toast.error("An unknown error occurred");
+    } finally {
+      setOpen(false);
+      navigate("/auth/login", { replace: true });
     }
   };
 
