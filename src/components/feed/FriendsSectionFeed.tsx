@@ -53,7 +53,7 @@ export default function FriendsSectionFeed() {
 
       <CardContent className="space-y-1">
         {friends.length === 0 ? (
-          <p className="text-xs text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             No friends online right now.
           </p>
         ) : (

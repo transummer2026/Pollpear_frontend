@@ -145,14 +145,14 @@ export default function HeaderMe() {
               ) : (
                 <Button
                   type="button"
-                  size="icon"
+                  size="icon-lg"
                   variant="secondary"
                   aria-label="Edit Profile"
                   title="Edit profile"
                   className="group rounded-full border-2 shadow-md"
                   onClick={startEditing}
                 >
-                  <Pencil className="h-4 w-4 transition-transform group-hover:rotate-12" />
+                  <Pencil className="h-5 w-5 transition-transform group-hover:rotate-12" />
                 </Button>
               )}
             </div>

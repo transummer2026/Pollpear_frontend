@@ -59,7 +59,7 @@ export default function RoomPearticipantBadge({
         <ItemTitle className="ml-4 min-w-0 flex-1 truncate">
           {username}
           {isMe && (
-            <span className="ml-1 text-xs text-muted-foreground">(you)</span>
+            <span className="ml-1 text-sm text-muted-foreground">(you)</span>
           )}
         </ItemTitle>
       </Link>

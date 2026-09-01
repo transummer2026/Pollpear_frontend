@@ -64,7 +64,7 @@ export default function FriendshipButton({ userId }: FriendshipButtonProps) {
     return (
       <Button
         type="button"
-        size="icon"
+        size="icon-lg"
         variant="outline"
         className="group cursor-pointer rounded-full"
         aria-label="Add friend"
@@ -72,7 +72,7 @@ export default function FriendshipButton({ userId }: FriendshipButtonProps) {
         disabled={isMutating}
         onClick={() => runAction(() => sendRequest())}
       >
-        <AddIcon />
+        <AddIcon className="size-5" />
       </Button>
     );
   }
@@ -83,7 +83,7 @@ export default function FriendshipButton({ userId }: FriendshipButtonProps) {
     return (
       <Button
         type="button"
-        size="icon"
+        size="icon-lg"
         variant="outline"
         className="group cursor-pointer rounded-full"
         aria-label="Cancel friend request"
@@ -91,7 +91,7 @@ export default function FriendshipButton({ userId }: FriendshipButtonProps) {
         disabled={isMutating}
         onClick={() => runAction(() => removeFriendship())}
       >
-        <X />
+        <X className="size-5" />
       </Button>
     );
   }
@@ -101,7 +101,7 @@ export default function FriendshipButton({ userId }: FriendshipButtonProps) {
       <div className="flex gap-2">
         <Button
           type="button"
-          size="icon"
+          size="icon-lg"
           variant="outline"
           className="group cursor-pointer rounded-full bg-[#FFE0E0] text-[#885053] hover:bg-[#FFE0E0]/80"
           aria-label="Decline friend request"
@@ -111,11 +111,11 @@ export default function FriendshipButton({ userId }: FriendshipButtonProps) {
             runAction(() => updateFriendship({ status: "rejected" }))
           }
         >
-          <X />
+          <X className="size-5" />
         </Button>
         <Button
           type="button"
-          size="icon"
+          size="icon-lg"
           className="group cursor-pointer rounded-full bg-[#3A4336] text-white hover:bg-[#3A4336]/80"
           aria-label="Accept friend request"
           title="Accept"
@@ -124,7 +124,7 @@ export default function FriendshipButton({ userId }: FriendshipButtonProps) {
             runAction(() => updateFriendship({ status: "accepted" }))
           }
         >
-          <Check />
+          <Check className="size-5" />
         </Button>
       </div>
     );
@@ -133,7 +133,7 @@ export default function FriendshipButton({ userId }: FriendshipButtonProps) {
   return (
     <Button
       type="button"
-      size="icon"
+      size="icon-lg"
       variant="outline"
       className="group cursor-pointer rounded-full"
       aria-label="Remove friend"
@@ -141,7 +141,7 @@ export default function FriendshipButton({ userId }: FriendshipButtonProps) {
       disabled={isMutating}
       onClick={() => runAction(() => removeFriendship())}
     >
-      <HoverIcon idle={TrashIcon} hover={OpenTrashIcon} />
+      <HoverIcon idle={TrashIcon} hover={OpenTrashIcon} className="size-5" />
     </Button>
   );
 }

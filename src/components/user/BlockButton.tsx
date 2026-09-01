@@ -52,7 +52,7 @@ export default function BlockButton({ userId }: BlockButtonProps) {
     return (
       <Button
         type="button"
-        size="icon"
+        size="icon-lg"
         variant="outline"
         className="group cursor-pointer rounded-full"
         aria-label="Unblock user"
@@ -60,7 +60,7 @@ export default function BlockButton({ userId }: BlockButtonProps) {
         disabled={isMutating}
         onClick={() => runAction(() => unblockUser())}
       >
-        <HoverIcon idle={LockedIcon} hover={UnlockedIcon} />
+        <HoverIcon idle={LockedIcon} hover={UnlockedIcon} className="size-5" />
       </Button>
     );
   }
@@ -68,7 +68,7 @@ export default function BlockButton({ userId }: BlockButtonProps) {
   return (
     <Button
       type="button"
-      size="icon"
+      size="icon-lg"
       variant="destructive"
       className="group cursor-pointer rounded-full"
       aria-label="Block user"
@@ -76,7 +76,7 @@ export default function BlockButton({ userId }: BlockButtonProps) {
       disabled={isMutating}
       onClick={() => runAction(() => blockUser())}
     >
-      <BlockedIcon />
+      <BlockedIcon className="size-5" />
     </Button>
   );
 }

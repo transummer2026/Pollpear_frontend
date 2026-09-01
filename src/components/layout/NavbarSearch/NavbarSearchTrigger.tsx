@@ -17,14 +17,14 @@ export function NavbarSearchTrigger({ className }: { className?: string }) {
       type="button"
       onClick={open}
       className={cn(
-        "flex h-9 w-72 items-center gap-2 rounded-4xl border border-input bg-input/30 px-3 text-sm text-muted-foreground",
+        "flex h-10 w-80 items-center gap-2 rounded-4xl border border-input bg-input/30 px-4 text-base text-muted-foreground",
         className,
       )}
     >
       <HugeiconsIcon
         icon={SearchIcon}
         strokeWidth={2}
-        className="size-4 shrink-0 opacity-50"
+        className="size-5 shrink-0 opacity-50"
       />
       Search...
       <CommandShortcut className="ml-auto">⌘K</CommandShortcut>

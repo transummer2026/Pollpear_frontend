@@ -23,7 +23,7 @@ export function RoomSearchGroup({ rooms, onSelect }: RoomSearchGroupProps) {
           <HugeiconsIcon
             icon={Door01Icon}
             strokeWidth={2}
-            className="size-4 opacity-70"
+            className="size-5 opacity-70"
           />
           {room.name}
         </CommandItem>

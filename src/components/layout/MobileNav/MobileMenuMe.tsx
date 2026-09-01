@@ -116,7 +116,7 @@ export default function MobileMenuMe() {
               Log out
             </Button>
 
-            <p className="text-center text-xs text-muted-foreground">
+            <p className="text-center text-sm text-muted-foreground">
               PollPear © {new Date().getFullYear()}
             </p>
           </SheetFooter>

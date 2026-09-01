@@ -48,7 +48,7 @@ export default function RoomInvitationBanner({
           <CardTitle className="truncate text-base">
             You&rsquo;ve been invited to {invitation.room.name}
           </CardTitle>
-          <p className="mt-0.5 text-sm text-muted-foreground">
+          <p className="mt-0.5 text-base text-muted-foreground">
             Invited by{" "}
             <Link
               to={`/users/${invitation.inviterId}`}
@@ -62,7 +62,7 @@ export default function RoomInvitationBanner({
       </CardHeader>
       {invitation.message && (
         <CardContent>
-          <blockquote className="border-l-2 pl-3 text-sm italic text-muted-foreground">
+          <blockquote className="border-l-2 pl-3 text-base italic text-muted-foreground">
             {invitation.message}
           </blockquote>
         </CardContent>

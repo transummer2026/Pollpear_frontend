@@ -12,16 +12,16 @@ import { NavbarSearchTrigger } from "@/components/layout/NavbarSearch/NavbarSear
  */
 export default function NavbarUser() {
   return (
-    <Menubar className="hidden h-16 items-center sticky z-50 bg-white dark:bg-background top-0 px-6 border-x-0 border-t-0 md:flex">
+    <Menubar className="hidden h-20 items-center sticky z-50 bg-white dark:bg-background top-0 px-6 border-x-0 border-t-0 md:flex">
       <LogoButton to="/feed" />
       <div className="ml-auto flex items-center flex-1">
         <NavbarSearchTrigger className="ml-4" />
         <div className="ml-auto flex items-center gap-4">
-          <Button asChild variant="outline">
+          <Button asChild variant="outline" size="lg">
             <Link to="/polls/new">New Poll</Link>
           </Button>
 
-          <Button asChild variant="outline">
+          <Button asChild variant="outline" size="lg">
             <Link to="/rooms/new">New Room</Link>
           </Button>
           <NotificationsDropdown />

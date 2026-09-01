@@ -111,7 +111,7 @@ export function NotificationsDropdown({
         {children ?? (
           <Button
             variant="outline"
-            size="icon"
+            size="icon-lg"
             aria-label={
               unreadCount > 0
                 ? `Notifications, ${unreadCount} unread`
@@ -169,7 +169,7 @@ export function NotificationsDropdown({
                       notification.content
                     )}
                     {roomInvitation?.message && (
-                      <span className="mt-0.5 block line-clamp-2 text-xs italic text-muted-foreground">
+                      <span className="mt-0.5 block line-clamp-2 text-sm italic text-muted-foreground">
                         “{roomInvitation.message}”
                       </span>
                     )}

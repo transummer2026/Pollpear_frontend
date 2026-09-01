@@ -15,7 +15,7 @@ export function LogoButton({ to = "/" }: LogoButtonProps) {
       <img
         src={logo}
         alt="Pollpear home"
-        className="h-10 w-10 rounded-full object-cover cursor-pointer"
+        className="h-12 w-12 rounded-full object-cover cursor-pointer"
       />
     </Link>
   );

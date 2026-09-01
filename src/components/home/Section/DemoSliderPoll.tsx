@@ -13,7 +13,7 @@ export default function DemoSliderPoll() {
     >
       <div className="flex items-center justify-between gap-2">
         <Badge variant="open">Open</Badge>
-        <span className="text-xs text-muted-foreground">Slider</span>
+        <span className="text-sm text-muted-foreground">Slider</span>
       </div>
 
       <h3 className="text-sm font-bold">{SLIDER_DEMO.title}</h3>
@@ -33,7 +33,7 @@ export default function DemoSliderPoll() {
             className="poll-bar-slider"
           />
 
-          <div className="flex justify-between gap-4 text-xs text-muted-foreground">
+          <div className="flex justify-between gap-4 text-sm text-muted-foreground">
             <span className="max-w-[45%] text-left">
               {SLIDER_DEMO.leftLabel}
             </span>

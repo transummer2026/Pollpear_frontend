@@ -38,7 +38,7 @@ export default function RoomPolls({ room }: RoomPollsProps) {
           }
         />
         {isEmpty && (
-          <p className="mt-4 text-center text-sm text-muted-foreground">
+          <p className="mt-4 text-center text-base text-muted-foreground">
             {isClosed
               ? "This room is closed — no new poll can be added."
               : "No poll yet — ask the first question and let the pearticipants vote."}

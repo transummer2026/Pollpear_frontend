@@ -81,7 +81,7 @@ export default function DeadlineSetting({
               }}
             />
 
-            <span className="text-sm text-muted-foreground">days</span>
+            <span className="text-base text-muted-foreground">days</span>
           </div>
         </div>
       )}

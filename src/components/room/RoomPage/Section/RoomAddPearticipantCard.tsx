@@ -54,7 +54,7 @@ export default function RoomAddPearticipantDialog({
           <DialogTitle className="text-center">Add pearticipants</DialogTitle>
         </DialogHeader>
         {friends.length === 0 ? (
-          <p className="text-center text-sm text-muted-foreground">
+          <p className="text-center text-base text-muted-foreground">
             No PearPal to invite yet
           </p>
         ) : (

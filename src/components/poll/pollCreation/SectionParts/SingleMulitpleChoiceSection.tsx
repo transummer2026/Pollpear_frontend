@@ -59,7 +59,7 @@ export default function SingleMultipleChoiceSection({
     <div className="space-y-5 flex flex-col w-full">
       <div className="flex items-center justify-between">
         <CardTitle>Choices</CardTitle>
-        <span className="text-sm text-muted-foreground">
+        <span className="text-base text-muted-foreground">
           {optionFields.length}/5
         </span>
       </div>

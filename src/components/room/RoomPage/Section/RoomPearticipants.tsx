@@ -58,7 +58,7 @@ export default function RoomPearticipants({ room }: RoomPearticipantsProps) {
       </CardHeader>
       <CardContent>
         {pearticipants.length === 0 ? (
-          <p className="text-center text-sm text-muted-foreground">
+          <p className="text-center text-base text-muted-foreground">
             No pearticipant yet
           </p>
         ) : (
@@ -85,7 +85,7 @@ export default function RoomPearticipants({ room }: RoomPearticipantsProps) {
         {pending.length > 0 && (
           <>
             <Separator className="my-3" />
-            <p className="mb-1 text-center text-xs text-muted-foreground">
+            <p className="mb-1 text-center text-sm text-muted-foreground">
               {pending.length} pending invitation
               {pending.length > 1 ? "s" : ""}
             </p>

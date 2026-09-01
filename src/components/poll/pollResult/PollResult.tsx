@@ -28,7 +28,7 @@ export default function PollResult({
 
       <Progress value={percent} className={barClassName} />
 
-      <p className="text-xs text-muted-foreground mt-1">{answer.votes} votes</p>
+      <p className="text-sm text-muted-foreground mt-1">{answer.votes} votes</p>
     </div>
   );
 }

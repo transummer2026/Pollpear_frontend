@@ -14,7 +14,7 @@ export default function FieldMessage({
     return (
       <ul className="mt-1 space-y-0.5">
         {hints.map((hint) => (
-          <li key={hint} className="text-muted-foreground text-xs">
+          <li key={hint} className="text-muted-foreground text-sm">
             {hint}
           </li>
         ))}
