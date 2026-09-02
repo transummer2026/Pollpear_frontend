@@ -31,23 +31,18 @@ type MenuDropdownProps = {
  * data behind it.
  */
 export function MenuDropdown({ variant = "burger" }: MenuDropdownProps) {
-  const { logout, isMutating } = useLogout();
+  const { trigger, isMutating } = useLogout();
   const { data: user } = useMe();
 
   const navigate = useNavigate();
 
-  // Leaving happens whatever the call returned. The gateway invalidates the
-  // session in redis before it forwards anything, so by the time a failure can
-  // surface there is no session left to keep the visitor here — and a toast on
-  // a page that now 401s everywhere is a dead end.
   const handleLogout = async () => {
     try {
-      await logout();
+      await trigger();
+      navigate("/auth/login", { replace: true });
     } catch (e) {
       if (e instanceof ApiError) toast.error(e.message);
       else toast.error("An unknown error occurred");
-    } finally {
-      navigate("/auth/login", { replace: true });
     }
   };
 
